@@ -230,6 +230,49 @@ class RunEnsembleTests(unittest.TestCase, _ArgparseUtils):
         load_tmr.assert_not_called()
         load_raid.assert_not_called()
 
+    def test_main_reports_missing_model_directory_without_traceback(self) -> None:
+        with patch.object(run_ensemble, "_ensure_torch", return_value=DummyTorch()), patch.object(
+            run_ensemble, "load_meld", side_effect=OSError("No model directory found: meld_model/config.json")
+        ) as load_meld, patch.object(run_ensemble, "load_tmr") as load_tmr, patch.object(
+            run_ensemble, "load_raid"
+        ) as load_raid, patch("sys.argv", ["run_ensemble.py", "--text", "hello", "--weights", "1,0,0"]), patch(
+            "sys.stderr", new=io.StringIO()
+        ) as stderr:
+            with self.assertRaises(SystemExit):
+                run_ensemble.main()
+            error_text = stderr.getvalue()
+
+        self.assertIn(
+            "Failed to initialize model for expert 'meld' from 'meld_model':",
+            error_text,
+        )
+        self.assertNotIn("Traceback", error_text)
+        load_meld.assert_called_once()
+        load_tmr.assert_not_called()
+        load_raid.assert_not_called()
+
+    def test_run_ensemble_wraps_oserror_from_loader(self) -> None:
+        with patch.object(run_ensemble, "_ensure_torch", return_value=DummyTorch()), patch.object(
+            run_ensemble,
+            "load_tmr",
+            side_effect=OSError("Failed to load weights from transformers hub config file"),
+        ) as load_tmr, patch.object(run_ensemble, "load_meld") as load_meld, patch.object(
+            run_ensemble, "load_raid"
+        ) as load_raid:
+            with self.assertRaises(RuntimeError) as exc_info:
+                run_ensemble.run_ensemble(
+                    "hello",
+                    self._make_args(weights={"meld": 0.0, "tmr": 1.0, "raid": 0.0}),
+                )
+
+        self.assertIn(
+            "Failed to initialize model for expert 'tmr' from 'tmr_model':",
+            str(exc_info.exception),
+        )
+        load_tmr.assert_called_once()
+        load_meld.assert_not_called()
+        load_raid.assert_not_called()
+
     def test_output_contains_ai_and_human_probabilities_and_scores(self) -> None:
         with patch.object(run_ensemble, "_ensure_torch", return_value=DummyTorch()), patch.object(
             run_ensemble, "load_meld"

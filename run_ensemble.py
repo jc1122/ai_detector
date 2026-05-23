@@ -312,6 +312,25 @@ def _format_plain_score(score: float | None) -> str:
     return f"{score:.6f}"
 
 
+def _load_expert_model(
+    expert_name: str,
+    loader: Callable[[Path, bool], tuple[Callable[[], object], object, int]],
+    model_dir: Path,
+    *,
+    local_files_only: bool,
+) -> tuple[Callable[[], object], object, int]:
+    try:
+        return loader(model_dir, local_files_only=local_files_only)
+    except ImportError as exc:
+        raise RuntimeError(
+            f"Failed to initialize model for expert '{expert_name}' due to a missing dependency: {exc}"
+        ) from exc
+    except OSError as exc:
+        raise RuntimeError(
+            f"Failed to initialize model for expert '{expert_name}' from '{model_dir}': {exc}"
+        ) from exc
+
+
 def run_ensemble(text: str, args: argparse.Namespace) -> dict[str, object]:
     torch = _ensure_torch()
 
@@ -342,14 +361,12 @@ def run_ensemble(text: str, args: argparse.Namespace) -> dict[str, object]:
 
     for name in expert_names:
         load_model = loader_by_name[name]
-        try:
-            model, tokenizer, max_length = load_model(
-                model_dir_by_name[name], local_files_only=args.local_files_only
-            )
-        except ImportError as exc:
-            raise RuntimeError(
-                f"Failed to initialize model for expert '{name}' due to a missing dependency: {exc}"
-            ) from exc
+        model, tokenizer, max_length = _load_expert_model(
+            name,
+            load_model,
+            model_dir_by_name[name],
+            local_files_only=args.local_files_only,
+        )
         model.to(device)
         model.eval()
 
