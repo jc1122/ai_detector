@@ -32,16 +32,17 @@ use `.venv/bin/python -m pip install -e . --no-deps`.
 
 ## 2) Model folders and deployment
 
-Use `deploy_meld.py` to pull Hugging Face models into local folders.
+Use the installed deploy entrypoint to pull Hugging Face models into local
+folders.
 
 ```bash
-python3 deploy_meld.py --model-id anon-review-meld-2026/meld --target-dir ./meld_model
-python3 deploy_meld.py --model-id Oxidane/tmr-ai-text-detector --target-dir ./tmr_model
-python3 deploy_meld.py --model-id GeorgeDrayson/modernbert-ai-detection-raid-mage --target-dir ./raid_model
+ai-detector-deploy --model-id anon-review-meld-2026/meld --target-dir ./meld_model
+ai-detector-deploy --model-id Oxidane/tmr-ai-text-detector --target-dir ./tmr_model
+ai-detector-deploy --model-id GeorgeDrayson/modernbert-ai-detection-raid-mage --target-dir ./raid_model
 ```
 
 Defaults and behavior:
-- `deploy_meld.py` default target is `./models/meld` (override with `--target-dir`).
+- `ai-detector-deploy` default target is `./models/meld` (override with `--target-dir`).
 - Re-running the same command is idempotent; unchanged files are skipped.
 - A manifest is written as `ai_detector_model_manifest.json` in each target folder.
 
@@ -50,20 +51,29 @@ Expected local directories for inference:
 - `./tmr_model`
 - `./raid_model`
 
+Checkout fallback: use `python3 deploy_meld.py ...` instead of
+`ai-detector-deploy ...` when the package has not been installed yet.
+
+MELD note: `./meld_model` contains the MELD head and tokenizer. Its
+`meld_config.json` points the backbone to `jhu-clsp/ettin-encoder-400m`, so
+`--local-files-only` also requires that backbone to be present in the local
+Hugging Face cache. Run once online without `--local-files-only`, or pre-cache
+that backbone, before expecting fully offline MELD inference.
+
 ## 3) Run ensemble inference
 
 ```bash
 # default weights 34/33/33, default threshold 0.5
-python3 run_ensemble.py --text "The sky is blue and clear."
+ai-detector --text "The sky is blue and clear."
 
 # input from stdin (pipe)
-printf "The sky is blue and clear." | python3 run_ensemble.py --json
+printf "The sky is blue and clear." | ai-detector --json
 
 # input from file
-python3 run_ensemble.py --text-file ./input.txt --json
+ai-detector --text-file ./input.txt --json
 
 # explicit weights and chunk controls
-python3 run_ensemble.py \
+ai-detector \
   --weights 0.34,0.33,0.33 \
   --max-chunks 4 \
   --batch-size 4 \
@@ -71,7 +81,7 @@ python3 run_ensemble.py \
   --text "The sky is blue and clear."
 
 # zero-weight expert skip
-python3 run_ensemble.py --weights 1.0,0.0,0.0 --text "The sky is blue and clear." --json
+ai-detector --weights 1.0,0.0,0.0 --text "The sky is blue and clear." --json
 ```
 
 Notes:
@@ -137,17 +147,17 @@ Interpretation:
 
 Quick checks:
 ```bash
-python3 run_ensemble.py --help
-python3 run_ensemble.py --text "quick smoke test" --json
+ai-detector --help
+ai-detector --text "quick smoke test" --json
 printf "quick smoke test\n" > /tmp/ai_detector_input.txt
-python3 run_ensemble.py --text-file /tmp/ai_detector_input.txt --json
-printf "quick smoke test\n" | python3 run_ensemble.py --json
+ai-detector --text-file /tmp/ai_detector_input.txt --json
+printf "quick smoke test\n" | ai-detector --json
 ```
 
 Heavy smoke test:
 ```bash
 printf "This is a longer validation snippet for smoke testing the ensemble path.\n" > /tmp/ai_detector_smoke.txt
-python3 run_ensemble.py \
+ai-detector \
   --text-file /tmp/ai_detector_smoke.txt \
   --weights 0.34,0.33,0.33 \
   --max-chunks 4 \
@@ -174,8 +184,9 @@ Expected smoke test outcome:
 - `ensemble.label` is `ai` or `human`
 
 Note: full smoke test requires runtime dependencies (including `torch`), so it is
-recommended to run these commands with your virtualenv interpreter, e.g.
-`.venv/bin/python3`, to avoid missing-system-package failures.
+recommended to run these commands after activating the project virtualenv. From a
+checkout without package entrypoints, replace `ai-detector` with
+`python3 run_ensemble.py`.
 
 ## 8) Runtime dependencies
 

@@ -38,7 +38,8 @@ Document the CLI in a way that another agent can:
 ## Review rule after each iteration
 
 After any doc change, run and verify:
-- `python3 run_ensemble.py --help`
+- `ai-detector --help` after package install, or `python3 run_ensemble.py --help`
+  from a checkout fallback
 - quick checks from README
 - heavy smoke test from README
 - output keys expected by operator scripts are still present (`experts.*`, `ensemble`, `calibration`)

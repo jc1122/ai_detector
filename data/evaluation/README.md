@@ -17,7 +17,7 @@ classification behavior. These files are not a calibrated benchmark.
 ## TMR-Only Smoke Commands
 
 ```bash
-.venv/bin/python run_ensemble.py \
+.venv/bin/ai-detector \
   --weights 0,1,0 \
   --device cpu \
   --batch-size 4 \
