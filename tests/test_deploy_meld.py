@@ -39,19 +39,42 @@ class DeployMeldTests(TestCase):
     def test_main_prints_completion_message_and_calls_download_model(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
             target_dir = Path(tmpdir)
-            args = deploy_meld.argparse.Namespace(
-                target_dir=target_dir, model_id="owner/repo", revision="main"
+            model_id = "owner/custom-meld"
+            revision = "v2"
+            argv = [
+                "deploy_meld.py",
+                "--model-id",
+                model_id,
+                "--revision",
+                revision,
+                "--target-dir",
+                str(target_dir),
+            ]
+
+            stdout = io.StringIO()
+            stderr = io.StringIO()
+
+            with patch.object(sys, "argv", argv):
+
+                def fake_download_model(
+                    observed_model_id: str, observed_revision: str, observed_target_dir: Path
+                ) -> list[dict]:
+                    self.assertEqual(observed_model_id, model_id)
+                    self.assertEqual(observed_revision, revision)
+                    self.assertEqual(observed_target_dir, target_dir)
+                    self.assertNotIn("Deployment complete.", stdout.getvalue())
+                    return []
+
+                with patch.object(
+                    deploy_meld, "download_model", side_effect=fake_download_model
+                ) as mocked_download, patch("sys.stdout", new=stdout), patch("sys.stderr", new=stderr):
+                    deploy_meld.main()
+
+            mocked_download.assert_called_once_with(model_id, revision, target_dir)
+            self.assertIn(
+                f"Deploying {model_id} @ {revision} to {target_dir.resolve()}",
+                stdout.getvalue(),
             )
-
-            with patch.object(deploy_meld, "parse_args", return_value=args), patch.object(
-                deploy_meld, "download_model"
-            ) as mocked_download, patch("sys.stdout", new=io.StringIO()) as stdout, patch(
-                "sys.stderr", new=io.StringIO()
-            ) as stderr:
-                deploy_meld.main()
-
-            mocked_download.assert_called_once_with("owner/repo", "main", target_dir)
-            self.assertIn("Deploying owner/repo @ main", stdout.getvalue())
             self.assertIn("Deployment complete.", stdout.getvalue())
             self.assertEqual(stderr.getvalue(), "")
 
