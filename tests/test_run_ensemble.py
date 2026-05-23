@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import io
+import json
 import tempfile
 import sys
 import unittest
@@ -454,3 +455,62 @@ class RunEnsembleTests(unittest.TestCase, _ArgparseUtils):
         self.assertIn("MELD AI probability: skipped", output)
         self.assertIn("RAID AI probability: skipped", output)
         self.assertIn("Decision: ai", output)
+
+    def test_main_json_output_emits_contract_keys(self) -> None:
+        fake_result = {
+            "text_preview": "x",
+            "weights": {"meld": 0.34, "tmr": 0.33, "raid": 0.33},
+            "experts": {
+                "meld": {
+                    "ai_score": 0.5,
+                    "human_score": 0.5,
+                    "ai_probability": 0.5,
+                    "human_probability": 0.5,
+                    "chunks": 1,
+                    "loaded": True,
+                },
+                "tmr": {
+                    "ai_score": 0.2,
+                    "human_score": 0.8,
+                    "ai_probability": 0.2,
+                    "human_probability": 0.8,
+                    "chunks": 1,
+                    "loaded": True,
+                },
+                "raid": {
+                    "ai_score": 0.7,
+                    "human_score": 0.3,
+                    "ai_probability": 0.7,
+                    "human_probability": 0.3,
+                    "chunks": 1,
+                    "loaded": True,
+                },
+            },
+            "ensemble": {
+                "ai_score": 0.48,
+                "human_score": 0.52,
+                "ai_probability": 0.48,
+                "human_probability": 0.52,
+                "threshold": 0.5,
+                "label": "human",
+            },
+            "calibration": {
+                "status": "uncalibrated",
+                "calibrated": False,
+                "message": "Scores are uncalibrated raw model probabilities. "
+                "Provide and use a calibrated model to get calibrated scores.",
+            },
+            "device": "cpu",
+        }
+
+        with patch.object(run_ensemble, "run_ensemble", return_value=fake_result), patch(
+            "sys.argv", ["run_ensemble.py", "--json", "--text", "x"]
+        ), patch("sys.stdout", new=io.StringIO()) as stdout:
+            run_ensemble.main()
+
+        parsed = json.loads(stdout.getvalue())
+        self.assertIn("experts", parsed)
+        self.assertIn("ensemble", parsed)
+        self.assertIn("calibration", parsed)
+        self.assertIn("weights", parsed)
+        self.assertIn("device", parsed)

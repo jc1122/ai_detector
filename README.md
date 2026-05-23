@@ -3,6 +3,25 @@
 This repo provides a 3-expert ensemble CLI for text classification:
 MELD, TMR, and MAGE (ModernBERT from `raid_model`).
 
+## CLI install
+
+```bash
+python3 -m venv .venv
+. .venv/bin/activate
+python -m pip install -e .
+```
+
+Then use the installed entrypoints:
+
+```bash
+ai-detector --help
+ai-detector-deploy --help
+```
+
+On externally managed Python installs, keep the editable install inside a virtual
+environment. For an existing environment where dependencies are already present,
+use `.venv/bin/python -m pip install -e . --no-deps`.
+
 ## 1) Ensemble review summary
 
 - Current contract: `meld`, `tmr`, `raid` experts are combined as a weighted
@@ -84,6 +103,9 @@ Scoring details:
 - Without calibration configuration, all probabilities are **raw uncalibrated scores**.
 
 ## 5) Polish and OOD local evaluation (`data/evaluation/`, TMR-only)
+
+See [`data/evaluation/README.md`](data/evaluation/README.md) for the local
+sample inventory, source notes, commands, and interpretation.
 
 The Polish snapshots below are `tmr`-only outputs (`weights: 0,1,0`):
 
