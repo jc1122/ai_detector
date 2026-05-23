@@ -8,7 +8,7 @@ import json
 import sys
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Callable
+from typing import Callable, Protocol
 
 
 def _ensure_torch() -> object:
@@ -312,9 +312,19 @@ def _format_plain_score(score: float | None) -> str:
     return f"{score:.6f}"
 
 
+class _ExpertLoader(Protocol):
+    def __call__(
+        self,
+        model_dir: Path,
+        *,
+        local_files_only: bool,
+    ) -> tuple[Callable[[], object], object, int]:
+        ...
+
+
 def _load_expert_model(
     expert_name: str,
-    loader: Callable[[Path, bool], tuple[Callable[[], object], object, int]],
+    loader: _ExpertLoader,
     model_dir: Path,
     *,
     local_files_only: bool,
