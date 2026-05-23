@@ -4,7 +4,10 @@ from __future__ import annotations
 
 import io
 import tempfile
+import textwrap
 from pathlib import Path
+import subprocess
+import sys
 from unittest import TestCase
 from unittest.mock import patch
 
@@ -160,3 +163,42 @@ class DeployMeldTests(TestCase):
             self.assertIn("Error: disk unavailable", stderr.getvalue())
             self.assertNotIn("Traceback", stderr.getvalue())
             self.assertIn("Deploying owner/repo @ main", stdout.getvalue())
+
+    def test_main_expected_failure_exits_with_code_1_without_traceback(self) -> None:
+        script = textwrap.dedent(
+            """
+            import sys
+            import tempfile
+            import unittest.mock
+
+            import deploy_meld
+
+
+            with tempfile.TemporaryDirectory() as tmpdir:
+                argv = [
+                    "deploy_meld.py",
+                    "--model-id",
+                    "owner/repo",
+                    "--revision",
+                    "main",
+                    "--target-dir",
+                    tmpdir,
+                ]
+                with unittest.mock.patch.object(
+                    deploy_meld, "download_model", side_effect=RuntimeError("subprocess boom")
+                ):
+                    sys.argv = argv
+                    deploy_meld.main()
+            """
+        )
+        completed = subprocess.run(
+            [sys.executable, "-c", script],
+            capture_output=True,
+            text=True,
+            cwd=Path.cwd(),
+        )
+
+        self.assertEqual(completed.returncode, 1)
+        self.assertIn("Deploying owner/repo @ main", completed.stdout)
+        self.assertIn("Error:", completed.stderr)
+        self.assertNotIn("Traceback", completed.stderr)
