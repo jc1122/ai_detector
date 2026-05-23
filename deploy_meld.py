@@ -19,6 +19,7 @@ from typing import Any
 
 MODEL_ID = "anon-review-meld-2026/meld"
 REVISION = "main"
+DEFAULT_TARGET_DIR = Path("meld_model")
 MANIFEST_FILENAME = "ai_detector_model_manifest.json"
 CHUNK_SIZE = 1024 * 256
 
@@ -246,9 +247,12 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--target-dir",
-        default=Path("models/meld"),
+        default=None,
         type=Path,
-        help="Directory to store downloaded model files.",
+        help=(
+            "Directory to store downloaded model files."
+            " Defaults to ./meld_model to match run_ensemble defaults."
+        ),
     )
     parser.add_argument(
         "--model-id",
@@ -266,7 +270,7 @@ def parse_args() -> argparse.Namespace:
 def main() -> None:
     try:
         args = parse_args()
-        target = args.target_dir
+        target = args.target_dir or DEFAULT_TARGET_DIR
         model_id = args.model_id
         revision = args.revision
         print(f"Deploying {model_id} @ {revision} to {target.resolve()}")

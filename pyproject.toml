@@ -16,5 +16,10 @@ dependencies = [
 ai-detector = "run_ensemble:main"
 ai-detector-deploy = "deploy_meld:main"
 
+[project.optional-dependencies]
+test = [
+  "pytest>=8.3",
+]
+
 [tool.setuptools]
 py-modules = ["run_ensemble", "deploy_meld"]

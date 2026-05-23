@@ -36,15 +36,31 @@ Use the installed deploy entrypoint to pull Hugging Face models into local
 folders.
 
 ```bash
-ai-detector-deploy --model-id anon-review-meld-2026/meld --target-dir ./meld_model
-ai-detector-deploy --model-id Oxidane/tmr-ai-text-detector --target-dir ./tmr_model
-ai-detector-deploy --model-id GeorgeDrayson/modernbert-ai-detection-raid-mage --target-dir ./raid_model
+ai-detector-deploy \
+  --model-id anon-review-meld-2026/meld \
+  --revision <immutable_meld_commit_or_tag> \
+  --target-dir ./meld_model
+ai-detector-deploy \
+  --model-id Oxidane/tmr-ai-text-detector \
+  --revision <immutable_tmr_commit_or_tag> \
+  --target-dir ./tmr_model
+ai-detector-deploy \
+  --model-id GeorgeDrayson/modernbert-ai-detection-raid-mage \
+  --revision <immutable_raid_commit_or_tag> \
+  --target-dir ./raid_model
 ```
 
 Defaults and behavior:
-- `ai-detector-deploy` default target is `./models/meld` (override with `--target-dir`).
+- `ai-detector-deploy` default target is `./meld_model` (override with `--target-dir`).
+- `--revision` defaults to `main`; treat `main` as a mutable pointer.
+  For reproducible deployments, use an immutable revision (commit SHA or tag) from
+  the model page under Commits/Versions.
 - Re-running the same command is idempotent; unchanged files are skipped.
 - A manifest is written as `ai_detector_model_manifest.json` in each target folder.
+  It stores deployment metadata including `model_id`, the requested `revision`,
+  `fetched_at`, and other model metadata returned by Hugging Face. If you pass
+  `main`, the manifest records `main`; use an immutable commit SHA or tag when
+  the manifest must identify a reproducible model version directly.
 
 Expected local directories for inference:
 - `./meld_model`
@@ -114,6 +130,14 @@ Scoring details:
   fields are `null` and `notes` explains the skip.
 - Without calibration configuration, all probabilities are **raw uncalibrated scores**.
 
+Privacy note:
+- `text_preview` in JSON output is the first 250 characters of raw input text.
+- This preview is emitted as part of CLI output and can be copied into logs by operators;
+  avoid sending sensitive or regulated text through the same output channel unless
+  log redaction is in place.
+- Keep `text_preview` as a debug aid only; it is not a sanitized/safe-to-keep
+  artifact when input confidentiality is required.
+
 ## 5) Polish and OOD local evaluation (`data/evaluation/`, TMR-only)
 
 See [`data/evaluation/README.md`](data/evaluation/README.md) for the local
@@ -136,6 +160,7 @@ The Polish snapshots below are `tmr`-only outputs (`weights: 0,1,0`):
 Interpretation:
 - these are local checks, not production benchmarks;
 - they show a calibration/threshold gap on OOD-like chemistry text (`human_articles` is a false-positive AI label);
+- this is intentionally a **negative** control and should not be interpreted as a successful detection.
 - negative or counterintuitive cases should be kept visible for tuning decisions.
 
 ## 6) Limits and caveats

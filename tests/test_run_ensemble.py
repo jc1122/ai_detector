@@ -714,3 +714,35 @@ class RunEnsembleTests(unittest.TestCase, _ArgparseUtils):
         self.assertIn("calibration", parsed)
         self.assertIn("weights", parsed)
         self.assertIn("device", parsed)
+
+    def test_tmr_human_articles_fixture_ood_false_positive_remains_non_success(self) -> None:
+        project_root = Path(__file__).resolve().parent.parent
+        fixture_path = project_root / "data/evaluation/tmr_human_articles_result.json"
+        with fixture_path.open(encoding="utf-8") as handle:
+            fixture = json.load(handle)
+
+        self.assertEqual(
+            fixture["weights"],
+            {"meld": 0.0, "tmr": 1.0, "raid": 0.0},
+        )
+        self.assertEqual(fixture["ensemble"]["label"], "ai")
+        for expert in ("meld", "raid"):
+            expert_payload = fixture["experts"][expert]
+            self.assertFalse(expert_payload["loaded"])
+            self.assertEqual(expert_payload["chunks"], 0)
+            self.assertIsNone(expert_payload["ai_score"])
+            self.assertIsNone(expert_payload["human_score"])
+            self.assertIsNone(expert_payload["ai_probability"])
+            self.assertIsNone(expert_payload["human_probability"])
+        self.assertTrue(fixture["experts"]["tmr"]["loaded"])
+        self.assertEqual(fixture["experts"]["tmr"]["chunks"], 8)
+        self.assertGreater(fixture["experts"]["tmr"]["ai_probability"], 0.5)
+
+        readme = (project_root / "README.md").read_text(encoding="utf-8")
+        eval_readme = (project_root / "data/evaluation/README.md").read_text(encoding="utf-8")
+
+        for text in (readme, eval_readme):
+            self.assertIn("tmr_human_articles_result.json", text)
+
+        self.assertIn("false-positive AI label", readme)
+        self.assertIn("not a success", eval_readme.lower())

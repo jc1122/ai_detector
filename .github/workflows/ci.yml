@@ -1,0 +1,71 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install package entrypoints without runtime dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e ".[test]" --no-deps
+
+      - name: Validate test extra and install pytest
+        run: |
+          python - <<'PY'
+          import tomllib
+          from pathlib import Path
+
+
+          def dep_name(spec: str) -> str:
+              base = spec.split("[", 1)[0]
+              for marker in ("<", ">", "=", "~", "!", ";"):
+                  base = base.split(marker, 1)[0]
+              return base.strip()
+
+
+          with Path("pyproject.toml").open("rb") as handle:
+              project = tomllib.load(handle)["project"]
+          test_deps = project.get("optional-dependencies", {}).get("test", [])
+          has_pytest = any(dep_name(dep) == "pytest" for dep in test_deps)
+          if not has_pytest:
+              raise SystemExit("Expected pytest in project.optional-dependencies.test")
+          PY
+          python -m pip install pytest
+
+      - name: Verify importability and module help entrypoints
+        run: |
+          ai-detector --help
+          ai-detector-deploy --help
+
+      - name: Source syntax check
+        run: |
+          python -m py_compile \
+            run_ensemble.py \
+            deploy_meld.py \
+            tests/test_run_ensemble.py \
+            tests/test_deploy_meld.py \
+            tests/test_packaging_cli.py
+
+      - name: Unit tests
+        run: |
+          python -m unittest discover -s tests
+
+      - name: CLI help smoke
+        run: |
+          python run_ensemble.py --help
+          python deploy_meld.py --help

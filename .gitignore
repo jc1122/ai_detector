@@ -6,3 +6,16 @@ models/
 __pycache__/
 data/human_articles/pdfs/
 data/human_articles/text/
+*.egg-info/
+build/
+dist/
+.pytest_cache/
+.mypy_cache/
+.pyright/
+.ruff_cache/
+.tox/
+.nox/
+.coverage
+coverage.xml
+coverage.json
+htmlcov/

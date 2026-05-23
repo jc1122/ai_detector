@@ -250,3 +250,22 @@ class DeployMeldTests(TestCase):
         self.assertIn("Deploying owner/repo @ main", completed.stdout)
         self.assertIn("Error: subprocess boom", completed.stderr)
         self.assertNotIn("Traceback", completed.stderr)
+
+    def test_main_uses_meld_model_as_default_target(self) -> None:
+        default_target = Path("meld_model").resolve()
+        with patch.object(sys, "argv", ["deploy_meld.py"]):
+            stdout = io.StringIO()
+            stderr = io.StringIO()
+
+            with patch.object(
+                deploy_meld, "download_model", return_value=[]
+            ) as mocked_download, patch("sys.stdout", new=stdout), patch("sys.stderr", new=stderr):
+                deploy_meld.main()
+
+            mocked_download.assert_called_once_with(
+                deploy_meld.MODEL_ID, deploy_meld.REVISION, Path("meld_model")
+            )
+            self.assertIn(f"Deploying {deploy_meld.MODEL_ID} @ {deploy_meld.REVISION}", stdout.getvalue())
+            self.assertIn(f"to {default_target}", stdout.getvalue())
+            self.assertIn("Deployment complete.", stdout.getvalue())
+            self.assertEqual(stderr.getvalue(), "")
