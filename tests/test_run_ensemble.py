@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 import io
 import json
+import os
 import types
 import tempfile
 import sys
@@ -608,25 +609,48 @@ class RunEnsembleTests(unittest.TestCase, _ArgparseUtils):
         }
 
         def run_inference(_text: str, _args: argparse.Namespace) -> dict[str, object]:
-            print("noisy third-party chatter", file=sys.stderr)
+            os.write(2, b"noisy third-party chatter")
             return fake_result
 
-        with patch("run_ensemble.run_ensemble", side_effect=run_inference), patch(
-            "sys.argv", ["run_ensemble.py", "--quiet", "--text", "hello"]
-        ), patch("sys.stdout", new=io.StringIO()) as stdout, patch(
-            "sys.stderr", new=io.StringIO()
-        ) as stderr:
-            run_ensemble.main()
+        with tempfile.TemporaryFile("w+b") as stderr_capture, patch(
+            "run_ensemble.run_ensemble", side_effect=run_inference
+        ), patch("sys.argv", ["run_ensemble.py", "--quiet", "--text", "hello"]), patch(
+            "sys.stdout", new=io.StringIO()
+        ) as stdout:
+            original_stderr_fd = os.dup(2)
+            os.dup2(stderr_capture.fileno(), 2)
+            try:
+                run_ensemble.main()
+            finally:
+                os.dup2(original_stderr_fd, 2)
+                os.close(original_stderr_fd)
 
-        self.assertEqual(stderr.getvalue(), "")
+            stderr_capture.seek(0)
+            self.assertEqual(stderr_capture.read().decode("utf-8"), "")
+
         self.assertIn("Ensemble AI probability:", stdout.getvalue())
 
     def test_main_quiet_preserves_user_error_to_real_stderr(self) -> None:
-        with patch("run_ensemble.run_ensemble", side_effect=RuntimeError("failed during inference")), patch(
-            "sys.argv", ["run_ensemble.py", "--quiet", "--text", "hello"]
-        ), patch("sys.stdout", new=io.StringIO()) as stdout, patch("sys.stderr", new=io.StringIO()) as stderr:
-            with self.assertRaises(SystemExit):
-                run_ensemble.main()
+        def fail_inference(_text: str, _args: argparse.Namespace) -> dict[str, object]:
+            os.write(2, b"noisy third-party chatter")
+            raise RuntimeError("failed during inference")
+
+        with tempfile.TemporaryFile("w+b") as stderr_capture, patch(
+            "run_ensemble.run_ensemble", side_effect=fail_inference
+        ), patch("sys.argv", ["run_ensemble.py", "--quiet", "--text", "hello"]), patch(
+            "sys.stdout", new=io.StringIO()
+        ) as stdout, patch("sys.stderr", new=io.StringIO()) as stderr:
+            original_stderr_fd = os.dup(2)
+            os.dup2(stderr_capture.fileno(), 2)
+            try:
+                with self.assertRaises(SystemExit):
+                    run_ensemble.main()
+            finally:
+                os.dup2(original_stderr_fd, 2)
+                os.close(original_stderr_fd)
+
+            stderr_capture.seek(0)
+            self.assertEqual(stderr_capture.read().decode("utf-8"), "")
 
         self.assertIn("Error: failed during inference", stderr.getvalue())
         self.assertNotIn("Traceback", stderr.getvalue())

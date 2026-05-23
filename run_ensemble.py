@@ -10,7 +10,7 @@ import os
 import sys
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Callable, Protocol
+from typing import Callable, Iterator, Protocol
 
 
 def _ensure_torch() -> object:
@@ -308,6 +308,18 @@ def _score_payload(result: ExpertResult | None) -> dict[str, object]:
     }
 
 
+@contextlib.contextmanager
+def _suppress_stderr_fd() -> Iterator[None]:
+    original_stderr_fd = os.dup(2)
+    with open(os.devnull, "w", encoding="utf-8") as devnull:
+        os.dup2(devnull.fileno(), 2)
+        try:
+            yield
+        finally:
+            os.dup2(original_stderr_fd, 2)
+            os.close(original_stderr_fd)
+
+
 def _format_plain_score(score: float | None) -> str:
     if score is None:
         return "skipped"
@@ -494,9 +506,8 @@ def main() -> None:
         args = parse_args()
         text = _read_text(args)
         if args.quiet:
-            with open(os.devnull, "w", encoding="utf-8") as devnull:
-                with contextlib.redirect_stderr(devnull):
-                    result = run_ensemble(text, args)
+            with _suppress_stderr_fd():
+                result = run_ensemble(text, args)
         else:
             result = run_ensemble(text, args)
     except (RuntimeError, ValueError) as exc:

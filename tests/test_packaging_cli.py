@@ -106,6 +106,7 @@ class PackagingCLITests(unittest.TestCase):
         self.assertIn("usage:", output)
         self.assertIn("--text", output)
         self.assertIn("--text-file", output)
+        self.assertIn("--quiet", output)
         self.assertIn("--json", output)
 
     def test_deploy_meld_help_smoke(self) -> None:
