@@ -32,6 +32,25 @@ class _MockHTTPResponse:
 
 
 class DeployMeldTests(TestCase):
+    def test_main_prints_completion_message_and_calls_download_model(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            target_dir = Path(tmpdir)
+            args = deploy_meld.argparse.Namespace(
+                target_dir=target_dir, model_id="owner/repo", revision="main"
+            )
+
+            with patch.object(deploy_meld, "parse_args", return_value=args), patch.object(
+                deploy_meld, "download_model"
+            ) as mocked_download, patch("sys.stdout", new=io.StringIO()) as stdout, patch(
+                "sys.stderr", new=io.StringIO()
+            ) as stderr:
+                deploy_meld.main()
+
+            mocked_download.assert_called_once_with("owner/repo", "main", target_dir)
+            self.assertIn("Deploying owner/repo @ main", stdout.getvalue())
+            self.assertIn("Deployment complete.", stdout.getvalue())
+            self.assertEqual(stderr.getvalue(), "")
+
     def test_file_needs_update_true_when_expected_size_missing_and_head_size_differs(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
             target = Path(tmpdir) / "file.bin"
