@@ -7,6 +7,7 @@ import subprocess
 import sys
 import textwrap
 import unittest
+import tempfile
 from pathlib import Path
 
 
@@ -27,10 +28,41 @@ def _parse_project_scripts(pyproject_path: Path) -> dict[str, str]:
         scripts = project.get("scripts", {})
         return {str(key): str(value) for key, value in dict(scripts).items()}
 
+    return _parse_project_scripts_fallback(pyproject_path.read_text(encoding="utf-8"))
+
+
+def _remove_toml_comment(line: str) -> str:
+    in_quote: str | None = None
+    escaped = False
+    for idx, ch in enumerate(line):
+        if escaped:
+            escaped = False
+            continue
+        if ch == "\\":
+            escaped = True
+            continue
+        if ch in {"'", '"'}:
+            if in_quote is None:
+                in_quote = ch
+            elif in_quote == ch:
+                in_quote = None
+            continue
+        if ch == "#" and in_quote is None:
+            return line[:idx]
+    return line
+
+
+def _unquote_toml_token(token: str) -> str:
+    if len(token) >= 2 and token[0] == token[-1] and token[0] in {"'", '"'}:
+        return token[1:-1]
+    return token
+
+
+def _parse_project_scripts_fallback(pyproject_text: str) -> dict[str, str]:
     scripts: dict[str, str] = {}
     in_scripts_block = False
-    for raw_line in pyproject_path.read_text(encoding="utf-8").splitlines():
-        line = raw_line.strip()
+    for raw_line in pyproject_text.splitlines():
+        line = _remove_toml_comment(raw_line).strip()
         if not line or line.startswith("#"):
             continue
         if line.startswith("[") and line.endswith("]"):
@@ -41,8 +73,8 @@ def _parse_project_scripts(pyproject_path: Path) -> dict[str, str]:
             continue
 
         key, value = [part.strip() for part in line.split("=", 1)]
-        if value and ((value[0] == value[-1]) and value[0] in {"'", '"'}):
-            value = value[1:-1]
+        key = _unquote_toml_token(key)
+        value = _unquote_toml_token(value)
         scripts[key] = value
     return scripts
 
@@ -96,8 +128,30 @@ class PackagingCLITests(unittest.TestCase):
         self.assertEqual(scripts.get("ai-detector-deploy"), "deploy_meld:main")
 
     def test_modules_importable_without_inference_dependencies(self) -> None:
-        _run_import_smoke("run_ensemble", ("parse_args", "main", "load_meld", "load_tmr"))
+        _run_import_smoke(
+            "run_ensemble",
+            ("parse_args", "main", "load_meld", "load_tmr", "load_raid"),
+        )
         _run_import_smoke("deploy_meld", ("parse_args", "main"))
+
+    def test_parse_project_scripts_fallback_parses_quoted_keys_and_inline_comments(self) -> None:
+        content = textwrap.dedent(
+            """
+            [project.scripts] # entry points
+            "ai-detector" = "run_ensemble:main" # primary
+            'ai-detector-deploy' = 'deploy_meld:main'  # deploy entry
+            ai-with-hash = "path#not-a-comment" # inline with hash in value
+            """
+        )
+
+        with tempfile.NamedTemporaryFile("w", suffix=".toml", encoding="utf-8") as handle:
+            handle.write(content)
+            handle.flush()
+            parsed = _parse_project_scripts_fallback(Path(handle.name).read_text(encoding="utf-8"))
+
+        self.assertEqual(parsed["ai-detector"], "run_ensemble:main")
+        self.assertEqual(parsed["ai-detector-deploy"], "deploy_meld:main")
+        self.assertEqual(parsed["ai-with-hash"], "path#not-a-comment")
 
     def test_run_ensemble_help_smoke(self) -> None:
         result = _run_subprocess([sys.executable, str(PROJECT_ROOT / "run_ensemble.py"), "--help"])
