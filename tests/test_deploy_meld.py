@@ -103,3 +103,60 @@ class DeployMeldTests(TestCase):
             self.assertTrue((target_dir / "nested" / "file.bin").exists())
             self.assertEqual(existing.read_bytes(), b"x" * 5)
             self.assertEqual(downloaded[0]["path"], "nested/file.bin")
+
+    def test_main_turns_runtime_error_into_operator_error(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            args = deploy_meld.argparse.Namespace(
+                target_dir=Path(tmpdir), model_id="owner/repo", revision="main"
+            )
+
+            with patch.object(deploy_meld, "parse_args", return_value=args), patch.object(
+                deploy_meld, "download_model", side_effect=RuntimeError("boom")
+            ), patch("sys.stdout", new=io.StringIO()) as stdout, patch(
+                "sys.stderr", new=io.StringIO()
+            ) as stderr:
+                with self.assertRaises(SystemExit) as exc:
+                    deploy_meld.main()
+
+            self.assertEqual(exc.exception.code, 1)
+            self.assertIn("Error: boom", stderr.getvalue())
+            self.assertNotIn("Traceback", stderr.getvalue())
+            self.assertIn("Deploying owner/repo @ main", stdout.getvalue())
+
+    def test_main_turns_value_error_into_operator_error(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            args = deploy_meld.argparse.Namespace(
+                target_dir=Path(tmpdir), model_id="owner/repo", revision="main"
+            )
+
+            with patch.object(deploy_meld, "parse_args", return_value=args), patch.object(
+                deploy_meld, "download_model", side_effect=ValueError("bad revision")
+            ), patch("sys.stdout", new=io.StringIO()) as stdout, patch(
+                "sys.stderr", new=io.StringIO()
+            ) as stderr:
+                with self.assertRaises(SystemExit) as exc:
+                    deploy_meld.main()
+
+            self.assertEqual(exc.exception.code, 1)
+            self.assertIn("Error: bad revision", stderr.getvalue())
+            self.assertNotIn("Traceback", stderr.getvalue())
+            self.assertIn("Deploying owner/repo @ main", stdout.getvalue())
+
+    def test_main_turns_os_error_into_operator_error(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            args = deploy_meld.argparse.Namespace(
+                target_dir=Path(tmpdir), model_id="owner/repo", revision="main"
+            )
+
+            with patch.object(deploy_meld, "parse_args", return_value=args), patch.object(
+                deploy_meld, "download_model", side_effect=OSError("disk unavailable")
+            ), patch("sys.stdout", new=io.StringIO()) as stdout, patch(
+                "sys.stderr", new=io.StringIO()
+            ) as stderr:
+                with self.assertRaises(SystemExit) as exc:
+                    deploy_meld.main()
+
+            self.assertEqual(exc.exception.code, 1)
+            self.assertIn("Error: disk unavailable", stderr.getvalue())
+            self.assertNotIn("Traceback", stderr.getvalue())
+            self.assertIn("Deploying owner/repo @ main", stdout.getvalue())

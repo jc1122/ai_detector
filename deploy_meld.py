@@ -12,6 +12,7 @@ import urllib
 import urllib.error
 import urllib.parse
 import urllib.request
+import sys
 from pathlib import Path
 from typing import Any
 
@@ -263,13 +264,17 @@ def parse_args() -> argparse.Namespace:
 
 
 def main() -> None:
-    args = parse_args()
-    target = args.target_dir
-    model_id = args.model_id
-    revision = args.revision
-    print(f"Deploying {model_id} @ {revision} to {target.resolve()}")
-    download_model(model_id, revision, target)
-    print("Deployment complete.")
+    try:
+        args = parse_args()
+        target = args.target_dir
+        model_id = args.model_id
+        revision = args.revision
+        print(f"Deploying {model_id} @ {revision} to {target.resolve()}")
+        download_model(model_id, revision, target)
+        print("Deployment complete.")
+    except (RuntimeError, ValueError, OSError) as exc:
+        print(f"Error: {exc}", file=sys.stderr)
+        raise SystemExit(1)
 
 
 if __name__ == "__main__":
