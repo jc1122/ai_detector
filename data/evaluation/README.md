@@ -38,7 +38,7 @@ data/evaluation/human_polish_chemistry_articles_excerpt.txt
 
 - `tmr_ai_sample_result.json`: `ai_probability = 0.963`, label `ai`.
 - `tmr_human_author_result.json`: `ai_probability = 0.074`, label `human`.
-- `tmr_human_articles_result.json`: `ai_probability = 0.522`, label `ai`.
+- `tmr_human_articles_result.json`: `ai_probability = 0.643`, label `ai`.
 
 The chemistry-article result is a negative OOD/threshold signal, not a success.
 Keep this visible when tuning thresholds or adding calibration.

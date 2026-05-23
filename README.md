@@ -130,12 +130,12 @@ The Polish snapshots below are `tmr`-only outputs (`weights: 0,1,0`):
 - `ensemble.label`: `human`
 
 `tmr_human_articles_result.json`
-- `ai_probability`: 0.5218
+- `ai_probability`: 0.6433
 - `ensemble.label`: `ai`
 
 Interpretation:
 - these are local checks, not production benchmarks;
-- they show a calibration/threshold gap on OOD-like chemistry text (`human_articles` near boundary with AI label);
+- they show a calibration/threshold gap on OOD-like chemistry text (`human_articles` is a false-positive AI label);
 - negative or counterintuitive cases should be kept visible for tuning decisions.
 
 ## 6) Limits and caveats

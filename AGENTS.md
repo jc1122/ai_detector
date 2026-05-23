@@ -6,6 +6,7 @@ Allowed file set for this workspace role:
 - `README.md`
 - `AGENTS.md`
 - `data/evaluation/README.md`
+- `reports/iteration_ledger.md`
 
 Do not edit source code, tests, or model artifacts in this role.
 

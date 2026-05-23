@@ -16,10 +16,10 @@
       "notes": "Not scored because model weight is 0.0."
     },
     "tmr": {
-      "ai_score": 0.5217570969834924,
-      "human_score": 0.4782429030165076,
-      "ai_probability": 0.5217570969834924,
-      "human_probability": 0.4782429030165076,
+      "ai_score": 0.6433479888364673,
+      "human_score": 0.35665201116353273,
+      "ai_probability": 0.6433479888364673,
+      "human_probability": 0.35665201116353273,
       "chunks": 8,
       "loaded": true
     },
@@ -34,10 +34,10 @@
     }
   },
   "ensemble": {
-    "ai_score": 0.5217570969834924,
-    "human_score": 0.4782429030165076,
-    "ai_probability": 0.5217570969834924,
-    "human_probability": 0.4782429030165076,
+    "ai_score": 0.6433479888364673,
+    "human_score": 0.35665201116353273,
+    "ai_probability": 0.6433479888364673,
+    "human_probability": 0.35665201116353273,
     "threshold": 0.5,
     "label": "ai"
   },
