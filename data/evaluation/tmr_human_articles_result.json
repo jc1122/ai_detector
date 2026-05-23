@@ -1,0 +1,50 @@
+{
+  "text_preview": "Uog\u00f3lniony model uplastyczniania tworzyw polimerowych w procesie wyt\u0142aczania Adrian Lewandowski1), Krzysztof Wilczy\u0144ski1), *) Streszczenie: Przedstawiono uog\u00f3lnion\u0105 metod\u0119 modelowania uplastyczniania tworzyw polimero- wych w procesie wyt\u0142aczania, nie",
+  "weights": {
+    "meld": 0.0,
+    "tmr": 1.0,
+    "raid": 0.0
+  },
+  "experts": {
+    "meld": {
+      "ai_score": null,
+      "human_score": null,
+      "ai_probability": null,
+      "human_probability": null,
+      "chunks": 0,
+      "loaded": false,
+      "notes": "Not scored because model weight is 0.0."
+    },
+    "tmr": {
+      "ai_score": 0.5217570969834924,
+      "human_score": 0.4782429030165076,
+      "ai_probability": 0.5217570969834924,
+      "human_probability": 0.4782429030165076,
+      "chunks": 8,
+      "loaded": true
+    },
+    "raid": {
+      "ai_score": null,
+      "human_score": null,
+      "ai_probability": null,
+      "human_probability": null,
+      "chunks": 0,
+      "loaded": false,
+      "notes": "Not scored because model weight is 0.0."
+    }
+  },
+  "ensemble": {
+    "ai_score": 0.5217570969834924,
+    "human_score": 0.4782429030165076,
+    "ai_probability": 0.5217570969834924,
+    "human_probability": 0.4782429030165076,
+    "threshold": 0.5,
+    "label": "ai"
+  },
+  "calibration": {
+    "status": "uncalibrated",
+    "calibrated": false,
+    "message": "Scores are uncalibrated raw model probabilities. Provide and use a calibrated model to get calibrated scores."
+  },
+  "device": "cpu"
+}

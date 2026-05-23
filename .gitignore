@@ -4,3 +4,5 @@ raid_model/
 models/
 .venv/
 __pycache__/
+data/human_articles/pdfs/
+data/human_articles/text/

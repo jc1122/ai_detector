@@ -1,115 +1,164 @@
-# AI Detector Deployment
+# AI Detector CLI
 
-This repository now ships a reproducible deploy flow for three Hugging Face AI
-detectors:
+This repo provides a 3-expert ensemble CLI for text classification:
+MELD, TMR, and MAGE (ModernBERT from `raid_model`).
 
-- `anon-review-meld-2026/meld`
-- `Oxidane/tmr-ai-text-detector`
-- `GeorgeDrayson/modernbert-ai-detection-raid-mage`
+## 1) Ensemble review summary
 
-## Deploy the models
+- Current contract: `meld`, `tmr`, `raid` experts are combined as a weighted
+  ensemble from active experts only.
+- `--weights` accepts `meld,tmr` (mapped to `meld,tmr,0`) or `meld,tmr,raid`.
+- In local practice, `tmr`-only runs are the reference for Polish/OOD quick checks
+  because sample outputs are stored in `data/evaluation/*`.
 
-Run each deployment from this working directory:
+## 2) Model folders and deployment
 
-```bash
-python3 deploy_meld.py --target-dir ./meld_model
-```
-
-or:
+Use `deploy_meld.py` to pull Hugging Face models into local folders.
 
 ```bash
+python3 deploy_meld.py --model-id anon-review-meld-2026/meld --target-dir ./meld_model
 python3 deploy_meld.py --model-id Oxidane/tmr-ai-text-detector --target-dir ./tmr_model
 python3 deploy_meld.py --model-id GeorgeDrayson/modernbert-ai-detection-raid-mage --target-dir ./raid_model
 ```
 
-Deploying both with explicit directories is recommended. The default target for
-`deploy_meld.py` is `./models/meld`, so you can still run:
+Defaults and behavior:
+- `deploy_meld.py` default target is `./models/meld` (override with `--target-dir`).
+- Re-running the same command is idempotent; unchanged files are skipped.
+- A manifest is written as `ai_detector_model_manifest.json` in each target folder.
+
+Expected local directories for inference:
+- `./meld_model`
+- `./tmr_model`
+- `./raid_model`
+
+## 3) Run ensemble inference
 
 ```bash
-python3 deploy_meld.py --model-id anon-review-meld-2026/meld
-python3 deploy_meld.py --model-id Oxidane/tmr-ai-text-detector
-```
-
-Running again skips files that are already present and unchanged.
-
-## Run ensemble inference
-
-Use `run_ensemble.py` to run both experts and combine their AI scores:
-
-```bash
-# 34/33/33 default (MELD/TMR/RAID)
+# default weights 34/33/33, default threshold 0.5
 python3 run_ensemble.py --text "The sky is blue and clear."
 
-# custom weights: 70% MELD, 20% TMR, 10% RAID
-python3 run_ensemble.py --weights 0.7,0.2,0.1 --text "The sky is blue and clear."
+# input from stdin (pipe)
+printf "The sky is blue and clear." | python3 run_ensemble.py --json
 
-# from a file, JSON output
+# input from file
 python3 run_ensemble.py --text-file ./input.txt --json
+
+# explicit weights and chunk controls
+python3 run_ensemble.py \
+  --weights 0.34,0.33,0.33 \
+  --max-chunks 4 \
+  --batch-size 4 \
+  --overlap 64 \
+  --text "The sky is blue and clear."
+
+# zero-weight expert skip
+python3 run_ensemble.py --weights 1.0,0.0,0.0 --text "The sky is blue and clear." --json
 ```
 
-The script prints each expert score and a combined ensemble score:
+Notes:
+- `--weights` accepts two or three values: `meld,tmr,(raid)`.
+- `--batch-size` controls chunk batch size for scoring.
+- `--max-chunks` caps the number of chunks scored per expert.
+- `--threshold` compares only the final ensemble value.
+- `--text`, `--text-file`, stdin pipe, and `--json` output mode are supported.
 
-- `experts.meld.ai_probability`
-- `experts.tmr.ai_probability`
-- `experts.raid.ai_probability`
-- `ensemble.ai_probability`
+## 4) Output contract (AI / human)
 
-By default it compares the ensemble score against `--threshold 0.5`.
+JSON fields used by operators:
+- `weights`
+- `experts.meld`, `experts.tmr`, `experts.raid` each with:
+  - `ai_score`, `human_score`, `ai_probability`, `human_probability` when loaded
+  - `loaded`, `chunks`, optional `notes`
+- `ensemble.ai_probability`, `ensemble.human_probability`, `ensemble.threshold`, `ensemble.label`
+- `calibration.status`, `calibration.calibrated`, `calibration.message`
 
-## Runtime dependencies
+Decision logic:
+- `ensemble.ai_probability` is the weighted average of loaded experts.
+- `ensemble.label` is `ai` if `ensemble.ai_probability >= threshold`, else `human`.
+- `ensemble.human_probability` is `1 - ensemble.ai_probability`.
 
-Create the environment and install packages if needed:
+Scoring details:
+- For loaded experts, `human_probability = 1 - ai_probability`.
+- For skipped experts (`loaded: false`, typically due to zero weight), all score/probability
+  fields are `null` and `notes` explains the skip.
+- Without calibration configuration, all probabilities are **raw uncalibrated scores**.
+
+## 5) Polish and OOD local evaluation (`data/evaluation/`, TMR-only)
+
+The Polish snapshots below are `tmr`-only outputs (`weights: 0,1,0`):
+
+`tmr_ai_sample_result.json`
+- `ai_probability`: 0.9631
+- `ensemble.label`: `ai`
+
+`tmr_human_author_result.json`
+- `ai_probability`: 0.0740
+- `ensemble.label`: `human`
+
+`tmr_human_articles_result.json`
+- `ai_probability`: 0.5218
+- `ensemble.label`: `ai`
+
+Interpretation:
+- these are local checks, not production benchmarks;
+- they show a calibration/threshold gap on OOD-like chemistry text (`human_articles` near boundary with AI label);
+- negative or counterintuitive cases should be kept visible for tuning decisions.
+
+## 6) Limits and caveats
+
+- PL language support is limited; model quality can drop for Polish text.
+- OOD (out-of-distribution) inputs are not guaranteed and can produce unstable
+  scores. Thresholds should be adjusted only after local validation.
+- Zero-weight models are not loaded to avoid unnecessary compute.
+
+## 7) Pre-merge checks
+
+Quick checks:
+```bash
+python3 run_ensemble.py --help
+python3 run_ensemble.py --text "quick smoke test" --json
+printf "quick smoke test\n" > /tmp/ai_detector_input.txt
+python3 run_ensemble.py --text-file /tmp/ai_detector_input.txt --json
+printf "quick smoke test\n" | python3 run_ensemble.py --json
+```
+
+Heavy smoke test:
+```bash
+printf "This is a longer validation snippet for smoke testing the ensemble path.\n" > /tmp/ai_detector_smoke.txt
+python3 run_ensemble.py \
+  --text-file /tmp/ai_detector_smoke.txt \
+  --weights 0.34,0.33,0.33 \
+  --max-chunks 4 \
+  --batch-size 4 \
+  --overlap 64 \
+  --json > /tmp/ai_detector_smoke.json
+python3 - <<'PY'
+import json
+
+result = json.load(open("/tmp/ai_detector_smoke.json", "r", encoding="utf-8"))
+
+for key in ("experts", "ensemble", "calibration"):
+    assert key in result, f"Missing section: {key}"
+for expert in ("meld", "tmr", "raid"):
+    assert expert in result["experts"], f"Missing expert: {expert}"
+
+print("ok")
+PY
+```
+
+Expected smoke test outcome:
+- command exits 0
+- JSON includes `experts.*`, `ensemble`, `calibration`, `weights`, `device`
+- `ensemble.label` is `ai` or `human`
+
+Note: full smoke test requires runtime dependencies (including `torch`), so it is
+recommended to run these commands with your virtualenv interpreter, e.g.
+`.venv/bin/python3`, to avoid missing-system-package failures.
+
+## 8) Runtime dependencies
 
 ```bash
 python3 -m venv .venv
 . .venv/bin/activate
 python -m pip install torch transformers safetensors
 ```
-
-Then run the inference commands in the same environment.
-
-## What each deployment folder contains
-
-### `meld_model/`
-- `.gitattributes`
-- `README.md`
-- `config.json`
-- `meld_config.json`
-- `model.safetensors`
-- `special_tokens_map.json`
-- `tokenizer.json`
-- `tokenizer_config.json`
-
-### `tmr_model/`
-- `.gitattributes`
-- `README.md`
-- `config.json`
-- `merges.txt`
-- `model.safetensors`
-- `special_tokens_map.json`
-- `tokenizer.json`
-- `tokenizer_config.json`
-- `training_args.bin`
-- `vocab.json`
-
-### `raid_model/`
-- `.gitattributes`
-- `README.md`
-- `config.json`
-- `model.safetensors`
-- `special_tokens_map.json`
-- `tokenizer.json`
-- `tokenizer_config.json`
-
-## Verify deployment
-
-```bash
-ls -lah meld_model
-ls -lah tmr_model
-ls -lah raid_model
-python3 deploy_meld.py --target-dir ./meld_model
-python3 deploy_meld.py --model-id Oxidane/tmr-ai-text-detector --target-dir ./tmr_model
-python3 deploy_meld.py --model-id GeorgeDrayson/modernbert-ai-detection-raid-mage --target-dir ./raid_model
-```
-
-The second run should report files as "already up to date."

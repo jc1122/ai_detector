@@ -1,0 +1,41 @@
+{
+  "human_author_style_excerpt": {
+    "source_path": "/home/jakub/projects/doktorat/agent_context/humanizer/author_style/author_style_sample_czakaj_rajkiewicz_2018.txt",
+    "notes": "Local author-style prose sample supplied by the thesis workspace."
+  },
+  "human_polish_chemistry_articles_excerpt": {
+    "notes": "Bounded excerpt assembled from downloaded Polish chemistry/polymer articles published before 2020.",
+    "sources": [
+      {
+        "title": "Uogolniony model uplastyczniania tworzyw polimerowych w procesie wytlaczania",
+        "journal": "Polimery",
+        "volume_issue": "63(6)",
+        "year": 2018,
+        "doi": "10.14314/polimery.2018.6.5",
+        "page_url": "https://polimery.ichp.vot.pl/index.php/p/article/view/224",
+        "download_url": "https://polimery.ichp.vot.pl/index.php/p/article/download/224/222"
+      },
+      {
+        "title": "Wplyw kompleksow anionowych surfaktantow z poliwinylopirolidonem tworzonych w roztworach wodnych na wlasciwosci fizykochemiczne i uzytkowe szamponow",
+        "journal": "Polimery",
+        "volume_issue": "63(7-8)",
+        "year": 2018,
+        "doi": "10.14314/polimery.2018.7.10",
+        "page_url": "https://polimery.ichp.vot.pl/index.php/p/article/view/236",
+        "download_url": "https://polimery.ichp.vot.pl/index.php/p/article/download/236/234"
+      },
+      {
+        "title": "Wlasciwosci reologiczne i termiczne mieszanin polibutadienu z koncowymi grupami hydroksylowymi oraz plastyfikatora",
+        "journal": "Polimery",
+        "volume_issue": "63(1)",
+        "year": 2018,
+        "doi": "10.14314/polimery.2018.1.9",
+        "page_url": "https://polimery.ichp.vot.pl/index.php/p/article/view/187",
+        "download_url": "https://polimery.ichp.vot.pl/index.php/p/article/download/187/175"
+      }
+    ]
+  },
+  "ai_polish_generated_style_sample": {
+    "notes": "Synthetic Polish AI-like chemistry/polymer prose generated locally for detector smoke evaluation."
+  }
+}

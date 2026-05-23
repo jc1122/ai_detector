@@ -1,0 +1,50 @@
+{
+  "text_preview": "Przedstawiono wyniki bada\u0144 do\u015bwiadczalnych procesu dynamicznej wulkanizacji mieszanek uszczelniaj\u0105cych, wykonanych z kauczuku butylowego plastyfikowanego poliizobutylenem. Przy u\u017cyciu wyt\u0142aczarki dwu\u015blimakowej wsp\u00f3\u0142bie\u017cnej, z zastosowaniem bromowanej",
+  "weights": {
+    "meld": 0.0,
+    "tmr": 1.0,
+    "raid": 0.0
+  },
+  "experts": {
+    "meld": {
+      "ai_score": null,
+      "human_score": null,
+      "ai_probability": null,
+      "human_probability": null,
+      "chunks": 0,
+      "loaded": false,
+      "notes": "Not scored because model weight is 0.0."
+    },
+    "tmr": {
+      "ai_score": 0.07396839931607246,
+      "human_score": 0.9260316006839275,
+      "ai_probability": 0.07396839931607246,
+      "human_probability": 0.9260316006839275,
+      "chunks": 8,
+      "loaded": true
+    },
+    "raid": {
+      "ai_score": null,
+      "human_score": null,
+      "ai_probability": null,
+      "human_probability": null,
+      "chunks": 0,
+      "loaded": false,
+      "notes": "Not scored because model weight is 0.0."
+    }
+  },
+  "ensemble": {
+    "ai_score": 0.07396839931607246,
+    "human_score": 0.9260316006839275,
+    "ai_probability": 0.07396839931607246,
+    "human_probability": 0.9260316006839275,
+    "threshold": 0.5,
+    "label": "human"
+  },
+  "calibration": {
+    "status": "uncalibrated",
+    "calibrated": false,
+    "message": "Scores are uncalibrated raw model probabilities. Provide and use a calibrated model to get calibrated scores."
+  },
+  "device": "cpu"
+}

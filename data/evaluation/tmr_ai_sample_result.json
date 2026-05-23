@@ -1,0 +1,50 @@
+{
+  "text_preview": "Wsp\u00f3\u0142czesna technologia materia\u0142\u00f3w polimerowych stanowi jeden z kluczowych obszar\u00f3w rozwoju przemys\u0142u chemicznego, poniewa\u017c umo\u017cliwia projektowanie rozwi\u0105za\u0144 o wysokiej funkcjonalno\u015bci oraz szerokim potencjale aplikacyjnym. Szczeg\u00f3lne znaczenie maj\u0105 ",
+  "weights": {
+    "meld": 0.0,
+    "tmr": 1.0,
+    "raid": 0.0
+  },
+  "experts": {
+    "meld": {
+      "ai_score": null,
+      "human_score": null,
+      "ai_probability": null,
+      "human_probability": null,
+      "chunks": 0,
+      "loaded": false,
+      "notes": "Not scored because model weight is 0.0."
+    },
+    "tmr": {
+      "ai_score": 0.9630910158157349,
+      "human_score": 0.03690898418426514,
+      "ai_probability": 0.9630910158157349,
+      "human_probability": 0.03690898418426514,
+      "chunks": 2,
+      "loaded": true
+    },
+    "raid": {
+      "ai_score": null,
+      "human_score": null,
+      "ai_probability": null,
+      "human_probability": null,
+      "chunks": 0,
+      "loaded": false,
+      "notes": "Not scored because model weight is 0.0."
+    }
+  },
+  "ensemble": {
+    "ai_score": 0.9630910158157349,
+    "human_score": 0.03690898418426514,
+    "ai_probability": 0.9630910158157349,
+    "human_probability": 0.03690898418426514,
+    "threshold": 0.5,
+    "label": "ai"
+  },
+  "calibration": {
+    "status": "uncalibrated",
+    "calibrated": false,
+    "message": "Scores are uncalibrated raw model probabilities. Provide and use a calibrated model to get calibrated scores."
+  },
+  "device": "cpu"
+}
