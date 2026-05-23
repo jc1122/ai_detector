@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 import io
 import json
+import types
 import tempfile
 import sys
 import unittest
@@ -175,6 +176,59 @@ class RunEnsembleTests(unittest.TestCase, _ArgparseUtils):
             ]
         scores = iter(score_by_expert)
         return lambda *args, **kwargs: next(scores)
+
+    def test_missing_text_file_reports_runtime_error(self) -> None:
+        args = argparse.Namespace(text=None, text_file="missing_text_file.txt")
+        with self.assertRaises(RuntimeError) as exc_info:
+            run_ensemble._read_text(args)
+        self.assertIn("Cannot read --text-file", str(exc_info.exception))
+
+    def test_main_reports_missing_text_file_without_trace(self) -> None:
+        with tempfile.TemporaryDirectory() as workspace:
+            missing = Path(workspace) / "missing_input.txt"
+            with patch("sys.argv", ["run_ensemble.py", "--text-file", str(missing)]), patch(
+                "sys.stderr", new=io.StringIO()
+            ) as stderr:
+                with self.assertRaises(SystemExit):
+                    run_ensemble.main()
+                error_text = stderr.getvalue()
+
+        self.assertIn("Cannot read --text-file", error_text)
+        self.assertNotIn("Traceback", error_text)
+
+    def test_meld_backbone_import_error(self) -> None:
+        fake_transformers = types.ModuleType("transformers")
+        with tempfile.TemporaryDirectory() as meld_dir:
+            with patch.dict("sys.modules", {"transformers": fake_transformers}):
+                with self.assertRaises(RuntimeError) as exc_info:
+                    run_ensemble._load_meld_backbone(
+                        "hf_backbone", Path(meld_dir), local_files_only=False
+                    )
+                self.assertIn(
+                    "transformers is required to load the MELD backbone.",
+                    str(exc_info.exception),
+                )
+
+    def test_main_reports_loader_dependency_error(self) -> None:
+        with patch.object(run_ensemble, "_ensure_torch", return_value=DummyTorch()), patch.object(
+            run_ensemble, "load_meld", side_effect=ImportError("No module named 'safetensors'")
+        ) as load_meld, patch.object(run_ensemble, "load_tmr") as load_tmr, patch.object(
+            run_ensemble, "load_raid"
+        ) as load_raid, patch("sys.argv", ["run_ensemble.py", "--text", "hello", "--weights", "1,0,0"]), patch(
+            "sys.stderr", new=io.StringIO()
+        ) as stderr:
+            with self.assertRaises(SystemExit):
+                run_ensemble.main()
+            error_text = stderr.getvalue()
+
+        self.assertIn(
+            "Failed to initialize model for expert 'meld' due to a missing dependency",
+            error_text,
+        )
+        self.assertNotIn("Traceback", error_text)
+        load_meld.assert_called_once()
+        load_tmr.assert_not_called()
+        load_raid.assert_not_called()
 
     def test_output_contains_ai_and_human_probabilities_and_scores(self) -> None:
         with patch.object(run_ensemble, "_ensure_torch", return_value=DummyTorch()), patch.object(

@@ -82,7 +82,10 @@ def _ensure_meld_dependencies() -> tuple[type, callable]:
 
 
 def _load_meld_backbone(backbone: str, _model_dir: Path, *, local_files_only: bool) -> object:
-    from transformers import AutoModel
+    try:
+        from transformers import AutoModel
+    except ImportError as exc:
+        raise RuntimeError("transformers is required to load the MELD backbone.") from exc
 
     try:
         return AutoModel.from_pretrained(backbone, local_files_only=local_files_only)
@@ -92,7 +95,9 @@ def _load_meld_backbone(backbone: str, _model_dir: Path, *, local_files_only: bo
                 "Cannot load MELD backbone in local-only mode. The backbone must be available in the local Hugging Face cache "
                 "or run without --local-files-only to allow downloading it."
             ) from exc
-        raise
+        raise RuntimeError(
+            "Failed to load MELD backbone. Check model availability and network/disk accessibility."
+        ) from exc
 
 
 @dataclass(frozen=True)
@@ -105,7 +110,13 @@ def _read_text(args: argparse.Namespace) -> str:
     if args.text is not None:
         return args.text
     if args.text_file is not None:
-        return Path(args.text_file).read_text(encoding="utf-8").strip()
+        text_path = Path(args.text_file)
+        try:
+            return text_path.read_text(encoding="utf-8").strip()
+        except OSError as exc:
+            raise RuntimeError(
+                f"Cannot read --text-file '{text_path}': {exc.strerror or exc}"
+            ) from exc
     return sys.stdin.read().strip()
 
 
@@ -331,7 +342,14 @@ def run_ensemble(text: str, args: argparse.Namespace) -> dict[str, object]:
 
     for name in expert_names:
         load_model = loader_by_name[name]
-        model, tokenizer, max_length = load_model(model_dir_by_name[name], local_files_only=args.local_files_only)
+        try:
+            model, tokenizer, max_length = load_model(
+                model_dir_by_name[name], local_files_only=args.local_files_only
+            )
+        except ImportError as exc:
+            raise RuntimeError(
+                f"Failed to initialize model for expert '{name}' due to a missing dependency: {exc}"
+            ) from exc
         model.to(device)
         model.eval()
 
