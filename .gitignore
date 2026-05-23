@@ -1,0 +1,6 @@
+meld_model/
+tmr_model/
+raid_model/
+models/
+.venv/
+__pycache__/
