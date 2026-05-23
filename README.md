@@ -90,6 +90,8 @@ Notes:
 - `--max-chunks` caps the number of chunks scored per expert.
 - `--threshold` compares only the final ensemble value.
 - `--text`, `--text-file`, stdin pipe, and `--json` output mode are supported.
+- `--quiet` suppresses third-party stderr chatter during model loading/scoring;
+  user-facing `Error: ...` messages are still printed on failure.
 
 ## 4) Output contract (AI / human)
 
@@ -163,6 +165,7 @@ ai-detector \
   --max-chunks 4 \
   --batch-size 4 \
   --overlap 64 \
+  --quiet \
   --json > /tmp/ai_detector_smoke.json
 python3 - <<'PY'
 import json

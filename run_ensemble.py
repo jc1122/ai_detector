@@ -4,7 +4,9 @@
 from __future__ import annotations
 
 import argparse
+import contextlib
 import json
+import os
 import sys
 from dataclasses import dataclass
 from pathlib import Path
@@ -479,6 +481,11 @@ def parse_args() -> argparse.Namespace:
         help="Run on cuda if available, otherwise cpu.",
     )
     parser.add_argument("--json", action="store_true", help="Print compact JSON output.")
+    parser.add_argument(
+        "--quiet",
+        action="store_true",
+        help="Suppress third-party stderr output during model loading and scoring.",
+    )
     return parser.parse_args()
 
 
@@ -486,7 +493,12 @@ def main() -> None:
     try:
         args = parse_args()
         text = _read_text(args)
-        result = run_ensemble(text, args)
+        if args.quiet:
+            with open(os.devnull, "w", encoding="utf-8") as devnull:
+                with contextlib.redirect_stderr(devnull):
+                    result = run_ensemble(text, args)
+        else:
+            result = run_ensemble(text, args)
     except (RuntimeError, ValueError) as exc:
         print(f"Error: {exc}", file=sys.stderr)
         raise SystemExit(1)

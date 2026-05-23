@@ -149,6 +149,14 @@ class ParseWeightsTests(unittest.TestCase, _ArgparseUtils):
         with self.assertRaises(argparse.ArgumentTypeError):
             run_ensemble._parse_weights("0,0,0")
 
+    def test_parse_quiet_defaults_to_false(self) -> None:
+        args = self._parse_cli([])
+        self.assertFalse(args.quiet)
+
+    def test_parse_quiet_flag_enabled(self) -> None:
+        args = self._parse_cli(["--quiet"])
+        self.assertTrue(args.quiet)
+
 
 class RunEnsembleTests(unittest.TestCase, _ArgparseUtils):
     def _make_args(self, **kwargs: object) -> argparse.Namespace:
@@ -552,6 +560,77 @@ class RunEnsembleTests(unittest.TestCase, _ArgparseUtils):
         self.assertIn("MELD AI probability: skipped", output)
         self.assertIn("RAID AI probability: skipped", output)
         self.assertIn("Decision: ai", output)
+
+    def test_main_with_quiet_suppresses_inference_stderr(self) -> None:
+        fake_result = {
+            "text_preview": "hello",
+            "weights": {"meld": 0.34, "tmr": 0.33, "raid": 0.33},
+            "experts": {
+                "meld": {
+                    "ai_score": 0.1,
+                    "human_score": 0.9,
+                    "ai_probability": 0.1,
+                    "human_probability": 0.9,
+                    "chunks": 1,
+                    "loaded": True,
+                },
+                "tmr": {
+                    "ai_score": 0.9,
+                    "human_score": 0.1,
+                    "ai_probability": 0.9,
+                    "human_probability": 0.1,
+                    "chunks": 1,
+                    "loaded": True,
+                },
+                "raid": {
+                    "ai_score": 0.2,
+                    "human_score": 0.8,
+                    "ai_probability": 0.2,
+                    "human_probability": 0.8,
+                    "chunks": 1,
+                    "loaded": True,
+                },
+            },
+            "ensemble": {
+                "ai_score": 0.4,
+                "human_score": 0.6,
+                "ai_probability": 0.4,
+                "human_probability": 0.6,
+                "threshold": 0.5,
+                "label": "human",
+            },
+            "calibration": {
+                "status": "uncalibrated",
+                "calibrated": False,
+                "message": "Scores are uncalibrated raw model probabilities.",
+            },
+            "device": "cpu",
+        }
+
+        def run_inference(_text: str, _args: argparse.Namespace) -> dict[str, object]:
+            print("noisy third-party chatter", file=sys.stderr)
+            return fake_result
+
+        with patch("run_ensemble.run_ensemble", side_effect=run_inference), patch(
+            "sys.argv", ["run_ensemble.py", "--quiet", "--text", "hello"]
+        ), patch("sys.stdout", new=io.StringIO()) as stdout, patch(
+            "sys.stderr", new=io.StringIO()
+        ) as stderr:
+            run_ensemble.main()
+
+        self.assertEqual(stderr.getvalue(), "")
+        self.assertIn("Ensemble AI probability:", stdout.getvalue())
+
+    def test_main_quiet_preserves_user_error_to_real_stderr(self) -> None:
+        with patch("run_ensemble.run_ensemble", side_effect=RuntimeError("failed during inference")), patch(
+            "sys.argv", ["run_ensemble.py", "--quiet", "--text", "hello"]
+        ), patch("sys.stdout", new=io.StringIO()) as stdout, patch("sys.stderr", new=io.StringIO()) as stderr:
+            with self.assertRaises(SystemExit):
+                run_ensemble.main()
+
+        self.assertIn("Error: failed during inference", stderr.getvalue())
+        self.assertNotIn("Traceback", stderr.getvalue())
+        self.assertEqual(stdout.getvalue(), "")
 
     def test_main_json_output_emits_contract_keys(self) -> None:
         fake_result = {
