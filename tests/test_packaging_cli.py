@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import json
 import os
 import subprocess
 import sys
@@ -171,3 +172,72 @@ class PackagingCLITests(unittest.TestCase):
         self.assertIn("--target-dir", output)
         self.assertIn("--model-id", output)
         self.assertIn("--revision", output)
+
+    def test_main_json_contract_subprocess(self) -> None:
+        script = textwrap.dedent(
+            """
+            import json
+            import run_ensemble
+            import sys
+
+            fake_result = {
+                "text_preview": "hello",
+                "weights": {"meld": 0.34, "tmr": 0.33, "raid": 0.33},
+                "experts": {
+                    "meld": {
+                        "ai_score": 0.12,
+                        "human_score": 0.88,
+                        "ai_probability": 0.12,
+                        "human_probability": 0.88,
+                        "chunks": 1,
+                        "loaded": True,
+                    },
+                    "tmr": {
+                        "ai_score": 0.22,
+                        "human_score": 0.78,
+                        "ai_probability": 0.22,
+                        "human_probability": 0.78,
+                        "chunks": 1,
+                        "loaded": True,
+                    },
+                    "raid": {
+                        "ai_score": 0.32,
+                        "human_score": 0.68,
+                        "ai_probability": 0.32,
+                        "human_probability": 0.68,
+                        "chunks": 1,
+                        "loaded": True,
+                    },
+                },
+                "ensemble": {
+                    "ai_score": 0.22,
+                    "human_score": 0.78,
+                    "ai_probability": 0.22,
+                    "human_probability": 0.78,
+                    "threshold": 0.5,
+                    "label": "human",
+                },
+                "calibration": {
+                    "status": "uncalibrated",
+                    "calibrated": False,
+                    "message": "test",
+                },
+                "device": "cpu",
+            }
+
+            def _fake_run_ensemble(text, args):
+                return fake_result
+
+            run_ensemble.run_ensemble = _fake_run_ensemble
+            sys.argv = ["run_ensemble.py", "--json", "--text", "hello"]
+            run_ensemble.main()
+            """
+        )
+        result = _run_subprocess([sys.executable, "-c", script])
+
+        self.assertEqual(result.returncode, 0)
+        self.assertEqual(result.stderr, "")
+        payload = json.loads(result.stdout)
+        for key in ("experts", "ensemble", "calibration", "weights", "device"):
+            self.assertIn(key, payload)
+        self.assertIn("label", payload["ensemble"])
