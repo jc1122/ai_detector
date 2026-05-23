@@ -241,3 +241,23 @@ class PackagingCLITests(unittest.TestCase):
         for key in ("experts", "ensemble", "calibration", "weights", "device"):
             self.assertIn(key, payload)
         self.assertIn("label", payload["ensemble"])
+        for expert in ("meld", "tmr", "raid"):
+            self.assertIn(expert, payload["experts"])
+            for key in (
+                "ai_score",
+                "human_score",
+                "ai_probability",
+                "human_probability",
+                "chunks",
+                "loaded",
+            ):
+                self.assertIn(key, payload["experts"][expert])
+        for key in (
+            "ai_probability",
+            "human_probability",
+            "threshold",
+            "label",
+        ):
+            self.assertIn(key, payload["ensemble"])
+        for key in ("status", "calibrated", "message"):
+            self.assertIn(key, payload["calibration"])
