@@ -6,12 +6,16 @@ import io
 import tempfile
 import textwrap
 from pathlib import Path
+import os
 import subprocess
 import sys
 from unittest import TestCase
 from unittest.mock import patch
 
 import deploy_meld
+
+
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
 
 
 class _MockHTTPResponse:
@@ -214,10 +218,12 @@ class DeployMeldTests(TestCase):
             [sys.executable, "-c", script],
             capture_output=True,
             text=True,
-            cwd=Path.cwd(),
+            cwd=str(PROJECT_ROOT),
+            env={**os.environ, "PYTHONPATH": str(PROJECT_ROOT)},
+            timeout=10,
         )
 
         self.assertEqual(completed.returncode, 1)
         self.assertIn("Deploying owner/repo @ main", completed.stdout)
-        self.assertIn("Error:", completed.stderr)
+        self.assertIn("Error: subprocess boom", completed.stderr)
         self.assertNotIn("Traceback", completed.stderr)
