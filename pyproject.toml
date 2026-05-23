@@ -15,6 +15,7 @@ dependencies = [
 [project.scripts]
 ai-detector = "run_ensemble:main"
 ai-detector-deploy = "deploy_meld:main"
+ai-detector-daemon = "detector_daemon:main"
 
 [project.optional-dependencies]
 test = [
@@ -22,4 +23,4 @@ test = [
 ]
 
 [tool.setuptools]
-py-modules = ["run_ensemble", "deploy_meld"]
+py-modules = ["run_ensemble", "deploy_meld", "detector_daemon"]

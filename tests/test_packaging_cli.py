@@ -127,6 +127,7 @@ class PackagingCLITests(unittest.TestCase):
         scripts = _parse_project_scripts(PROJECT_ROOT / "pyproject.toml")
         self.assertEqual(scripts.get("ai-detector"), "run_ensemble:main")
         self.assertEqual(scripts.get("ai-detector-deploy"), "deploy_meld:main")
+        self.assertEqual(scripts.get("ai-detector-daemon"), "detector_daemon:main")
 
     def test_modules_importable_without_inference_dependencies(self) -> None:
         _run_import_smoke(
@@ -134,6 +135,7 @@ class PackagingCLITests(unittest.TestCase):
             ("parse_args", "main", "load_meld", "load_tmr", "load_raid"),
         )
         _run_import_smoke("deploy_meld", ("parse_args", "main"))
+        _run_import_smoke("detector_daemon", ("parse_args", "main", "DetectorDaemon"))
 
     def test_parse_project_scripts_fallback_parses_quoted_keys_and_inline_comments(self) -> None:
         content = textwrap.dedent(
@@ -172,6 +174,14 @@ class PackagingCLITests(unittest.TestCase):
         self.assertIn("--target-dir", output)
         self.assertIn("--model-id", output)
         self.assertIn("--revision", output)
+
+    def test_detector_daemon_help_smoke(self) -> None:
+        result = _run_subprocess([sys.executable, str(PROJECT_ROOT / "detector_daemon.py"), "--help"])
+        self.assertEqual(result.returncode, 0)
+        output = (result.stdout + result.stderr).lower()
+        self.assertIn("usage:", output)
+        self.assertIn("--weights", output)
+        self.assertIn("--experts", output)
 
     def test_main_json_contract_subprocess(self) -> None:
         script = textwrap.dedent(

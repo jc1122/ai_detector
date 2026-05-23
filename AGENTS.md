@@ -55,3 +55,15 @@ and keep negative evaluation outcomes visible (no hiding of poor OOD/PL cases).
 - Coding and code modifications are done by dedicated small Spark workers, not in this role.
 - This role is reviewable and self-contained: edit only the documentation files
   listed in the scope above and keep the contract stable.
+
+## Daemon usage guidance
+
+- Prefer `ai-detector-daemon` for repeated local scoring on the same machine
+  when avoiding per-command model load dominates runtime.
+- Keep runs reproducible: pin thread/environment settings in benchmark and smoke
+  commands (`OMP_NUM_THREADS`, `MKL_NUM_THREADS`, `taskset`, `--threads`,
+  `--device`), and record those settings in notes/artifacts.
+- Use JSONL for all daemon traffic (one request object per line) and avoid raw
+  JSON dumps of sensitive text when possible.
+- Always shut down the daemon at the end of usage: send `{"command":"shutdown"}`,
+  otherwise terminate the process if control is lost.

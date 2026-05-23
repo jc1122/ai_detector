@@ -1,0 +1,385 @@
+{
+  "command": {
+    "daemon_cmd": ".venv/bin/python detector_daemon.py",
+    "workdir": ".",
+    "text_size": 3600
+  },
+  "settings": {
+    "tmr_threads": [
+      2,
+      4,
+      8
+    ],
+    "tmr_batch_sizes": [
+      1,
+      4,
+      8
+    ],
+    "tmr_max_chunks": [
+      1,
+      4
+    ],
+    "tmr_iterations": 1,
+    "tmr_warmup": 1,
+    "all_experts_threads": [
+      2
+    ],
+    "all_experts_batch_sizes": [
+      4
+    ],
+    "all_experts_max_chunks": [
+      1
+    ],
+    "all_experts_iterations": 1,
+    "all_experts_warmup": 1,
+    "baseline_runs": 1
+  },
+  "results": [
+    {
+      "name": "tmr threads=2 batch=1 max_chunks=1",
+      "experts": "tmr",
+      "threads": 2,
+      "batch_size": 1,
+      "max_chunks": 1,
+      "startup_ms": 2830.76024800539,
+      "latencies_ms": [
+        945.5899080057861
+      ],
+      "median_ms": 945.5899080057861,
+      "p95_ms": 945.5899080057861,
+      "mean_ms": 945.5899080057861,
+      "min_ms": 945.5899080057861,
+      "max_ms": 945.5899080057861,
+      "peak_rss_mb": null
+    },
+    {
+      "name": "tmr threads=2 batch=1 max_chunks=4",
+      "experts": "tmr",
+      "threads": 2,
+      "batch_size": 1,
+      "max_chunks": 4,
+      "startup_ms": 2761.3929560029646,
+      "latencies_ms": [
+        999.6590189985
+      ],
+      "median_ms": 999.6590189985,
+      "p95_ms": 999.6590189985,
+      "mean_ms": 999.6590189985,
+      "min_ms": 999.6590189985,
+      "max_ms": 999.6590189985,
+      "peak_rss_mb": null
+    },
+    {
+      "name": "tmr threads=2 batch=4 max_chunks=1",
+      "experts": "tmr",
+      "threads": 2,
+      "batch_size": 4,
+      "max_chunks": 1,
+      "startup_ms": 2746.353000999079,
+      "latencies_ms": [
+        687.2133949946146
+      ],
+      "median_ms": 687.2133949946146,
+      "p95_ms": 687.2133949946146,
+      "mean_ms": 687.2133949946146,
+      "min_ms": 687.2133949946146,
+      "max_ms": 687.2133949946146,
+      "peak_rss_mb": null
+    },
+    {
+      "name": "tmr threads=2 batch=4 max_chunks=4",
+      "experts": "tmr",
+      "threads": 2,
+      "batch_size": 4,
+      "max_chunks": 4,
+      "startup_ms": 2702.9595659987535,
+      "latencies_ms": [
+        1335.815464000916
+      ],
+      "median_ms": 1335.815464000916,
+      "p95_ms": 1335.815464000916,
+      "mean_ms": 1335.815464000916,
+      "min_ms": 1335.815464000916,
+      "max_ms": 1335.815464000916,
+      "peak_rss_mb": null
+    },
+    {
+      "name": "tmr threads=2 batch=8 max_chunks=1",
+      "experts": "tmr",
+      "threads": 2,
+      "batch_size": 8,
+      "max_chunks": 1,
+      "startup_ms": 2304.5602460042574,
+      "latencies_ms": [
+        601.2920920038596
+      ],
+      "median_ms": 601.2920920038596,
+      "p95_ms": 601.2920920038596,
+      "mean_ms": 601.2920920038596,
+      "min_ms": 601.2920920038596,
+      "max_ms": 601.2920920038596,
+      "peak_rss_mb": null
+    },
+    {
+      "name": "tmr threads=2 batch=8 max_chunks=4",
+      "experts": "tmr",
+      "threads": 2,
+      "batch_size": 8,
+      "max_chunks": 4,
+      "startup_ms": 2492.3078889987664,
+      "latencies_ms": [
+        1388.5710059985286
+      ],
+      "median_ms": 1388.5710059985286,
+      "p95_ms": 1388.5710059985286,
+      "mean_ms": 1388.5710059985286,
+      "min_ms": 1388.5710059985286,
+      "max_ms": 1388.5710059985286,
+      "peak_rss_mb": null
+    },
+    {
+      "name": "tmr threads=4 batch=1 max_chunks=1",
+      "experts": "tmr",
+      "threads": 4,
+      "batch_size": 1,
+      "max_chunks": 1,
+      "startup_ms": 2264.4679649965838,
+      "latencies_ms": [
+        363.46374500135425
+      ],
+      "median_ms": 363.46374500135425,
+      "p95_ms": 363.46374500135425,
+      "mean_ms": 363.46374500135425,
+      "min_ms": 363.46374500135425,
+      "max_ms": 363.46374500135425,
+      "peak_rss_mb": null
+    },
+    {
+      "name": "tmr threads=4 batch=1 max_chunks=4",
+      "experts": "tmr",
+      "threads": 4,
+      "batch_size": 1,
+      "max_chunks": 4,
+      "startup_ms": 2168.9667019963963,
+      "latencies_ms": [
+        538.1519509974169
+      ],
+      "median_ms": 538.1519509974169,
+      "p95_ms": 538.1519509974169,
+      "mean_ms": 538.1519509974169,
+      "min_ms": 538.1519509974169,
+      "max_ms": 538.1519509974169,
+      "peak_rss_mb": null
+    },
+    {
+      "name": "tmr threads=4 batch=4 max_chunks=1",
+      "experts": "tmr",
+      "threads": 4,
+      "batch_size": 4,
+      "max_chunks": 1,
+      "startup_ms": 2250.7160899986047,
+      "latencies_ms": [
+        527.4064659897704
+      ],
+      "median_ms": 527.4064659897704,
+      "p95_ms": 527.4064659897704,
+      "mean_ms": 527.4064659897704,
+      "min_ms": 527.4064659897704,
+      "max_ms": 527.4064659897704,
+      "peak_rss_mb": null
+    },
+    {
+      "name": "tmr threads=4 batch=4 max_chunks=4",
+      "experts": "tmr",
+      "threads": 4,
+      "batch_size": 4,
+      "max_chunks": 4,
+      "startup_ms": 2406.483690996538,
+      "latencies_ms": [
+        740.1850129972445
+      ],
+      "median_ms": 740.1850129972445,
+      "p95_ms": 740.1850129972445,
+      "mean_ms": 740.1850129972445,
+      "min_ms": 740.1850129972445,
+      "max_ms": 740.1850129972445,
+      "peak_rss_mb": null
+    },
+    {
+      "name": "tmr threads=4 batch=8 max_chunks=1",
+      "experts": "tmr",
+      "threads": 4,
+      "batch_size": 8,
+      "max_chunks": 1,
+      "startup_ms": 2484.528813001816,
+      "latencies_ms": [
+        492.23346999497153
+      ],
+      "median_ms": 492.23346999497153,
+      "p95_ms": 492.23346999497153,
+      "mean_ms": 492.23346999497153,
+      "min_ms": 492.23346999497153,
+      "max_ms": 492.23346999497153,
+      "peak_rss_mb": null
+    },
+    {
+      "name": "tmr threads=4 batch=8 max_chunks=4",
+      "experts": "tmr",
+      "threads": 4,
+      "batch_size": 8,
+      "max_chunks": 4,
+      "startup_ms": 2525.644994995673,
+      "latencies_ms": [
+        756.9332669954747
+      ],
+      "median_ms": 756.9332669954747,
+      "p95_ms": 756.9332669954747,
+      "mean_ms": 756.9332669954747,
+      "min_ms": 756.9332669954747,
+      "max_ms": 756.9332669954747,
+      "peak_rss_mb": null
+    },
+    {
+      "name": "tmr threads=8 batch=1 max_chunks=1",
+      "experts": "tmr",
+      "threads": 8,
+      "batch_size": 1,
+      "max_chunks": 1,
+      "startup_ms": 2197.4369100062177,
+      "latencies_ms": [
+        596.8065880006179
+      ],
+      "median_ms": 596.8065880006179,
+      "p95_ms": 596.8065880006179,
+      "mean_ms": 596.8065880006179,
+      "min_ms": 596.8065880006179,
+      "max_ms": 596.8065880006179,
+      "peak_rss_mb": null
+    },
+    {
+      "name": "tmr threads=8 batch=1 max_chunks=4",
+      "experts": "tmr",
+      "threads": 8,
+      "batch_size": 1,
+      "max_chunks": 4,
+      "startup_ms": 2384.011709000333,
+      "latencies_ms": [
+        864.0609450085321
+      ],
+      "median_ms": 864.0609450085321,
+      "p95_ms": 864.0609450085321,
+      "mean_ms": 864.0609450085321,
+      "min_ms": 864.0609450085321,
+      "max_ms": 864.0609450085321,
+      "peak_rss_mb": null
+    },
+    {
+      "name": "tmr threads=8 batch=4 max_chunks=1",
+      "experts": "tmr",
+      "threads": 8,
+      "batch_size": 4,
+      "max_chunks": 1,
+      "startup_ms": 2412.0107740018284,
+      "latencies_ms": [
+        466.01441300299484
+      ],
+      "median_ms": 466.01441300299484,
+      "p95_ms": 466.01441300299484,
+      "mean_ms": 466.01441300299484,
+      "min_ms": 466.01441300299484,
+      "max_ms": 466.01441300299484,
+      "peak_rss_mb": null
+    },
+    {
+      "name": "tmr threads=8 batch=4 max_chunks=4",
+      "experts": "tmr",
+      "threads": 8,
+      "batch_size": 4,
+      "max_chunks": 4,
+      "startup_ms": 2586.702005995903,
+      "latencies_ms": [
+        1187.6036500034388
+      ],
+      "median_ms": 1187.6036500034388,
+      "p95_ms": 1187.6036500034388,
+      "mean_ms": 1187.6036500034388,
+      "min_ms": 1187.6036500034388,
+      "max_ms": 1187.6036500034388,
+      "peak_rss_mb": null
+    },
+    {
+      "name": "tmr threads=8 batch=8 max_chunks=1",
+      "experts": "tmr",
+      "threads": 8,
+      "batch_size": 8,
+      "max_chunks": 1,
+      "startup_ms": 2384.687817990198,
+      "latencies_ms": [
+        474.7057820059126
+      ],
+      "median_ms": 474.7057820059126,
+      "p95_ms": 474.7057820059126,
+      "mean_ms": 474.7057820059126,
+      "min_ms": 474.7057820059126,
+      "max_ms": 474.7057820059126,
+      "peak_rss_mb": null
+    },
+    {
+      "name": "tmr threads=8 batch=8 max_chunks=4",
+      "experts": "tmr",
+      "threads": 8,
+      "batch_size": 8,
+      "max_chunks": 4,
+      "startup_ms": 2368.5996720014373,
+      "latencies_ms": [
+        955.6511959963245
+      ],
+      "median_ms": 955.6511959963245,
+      "p95_ms": 955.6511959963245,
+      "mean_ms": 955.6511959963245,
+      "min_ms": 955.6511959963245,
+      "max_ms": 955.6511959963245,
+      "peak_rss_mb": null
+    },
+    {
+      "name": "all experts threads=2 batch=4 max_chunks=1",
+      "experts": "meld,tmr,raid",
+      "threads": 2,
+      "batch_size": 4,
+      "max_chunks": 1,
+      "startup_ms": 3358.716330010793,
+      "latencies_ms": [
+        4723.2732660049805
+      ],
+      "median_ms": 4723.2732660049805,
+      "p95_ms": 4723.2732660049805,
+      "mean_ms": 4723.2732660049805,
+      "min_ms": 4723.2732660049805,
+      "max_ms": 4723.2732660049805,
+      "peak_rss_mb": null
+    }
+  ],
+  "warmup_total": 19,
+  "measured_total": 19,
+  "iteration_total": 38,
+  "baseline": {
+    "runs": 1,
+    "latencies_ms": [
+      7686.832552994019
+    ],
+    "median_ms": 7686.832552994019,
+    "p95_ms": 7686.832552994019,
+    "mean_ms": 7686.832552994019,
+    "min_ms": 7686.832552994019,
+    "max_ms": 7686.832552994019,
+    "command": [
+      ".venv/bin/python",
+      "run_ensemble.py",
+      "--text",
+      "Model quality signals depend on text rhythm, token boundaries, and the interaction between chunk boundaries and scoring head overlap, so we include a stable synthetic paragraph. Model quality signals depend on text rhythm, token boundaries, and the interaction between chunk boundaries and scoring head overlap, so we include a stable synthetic paragraph. Model quality signals depend on text rhythm, token boundaries, and the interaction between chunk boundaries and scoring head overlap, so we include a stable synthetic paragraph. Model quality signals depend on text rhythm, token boundaries, and the interaction between chunk boundaries and scoring head overlap, so we include a stable synthetic paragraph. Model quality signals depend on text rhythm, token boundaries, and the interaction between chunk boundaries and scoring head overlap, so we include a stable synthetic paragraph. Model quality signals depend on text rhythm, token boundaries, and the interaction between chunk boundaries and scoring head overlap, so we include a stable synthetic paragraph. Model quality signals depend on text rhythm, token boundaries, and the interaction between chunk boundaries and scoring head overlap, so we include a stable synthetic paragraph. Model quality signals depend on text rhythm, token boundaries, and the interaction between chunk boundaries and scoring head overlap, so we include a stable synthetic paragraph. Model quality signals depend on text rhythm, token boundaries, and the interaction between chunk boundaries and scoring head overlap, so we include a stable synthetic paragraph. Model quality signals depend on text rhythm, token boundaries, and the interaction between chunk boundaries and scoring head overlap, so we include a stable synthetic paragraph. Model quality signals depend on text rhythm, token boundaries, and the interaction between chunk boundaries and scoring head overlap, so we include a stable synthetic paragraph. Model quality signals depend on text rhythm, token boundaries, and the interaction between chunk boundaries and scoring head overlap, so we include a stable synthetic paragraph. Model quality signals depend on text rhythm, token boundaries, and the interaction between chunk boundaries and scoring head overlap, so we include a stable synthetic paragraph. Model quality signals depend on text rhythm, token boundaries, and the interaction between chunk boundaries and scoring head overlap, so we include a stable synthetic paragraph. Model quality signals depend on text rhythm, token boundaries, and the interaction between chunk boundaries and scoring head overlap, so we include a stable synthetic paragraph. Model quality signals depend on text rhythm, token boundaries, and the interaction between chunk boundaries and scoring head overlap, so we include a stable synthetic paragraph. Model quality signals depend on text rhythm, token boundaries, and the interaction between chunk boundaries and scoring head overlap, so we include a stable synthetic paragraph. Model quality signals depend on text rhythm, token boundaries, and the interaction between chunk boundaries and scoring head overlap, so we include a stable synthetic paragraph. Model quality signals depend on text rhythm, token boundaries, and the interaction between chunk boundaries and scoring head overlap, so we include a stable synthetic paragraph. Model quality signals depend on text rhythm, token boundaries, and the interaction between chunk boundaries and scoring head overlap, so we include a stable synthetic paragraph. Model quality signals depend on text rhy",
+      "--json",
+      "--local-files-only",
+      "--quiet"
+    ]
+  }
+}

@@ -216,7 +216,89 @@ recommended to run these commands after activating the project virtualenv. From 
 checkout without package entrypoints, replace `ai-detector` with
 `python3 run_ensemble.py`.
 
-## 8) Runtime dependencies
+## 8) Preloaded daemon (`ai-detector-daemon`)
+
+Use the daemon when you send repeated local scoring requests. It keeps models
+preloaded and scores JSONL requests sequentially in one process, so you avoid
+CLI cold-start/model-load overhead.
+
+Recommended launch on this CPU (P-core pinning):
+
+```bash
+OMP_NUM_THREADS=4 MKL_NUM_THREADS=4 taskset -c 0-7 ai-detector-daemon --local-files-only --threads 4 --device cpu --quiet
+```
+
+- `--device cpu` is explicit but optional because the daemon default is CPU.
+- Use `--device auto` only when doing direct accelerator-vs-CPU comparisons.
+- `taskset -c 0-7` is used to pin to this host’s P-core cluster in the local
+  daemon launch profile.
+
+Protocol: one JSON object per line on stdin, one JSON object per line on stdout.
+
+Choose executable:
+
+```bash
+if command -v ai-detector-daemon >/dev/null 2>&1; then
+  DAEMON_CMD=(ai-detector-daemon)
+else
+  DAEMON_CMD=(python3 detector_daemon.py)
+fi
+```
+
+Lifecycle (single process):
+```bash
+coproc DAEMON {
+  OMP_NUM_THREADS=4 MKL_NUM_THREADS=4 taskset -c 0-7 "${DAEMON_CMD[@]}" \
+    --local-files-only --threads 4 --device cpu --quiet
+}
+
+# Health check
+printf '%s\n' '{"command":"health"}' >&"${DAEMON[1]}"
+read -r health_resp <&"${DAEMON[0]}"
+echo "health: $health_resp"
+
+# Scoring request (uses daemon default weights)
+printf '%s\n' '{"text":"This is a review sentence with enough context to score.","threshold":0.5}' >&"${DAEMON[1]}"
+read -r score_resp <&"${DAEMON[0]}"
+echo "score: $score_resp"
+
+# Shutdown/unload path: request process exit and wait for it to terminate
+printf '%s\n' '{"command":"shutdown"}' >&"${DAEMON[1]}"
+read -r shutdown_resp <&"${DAEMON[0]}"
+echo "shutdown: $shutdown_resp"
+wait "$DAEMON_PID"
+```
+
+Expected response shapes:
+- Health:
+  `{"status":"ok","command":"health","loaded_experts":["meld","tmr","raid"],"device":"cpu","threads":4,"local_files_only":true}`
+- Scoring (default request weights):
+  `{"text_preview":"...","weights":{"meld":0.34,"tmr":0.33,"raid":0.33},"experts":{...},"ensemble":{...},"calibration":{...},"device":"cpu"}`
+- Shutdown:
+  `{"status":"ok","command":"shutdown"}`
+
+- Sending `{"command":"shutdown"}` is the unload path for this daemon. The daemon is
+  designed to be torn down cleanly this way.
+- For reliable RSS recovery in operators, process exit/restart is the robust unload
+  path; partial Python GC (`gc.collect()`) may not return all memory to OS.
+
+`--experts` subset behavior:
+- Start with `--experts tmr,raid` to preload only those two.
+- If a request does not provide `weights`, defaults are remapped only to the
+  preloaded set (for example, with default `0.34,0.33,0.33`, `tmr,raid` becomes
+  `tmr=0.5`, `raid=0.5` internally).
+- If a request provides explicit positive weight for a non-preloaded expert, the
+  daemon returns an error.
+
+Output behavior and privacy:
+- JSON output shape matches the CLI contract used by `ai-detector`, including
+  `experts`, `ensemble`, and `calibration`.
+- `ai_probability` and `human_probability` are raw uncalibrated values unless a
+  calibrated scoring path is configured.
+- `text_preview` is still emitted exactly like the CLI and keeps the first
+  250 characters; avoid sending sensitive text if this output may be logged.
+
+## 9) Runtime dependencies
 
 ```bash
 python3 -m venv .venv
