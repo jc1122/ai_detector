@@ -5,6 +5,7 @@
 Allowed file set for this workspace role:
 - `README.md`
 - `AGENTS.md`
+- `data/evaluation/README.md`
 
 Do not edit source code, tests, or model artifacts in this role.
 
@@ -51,4 +52,5 @@ and keep negative evaluation outcomes visible (no hiding of poor OOD/PL cases).
 ## Development governance
 
 - Coding and code modifications are done by dedicated small Spark workers, not in this role.
-- This role is reviewable and self-contained: edit only these two files and keep the contract stable.
+- This role is reviewable and self-contained: edit only the documentation files
+  listed in the scope above and keep the contract stable.
