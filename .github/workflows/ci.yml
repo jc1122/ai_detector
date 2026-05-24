@@ -6,6 +6,9 @@ on:
       - main
   pull_request:
 
+permissions:
+  contents: read
+
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -51,21 +54,75 @@ jobs:
         run: |
           ai-detector --help
           ai-detector-deploy --help
+          ai-detector-daemon --help
+          ai-detector-heuristic --help
+          ai-detector-calibrate --help
 
       - name: Source syntax check
         run: |
-          python -m py_compile \
-            run_ensemble.py \
-            deploy_meld.py \
-            tests/test_run_ensemble.py \
-            tests/test_deploy_meld.py \
-            tests/test_packaging_cli.py
+          python -m py_compile *.py scripts/*.py tests/*.py
+
+      - name: Validate evaluation artifacts
+        run: |
+          python -m json.tool data/evaluation/sources.json >/dev/null
+          python -m json.tool data/evaluation/polish_pre2020_technical_papers/manifest.json >/dev/null
+          python -m json.tool data/evaluation/polish_pre2020_technical_papers/sources/manifest.json >/dev/null
+          python -m json.tool data/evaluation/polish_pre2020_technical_papers/broad_eval_2026-05-24.json >/dev/null
+          python -m json.tool data/evaluation/polish_pre2020_technical_papers/broad_eval_windows_2026-05-24.json >/dev/null
+          python -m json.tool data/evaluation/polish_pre2020_technical_papers/calibration_pl_ood_2026-05-24.json >/dev/null
+          python calibrate_detector.py \
+            --baseline-result data/evaluation/polish_pre2020_technical_papers/broad_eval_windows_2026-05-24.json \
+            --output /tmp/ai_detector_calibration.json \
+            --id pl_technical_ood_2026_05_24 \
+            --grid-step 0.05 \
+            --fixed-weights 0.75,0,0.25 \
+            --fit-heuristic-weight \
+            --heuristic-grid-step 0.05 \
+            --max-heuristic-weight 0.60 \
+            --split-seed pl-technical-ood-v2 \
+            --max-false-positives 0 \
+            --max-false-negatives 0 \
+            --min-margin 0.05
+          cmp -s /tmp/ai_detector_calibration.json \
+            data/evaluation/polish_pre2020_technical_papers/calibration_pl_ood_2026-05-24.json
+          python - <<'PY'
+          import json
+          import calibration_config
+
+          artifact = calibration_config.load_calibration_config(
+              "data/evaluation/polish_pre2020_technical_papers/calibration_pl_ood_2026-05-24.json"
+          )
+          profile = calibration_config.load_builtin_profile("pl-technical-ood")
+          assert artifact.weights == profile.weights
+          assert artifact.threshold == profile.threshold
+          assert artifact.heuristic_weight == profile.heuristic_weight
+          assert artifact.method == profile.method
+
+          records = json.load(open("data/evaluation/polish_pre2020_technical_papers/broad_eval_windows_2026-05-24.json", encoding="utf-8"))["records"]
+          def score(record):
+              model = sum(artifact.weights[name] * record["scores"][name] for name in ("meld", "tmr", "raid"))
+              return (1.0 - artifact.heuristic_weight) * model + artifact.heuristic_weight * record["scores"]["heuristic"]
+
+          human = [score(record) for record in records if record["label"] == "human_pre2020"]
+          ai = [score(record) for record in records if record["label"] == "synthetic_ai_control"]
+          assert sum(value >= artifact.threshold for value in human) == 0
+          assert sum(value < artifact.threshold for value in ai) == 0
+          assert min(ai) - max(human) > 0.05
+          PY
 
       - name: Unit tests
         run: |
-          python -m unittest discover -s tests
+          python -m pytest -q
 
       - name: CLI help smoke
         run: |
           python run_ensemble.py --help
           python deploy_meld.py --help
+          python detector_daemon.py --help
+          python heuristic_detector.py --help
+          python calibrate_detector.py --help
+
+      - name: Build distribution
+        run: |
+          python -m pip install build
+          python -m build --sdist --wheel

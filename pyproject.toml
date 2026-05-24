@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "ai-detector"
-version = "0.0.0"
+version = "0.1.0"
 requires-python = ">=3.10"
 dependencies = [
   "torch",
@@ -16,6 +16,8 @@ dependencies = [
 ai-detector = "run_ensemble:main"
 ai-detector-deploy = "deploy_meld:main"
 ai-detector-daemon = "detector_daemon:main"
+ai-detector-heuristic = "heuristic_detector:main"
+ai-detector-calibrate = "calibrate_detector:main"
 
 [project.optional-dependencies]
 test = [
@@ -23,4 +25,11 @@ test = [
 ]
 
 [tool.setuptools]
-py-modules = ["run_ensemble", "deploy_meld", "detector_daemon"]
+py-modules = [
+  "run_ensemble",
+  "deploy_meld",
+  "detector_daemon",
+  "heuristic_detector",
+  "calibration_config",
+  "calibrate_detector",
+]

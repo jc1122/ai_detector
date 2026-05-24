@@ -1,0 +1,103 @@
+name: Runtime Smoke
+
+on:
+  workflow_dispatch:
+    inputs:
+      meld_revision:
+        description: "MELD Hugging Face revision"
+        required: false
+        default: "main"
+      tmr_revision:
+        description: "TMR Hugging Face revision"
+        required: false
+        default: "main"
+      raid_revision:
+        description: "MAGE/RAID Hugging Face revision"
+        required: false
+        default: "main"
+  schedule:
+    - cron: "17 3 * * 1"
+
+permissions:
+  contents: read
+
+jobs:
+  runtime-smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+
+    env:
+      MELD_REVISION: ${{ github.event.inputs.meld_revision || vars.MELD_REVISION || 'main' }}
+      TMR_REVISION: ${{ github.event.inputs.tmr_revision || vars.TMR_REVISION || 'main' }}
+      RAID_REVISION: ${{ github.event.inputs.raid_revision || vars.RAID_REVISION || 'main' }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Restore model cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/huggingface
+            meld_model
+            tmr_model
+            raid_model
+          key: ai-detector-models-${{ runner.os }}-${{ env.MELD_REVISION }}-${{ env.TMR_REVISION }}-${{ env.RAID_REVISION }}
+
+      - name: Install runtime package
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e .
+
+      - name: Download model artifacts
+        run: |
+          ai-detector-deploy \
+            --model-id anon-review-meld-2026/meld \
+            --revision "${MELD_REVISION}" \
+            --target-dir meld_model
+          ai-detector-deploy \
+            --model-id Oxidane/tmr-ai-text-detector \
+            --revision "${TMR_REVISION}" \
+            --target-dir tmr_model
+          ai-detector-deploy \
+            --model-id GeorgeDrayson/modernbert-ai-detection-raid-mage \
+            --revision "${RAID_REVISION}" \
+            --target-dir raid_model
+
+      - name: Calibrated inference smoke
+        env:
+          OMP_NUM_THREADS: "2"
+          MKL_NUM_THREADS: "2"
+        run: |
+          printf "Współczesne systemy monitorowania technicznego wymagają spójnej analizy danych i procedur walidacji wyników.\n" > /tmp/ai_detector_runtime_smoke.txt
+          ai-detector \
+            --profile pl-technical-ood \
+            --text-file /tmp/ai_detector_runtime_smoke.txt \
+            --max-chunks 2 \
+            --batch-size 2 \
+            --overlap 64 \
+            --device cpu \
+            --quiet \
+            --json > /tmp/ai_detector_runtime_smoke.json
+          python - <<'PY'
+          import json
+
+          result = json.load(open("/tmp/ai_detector_runtime_smoke.json", encoding="utf-8"))
+          for section in ("experts", "ensemble", "calibration", "weights", "device"):
+              assert section in result, section
+          for expert in ("meld", "tmr", "raid"):
+              assert expert in result["experts"], expert
+          assert result["calibration"]["status"] == "operating_point_calibrated"
+          assert abs(result["weights"]["meld"] - 0.3) < 1e-12
+          assert abs(result["weights"]["tmr"] - 0.0) < 1e-12
+          assert abs(result["weights"]["raid"] - 0.1) < 1e-12
+          assert abs(result["weights"]["heuristic"] - 0.6) < 1e-12
+          assert result["ensemble"]["label"] in {"human", "ai"}
+          PY

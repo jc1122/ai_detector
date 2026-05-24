@@ -1,0 +1,1464 @@
+{
+  "records": [
+    {
+      "field": "environmental_energy",
+      "heuristic_site_metrics": {
+        "entropy": 25,
+        "repetition": 33,
+        "signatures": 21,
+        "structure": 33,
+        "variation": 13,
+        "vocabulary": 18
+      },
+      "id": "umk_biomass_2018::early_body_220w",
+      "label": "human_pre2020",
+      "labels": {
+        "ensemble_default": "human",
+        "heuristic": "human"
+      },
+      "quality": "pl_clean",
+      "scores": {
+        "ensemble_default": 0.36290487393736837,
+        "heuristic": 0.23,
+        "meld": 0.4250854253768921,
+        "raid": 0.14784899353981018,
+        "tmr": 0.5138959437608719
+      },
+      "source_id": "umk_biomass_2018",
+      "title": "Potencjał techniczny odpadowej biomasy stałej na cele energetyczne w Polsce",
+      "url": "https://repozytorium.umk.pl/server/api/core/bitstreams/51364810-2bde-4343-ab1e-0ebf0ae2c12c/content",
+      "view": "early_body_220w",
+      "window_end_word": 340,
+      "window_start_word": 120,
+      "word_count": 220,
+      "year": 2018
+    },
+    {
+      "field": "environmental_energy",
+      "heuristic_site_metrics": {
+        "entropy": 25,
+        "repetition": 99,
+        "signatures": 17,
+        "structure": 31,
+        "variation": 11,
+        "vocabulary": 59
+      },
+      "id": "umk_biomass_2018::middle_body_220w",
+      "label": "human_pre2020",
+      "labels": {
+        "ensemble_default": "human",
+        "heuristic": "human"
+      },
+      "quality": "pl_clean",
+      "scores": {
+        "ensemble_default": 0.37616286125034093,
+        "heuristic": 0.25,
+        "meld": 0.39825329184532166,
+        "raid": 0.19785085320472717,
+        "tmr": 0.5317150317132473
+      },
+      "source_id": "umk_biomass_2018",
+      "title": "Potencjał techniczny odpadowej biomasy stałej na cele energetyczne w Polsce",
+      "url": "https://repozytorium.umk.pl/server/api/core/bitstreams/51364810-2bde-4343-ab1e-0ebf0ae2c12c/content",
+      "view": "middle_body_220w",
+      "window_end_word": 1253,
+      "window_start_word": 1033,
+      "word_count": 220,
+      "year": 2018
+    },
+    {
+      "field": "environmental_energy",
+      "heuristic_site_metrics": {
+        "entropy": 24,
+        "repetition": 52,
+        "signatures": 20,
+        "structure": 36,
+        "variation": 16,
+        "vocabulary": 34
+      },
+      "id": "umk_biomass_2018::late_body_220w",
+      "label": "human_pre2020",
+      "labels": {
+        "ensemble_default": "ai",
+        "heuristic": "human"
+      },
+      "quality": "pl_clean",
+      "scores": {
+        "ensemble_default": 0.5861064624786377,
+        "heuristic": 0.27,
+        "meld": 0.42531031370162964,
+        "raid": 0.6772587895393372,
+        "tmr": 0.6606228947639465
+      },
+      "source_id": "umk_biomass_2018",
+      "title": "Potencjał techniczny odpadowej biomasy stałej na cele energetyczne w Polsce",
+      "url": "https://repozytorium.umk.pl/server/api/core/bitstreams/51364810-2bde-4343-ab1e-0ebf0ae2c12c/content",
+      "view": "late_body_220w",
+      "window_end_word": 2286,
+      "window_start_word": 2066,
+      "word_count": 220,
+      "year": 2018
+    },
+    {
+      "field": "electrical_power",
+      "heuristic_site_metrics": {
+        "entropy": 27,
+        "repetition": 33,
+        "signatures": 18,
+        "structure": 36,
+        "variation": 12,
+        "vocabulary": 31
+      },
+      "id": "pe_distribution_reliability_2017::early_body_220w",
+      "label": "human_pre2020",
+      "labels": {
+        "ensemble_default": "human",
+        "heuristic": "human"
+      },
+      "quality": "pl_clean",
+      "scores": {
+        "ensemble_default": 0.44760369181633,
+        "heuristic": 0.24,
+        "meld": 0.2215544581413269,
+        "raid": 0.16439974308013916,
+        "tmr": 0.9637068510055542
+      },
+      "source_id": "pe_distribution_reliability_2017",
+      "title": "Analiza poziomu niezawodności zasilania odbiorców w elektroenergetycznych sieciach dystrybucyjnych",
+      "url": "https://archiwum.pe.org.pl/articles/2017/3/1.pdf",
+      "view": "early_body_220w",
+      "window_end_word": 340,
+      "window_start_word": 120,
+      "word_count": 220,
+      "year": 2017
+    },
+    {
+      "field": "electrical_power",
+      "heuristic_site_metrics": {
+        "entropy": 26,
+        "repetition": 57,
+        "signatures": 20,
+        "structure": 27,
+        "variation": 12,
+        "vocabulary": 39
+      },
+      "id": "pe_distribution_reliability_2017::middle_body_220w",
+      "label": "human_pre2020",
+      "labels": {
+        "ensemble_default": "human",
+        "heuristic": "human"
+      },
+      "quality": "pl_clean",
+      "scores": {
+        "ensemble_default": 0.24560539599508047,
+        "heuristic": 0.26,
+        "meld": 0.20361468195915222,
+        "raid": 0.41961824893951416,
+        "tmr": 0.11485570296645164
+      },
+      "source_id": "pe_distribution_reliability_2017",
+      "title": "Analiza poziomu niezawodności zasilania odbiorców w elektroenergetycznych sieciach dystrybucyjnych",
+      "url": "https://archiwum.pe.org.pl/articles/2017/3/1.pdf",
+      "view": "middle_body_220w",
+      "window_end_word": 1474,
+      "window_start_word": 1254,
+      "word_count": 220,
+      "year": 2017
+    },
+    {
+      "field": "electrical_power",
+      "heuristic_site_metrics": {
+        "entropy": 22,
+        "repetition": 57,
+        "signatures": 12,
+        "structure": 23,
+        "variation": 11,
+        "vocabulary": 34
+      },
+      "id": "pe_distribution_reliability_2017::late_body_220w",
+      "label": "human_pre2020",
+      "labels": {
+        "ensemble_default": "ai",
+        "heuristic": "human"
+      },
+      "quality": "pl_clean",
+      "scores": {
+        "ensemble_default": 0.6623455104231835,
+        "heuristic": 0.22,
+        "meld": 0.28636452555656433,
+        "raid": 0.9469996094703674,
+        "tmr": 0.7650657594203949
+      },
+      "source_id": "pe_distribution_reliability_2017",
+      "title": "Analiza poziomu niezawodności zasilania odbiorców w elektroenergetycznych sieciach dystrybucyjnych",
+      "url": "https://archiwum.pe.org.pl/articles/2017/3/1.pdf",
+      "view": "late_body_220w",
+      "window_end_word": 2729,
+      "window_start_word": 2509,
+      "word_count": 220,
+      "year": 2017
+    },
+    {
+      "field": "geology_energy",
+      "heuristic_site_metrics": {
+        "entropy": 26,
+        "repetition": 57,
+        "signatures": 18,
+        "structure": 26,
+        "variation": 12,
+        "vocabulary": 14
+      },
+      "id": "bn_geology_energy_storage_2017::early_body_220w",
+      "label": "human_pre2020",
+      "labels": {
+        "ensemble_default": "ai",
+        "heuristic": "human"
+      },
+      "quality": "pl_clean",
+      "scores": {
+        "ensemble_default": 0.5270161765813828,
+        "heuristic": 0.24,
+        "meld": 0.3410961925983429,
+        "raid": 0.34443143010139465,
+        "tmr": 0.9011548459529877
+      },
+      "source_id": "bn_geology_energy_storage_2017",
+      "title": "Przegląd Geologiczny technical energy/geology article",
+      "url": "https://bibliotekanauki.pl/articles/2075739.pdf",
+      "view": "early_body_220w",
+      "window_end_word": 340,
+      "window_start_word": 120,
+      "word_count": 220,
+      "year": 2017
+    },
+    {
+      "field": "geology_energy",
+      "heuristic_site_metrics": {
+        "entropy": 20,
+        "repetition": 26,
+        "signatures": 27,
+        "structure": 30,
+        "variation": 11,
+        "vocabulary": 10
+      },
+      "id": "bn_geology_energy_storage_2017::middle_body_220w",
+      "label": "human_pre2020",
+      "labels": {
+        "ensemble_default": "human",
+        "heuristic": "human"
+      },
+      "quality": "pl_clean",
+      "scores": {
+        "ensemble_default": 0.20874178593978288,
+        "heuristic": 0.37,
+        "meld": 0.06139116734266281,
+        "raid": 0.48561641573905945,
+        "tmr": 0.0836829449981451
+      },
+      "source_id": "bn_geology_energy_storage_2017",
+      "title": "Przegląd Geologiczny technical energy/geology article",
+      "url": "https://bibliotekanauki.pl/articles/2075739.pdf",
+      "view": "middle_body_220w",
+      "window_end_word": 3721,
+      "window_start_word": 3501,
+      "word_count": 220,
+      "year": 2017
+    },
+    {
+      "field": "geology_energy",
+      "heuristic_site_metrics": {
+        "entropy": 21,
+        "repetition": 48,
+        "signatures": 28,
+        "structure": 44,
+        "variation": 17,
+        "vocabulary": 15
+      },
+      "id": "bn_geology_energy_storage_2017::late_body_220w",
+      "label": "human_pre2020",
+      "labels": {
+        "ensemble_default": "human",
+        "heuristic": "human"
+      },
+      "quality": "pl_clean",
+      "scores": {
+        "ensemble_default": 0.3349741490650922,
+        "heuristic": 0.44,
+        "meld": 0.01628826931118965,
+        "raid": 0.9664058685302734,
+        "tmr": 0.03188545722514391
+      },
+      "source_id": "bn_geology_energy_storage_2017",
+      "title": "Przegląd Geologiczny technical energy/geology article",
+      "url": "https://bibliotekanauki.pl/articles/2075739.pdf",
+      "view": "late_body_220w",
+      "window_end_word": 7222,
+      "window_start_word": 7002,
+      "word_count": 220,
+      "year": 2017
+    },
+    {
+      "field": "construction",
+      "heuristic_site_metrics": {
+        "entropy": 27,
+        "repetition": 43,
+        "signatures": 12,
+        "structure": 43,
+        "variation": 17,
+        "vocabulary": 17
+      },
+      "id": "bn_building_facades_2016::early_body_220w",
+      "label": "human_pre2020",
+      "labels": {
+        "ensemble_default": "ai",
+        "heuristic": "human"
+      },
+      "quality": "pl_clean",
+      "scores": {
+        "ensemble_default": 0.5367572230100632,
+        "heuristic": 0.23,
+        "meld": 0.4094454050064087,
+        "raid": 0.3640134930610657,
+        "tmr": 0.8406707048416138
+      },
+      "source_id": "bn_building_facades_2016",
+      "title": "Elewacje wentylowane - problemy wykonania i odbioru",
+      "url": "https://bibliotekanauki.pl/articles/390322.pdf",
+      "view": "early_body_220w",
+      "window_end_word": 340,
+      "window_start_word": 120,
+      "word_count": 220,
+      "year": 2016
+    },
+    {
+      "field": "construction",
+      "heuristic_site_metrics": {
+        "entropy": 27,
+        "repetition": 33,
+        "signatures": 11,
+        "structure": 46,
+        "variation": 24,
+        "vocabulary": 29
+      },
+      "id": "bn_building_facades_2016::middle_body_220w",
+      "label": "human_pre2020",
+      "labels": {
+        "ensemble_default": "human",
+        "heuristic": "human"
+      },
+      "quality": "pl_clean",
+      "scores": {
+        "ensemble_default": 0.18972348438575865,
+        "heuristic": 0.25,
+        "meld": 0.3381209671497345,
+        "raid": 0.12145373225212097,
+        "tmr": 0.10509886033833027
+      },
+      "source_id": "bn_building_facades_2016",
+      "title": "Elewacje wentylowane - problemy wykonania i odbioru",
+      "url": "https://bibliotekanauki.pl/articles/390322.pdf",
+      "view": "middle_body_220w",
+      "window_end_word": 881,
+      "window_start_word": 661,
+      "word_count": 220,
+      "year": 2016
+    },
+    {
+      "field": "construction",
+      "heuristic_site_metrics": {
+        "entropy": 26,
+        "repetition": 43,
+        "signatures": 18,
+        "structure": 42,
+        "variation": 13,
+        "vocabulary": 21
+      },
+      "id": "bn_building_facades_2016::late_body_220w",
+      "label": "human_pre2020",
+      "labels": {
+        "ensemble_default": "human",
+        "heuristic": "human"
+      },
+      "quality": "pl_clean",
+      "scores": {
+        "ensemble_default": 0.36490475997328764,
+        "heuristic": 0.25,
+        "meld": 0.42276501655578613,
+        "raid": 0.08037427067756653,
+        "tmr": 0.5898216515779495
+      },
+      "source_id": "bn_building_facades_2016",
+      "title": "Elewacje wentylowane - problemy wykonania i odbioru",
+      "url": "https://bibliotekanauki.pl/articles/390322.pdf",
+      "view": "late_body_220w",
+      "window_end_word": 1542,
+      "window_start_word": 1322,
+      "word_count": 220,
+      "year": 2016
+    },
+    {
+      "field": "road_materials",
+      "heuristic_site_metrics": {
+        "entropy": 27,
+        "repetition": 48,
+        "signatures": 21,
+        "structure": 40,
+        "variation": 37,
+        "vocabulary": 22
+      },
+      "id": "bn_road_recycling_2016::early_body_220w",
+      "label": "human_pre2020",
+      "labels": {
+        "ensemble_default": "human",
+        "heuristic": "human"
+      },
+      "quality": "pl_clean",
+      "scores": {
+        "ensemble_default": 0.38605919644236564,
+        "heuristic": 0.31,
+        "meld": 0.4221455752849579,
+        "raid": 0.1916332244873047,
+        "tmr": 0.5433052629232407
+      },
+      "source_id": "bn_road_recycling_2016",
+      "title": "Wodoodporność recyklowanej podbudowy z asfaltem spienionym",
+      "url": "https://bibliotekanauki.pl/articles/391058.pdf",
+      "view": "early_body_220w",
+      "window_end_word": 340,
+      "window_start_word": 120,
+      "word_count": 220,
+      "year": 2016
+    },
+    {
+      "field": "road_materials",
+      "heuristic_site_metrics": {
+        "entropy": 22,
+        "repetition": 33,
+        "signatures": 25,
+        "structure": 38,
+        "variation": 13,
+        "vocabulary": 24
+      },
+      "id": "bn_road_recycling_2016::middle_body_220w",
+      "label": "human_pre2020",
+      "labels": {
+        "ensemble_default": "ai",
+        "heuristic": "human"
+      },
+      "quality": "pl_clean",
+      "scores": {
+        "ensemble_default": 0.6760550305247307,
+        "heuristic": 0.25,
+        "meld": 0.3958730101585388,
+        "raid": 0.7974111437797546,
+        "tmr": 0.8433713018894196
+      },
+      "source_id": "bn_road_recycling_2016",
+      "title": "Wodoodporność recyklowanej podbudowy z asfaltem spienionym",
+      "url": "https://bibliotekanauki.pl/articles/391058.pdf",
+      "view": "middle_body_220w",
+      "window_end_word": 1370,
+      "window_start_word": 1150,
+      "word_count": 220,
+      "year": 2016
+    },
+    {
+      "field": "road_materials",
+      "heuristic_site_metrics": {
+        "entropy": 23,
+        "repetition": 68,
+        "signatures": 19,
+        "structure": 29,
+        "variation": 11,
+        "vocabulary": 23
+      },
+      "id": "bn_road_recycling_2016::late_body_220w",
+      "label": "human_pre2020",
+      "labels": {
+        "ensemble_default": "human",
+        "heuristic": "human"
+      },
+      "quality": "pl_clean",
+      "scores": {
+        "ensemble_default": 0.24246211983263494,
+        "heuristic": 0.26,
+        "meld": 0.4352430999279022,
+        "raid": 0.12117650359869003,
+        "tmr": 0.16512490808963776
+      },
+      "source_id": "bn_road_recycling_2016",
+      "title": "Wodoodporność recyklowanej podbudowy z asfaltem spienionym",
+      "url": "https://bibliotekanauki.pl/articles/391058.pdf",
+      "view": "late_body_220w",
+      "window_end_word": 2520,
+      "window_start_word": 2300,
+      "word_count": 220,
+      "year": 2016
+    },
+    {
+      "field": "fire_structural_engineering",
+      "heuristic_site_metrics": {
+        "entropy": 26,
+        "repetition": 57,
+        "signatures": 17,
+        "structure": 30,
+        "variation": 11,
+        "vocabulary": 21
+      },
+      "id": "bn_fire_safety_2016::early_body_220w",
+      "label": "human_pre2020",
+      "labels": {
+        "ensemble_default": "human",
+        "heuristic": "human"
+      },
+      "quality": "pl_clean",
+      "scores": {
+        "ensemble_default": 0.32035346250049773,
+        "heuristic": 0.24,
+        "meld": 0.42606744170188904,
+        "raid": 0.05505102500319481,
+        "tmr": 0.4767384668812156
+      },
+      "source_id": "bn_fire_safety_2016",
+      "title": "Projektowanie konstrukcji budowlanych z uwagi na warunki pożarowe",
+      "url": "https://bibliotekanauki.pl/articles/390772.pdf",
+      "view": "early_body_220w",
+      "window_end_word": 340,
+      "window_start_word": 120,
+      "word_count": 220,
+      "year": 2016
+    },
+    {
+      "field": "fire_structural_engineering",
+      "heuristic_site_metrics": {
+        "entropy": 21,
+        "repetition": 57,
+        "signatures": 25,
+        "structure": 24,
+        "variation": 11,
+        "vocabulary": 46
+      },
+      "id": "bn_fire_safety_2016::middle_body_220w",
+      "label": "human_pre2020",
+      "labels": {
+        "ensemble_default": "human",
+        "heuristic": "human"
+      },
+      "quality": "pl_clean",
+      "scores": {
+        "ensemble_default": 0.41703876793384553,
+        "heuristic": 0.37,
+        "meld": 0.39562252163887024,
+        "raid": 0.25656235218048096,
+        "tmr": 0.5995804071426392
+      },
+      "source_id": "bn_fire_safety_2016",
+      "title": "Projektowanie konstrukcji budowlanych z uwagi na warunki pożarowe",
+      "url": "https://bibliotekanauki.pl/articles/390772.pdf",
+      "view": "middle_body_220w",
+      "window_end_word": 1090,
+      "window_start_word": 870,
+      "word_count": 220,
+      "year": 2016
+    },
+    {
+      "field": "fire_structural_engineering",
+      "heuristic_site_metrics": {
+        "entropy": 24,
+        "repetition": 15,
+        "signatures": 25,
+        "structure": 31,
+        "variation": 25,
+        "vocabulary": 18
+      },
+      "id": "bn_fire_safety_2016::late_body_220w",
+      "label": "human_pre2020",
+      "labels": {
+        "ensemble_default": "ai",
+        "heuristic": "human"
+      },
+      "quality": "pl_clean",
+      "scores": {
+        "ensemble_default": 0.5037000311911106,
+        "heuristic": 0.24,
+        "meld": 0.4211507737636566,
+        "raid": 0.14101259410381317,
+        "tmr": 0.9514382183551788
+      },
+      "source_id": "bn_fire_safety_2016",
+      "title": "Projektowanie konstrukcji budowlanych z uwagi na warunki pożarowe",
+      "url": "https://bibliotekanauki.pl/articles/390772.pdf",
+      "view": "late_body_220w",
+      "window_end_word": 1961,
+      "window_start_word": 1741,
+      "word_count": 220,
+      "year": 2016
+    },
+    {
+      "field": "ecological_engineering",
+      "heuristic_site_metrics": {
+        "entropy": 29,
+        "repetition": 15,
+        "signatures": 24,
+        "structure": 40,
+        "variation": 11,
+        "vocabulary": 16
+      },
+      "id": "bn_ecological_engineering_2017::early_body_220w",
+      "label": "human_pre2020",
+      "labels": {
+        "ensemble_default": "ai",
+        "heuristic": "human"
+      },
+      "quality": "pl_clean",
+      "scores": {
+        "ensemble_default": 0.6284103649854661,
+        "heuristic": 0.23,
+        "meld": 0.16017819941043854,
+        "raid": 0.9690802693367004,
+        "tmr": 0.7701614797115326
+      },
+      "source_id": "bn_ecological_engineering_2017",
+      "title": "Odniesienia koncepcji retardacja przekształcania zasobów przyrody...",
+      "url": "https://bibliotekanauki.pl/articles/401593.pdf",
+      "view": "early_body_220w",
+      "window_end_word": 340,
+      "window_start_word": 120,
+      "word_count": 220,
+      "year": 2017
+    },
+    {
+      "field": "ecological_engineering",
+      "heuristic_site_metrics": {
+        "entropy": 24,
+        "repetition": 15,
+        "signatures": 24,
+        "structure": 26,
+        "variation": 11,
+        "vocabulary": 7
+      },
+      "id": "bn_ecological_engineering_2017::middle_body_220w",
+      "label": "human_pre2020",
+      "labels": {
+        "ensemble_default": "human",
+        "heuristic": "human"
+      },
+      "quality": "pl_clean",
+      "scores": {
+        "ensemble_default": 0.1713495161663741,
+        "heuristic": 0.35,
+        "meld": 0.2231292873620987,
+        "raid": 0.2601458430290222,
+        "tmr": 0.029204334132373333
+      },
+      "source_id": "bn_ecological_engineering_2017",
+      "title": "Odniesienia koncepcji retardacja przekształcania zasobów przyrody...",
+      "url": "https://bibliotekanauki.pl/articles/401593.pdf",
+      "view": "middle_body_220w",
+      "window_end_word": 4174,
+      "window_start_word": 3954,
+      "word_count": 220,
+      "year": 2017
+    },
+    {
+      "field": "ecological_engineering",
+      "heuristic_site_metrics": {
+        "entropy": 21,
+        "repetition": 26,
+        "signatures": 27,
+        "structure": 41,
+        "variation": 21,
+        "vocabulary": 8
+      },
+      "id": "bn_ecological_engineering_2017::late_body_220w",
+      "label": "human_pre2020",
+      "labels": {
+        "ensemble_default": "human",
+        "heuristic": "human"
+      },
+      "quality": "pl_clean",
+      "scores": {
+        "ensemble_default": 0.4827612159075215,
+        "heuristic": 0.36,
+        "meld": 0.013644951395690441,
+        "raid": 0.9783743619918823,
+        "tmr": 0.47047997871413827
+      },
+      "source_id": "bn_ecological_engineering_2017",
+      "title": "Odniesienia koncepcji retardacja przekształcania zasobów przyrody...",
+      "url": "https://bibliotekanauki.pl/articles/401593.pdf",
+      "view": "late_body_220w",
+      "window_end_word": 8129,
+      "window_start_word": 7909,
+      "word_count": 220,
+      "year": 2017
+    },
+    {
+      "field": "business_informatics",
+      "heuristic_site_metrics": {
+        "entropy": 29,
+        "repetition": 33,
+        "signatures": 20,
+        "structure": 36,
+        "variation": 15,
+        "vocabulary": 28
+      },
+      "id": "bn_blockchain_education_2017::early_body_220w",
+      "label": "human_pre2020",
+      "labels": {
+        "ensemble_default": "ai",
+        "heuristic": "human"
+      },
+      "quality": "pl_clean",
+      "scores": {
+        "ensemble_default": 0.785664753317833,
+        "heuristic": 0.25,
+        "meld": 0.4129001796245575,
+        "raid": 0.9865915179252625,
+        "tmr": 0.9687984585762024
+      },
+      "source_id": "bn_blockchain_education_2017",
+      "title": "Możliwości wykorzystania technologii blockchain w obszarze edukacji",
+      "url": "https://bibliotekanauki.pl/articles/432201.pdf",
+      "view": "early_body_220w",
+      "window_end_word": 340,
+      "window_start_word": 120,
+      "word_count": 220,
+      "year": 2017
+    },
+    {
+      "field": "business_informatics",
+      "heuristic_site_metrics": {
+        "entropy": 24,
+        "repetition": 33,
+        "signatures": 21,
+        "structure": 31,
+        "variation": 21,
+        "vocabulary": 15
+      },
+      "id": "bn_blockchain_education_2017::middle_body_220w",
+      "label": "human_pre2020",
+      "labels": {
+        "ensemble_default": "human",
+        "heuristic": "human"
+      },
+      "quality": "pl_clean",
+      "scores": {
+        "ensemble_default": 0.21891075298190116,
+        "heuristic": 0.24,
+        "meld": 0.4132412374019623,
+        "raid": 0.15690001845359802,
+        "tmr": 0.08070220053195953
+      },
+      "source_id": "bn_blockchain_education_2017",
+      "title": "Możliwości wykorzystania technologii blockchain w obszarze edukacji",
+      "url": "https://bibliotekanauki.pl/articles/432201.pdf",
+      "view": "middle_body_220w",
+      "window_end_word": 1693,
+      "window_start_word": 1473,
+      "word_count": 220,
+      "year": 2017
+    },
+    {
+      "field": "business_informatics",
+      "heuristic_site_metrics": {
+        "entropy": 26,
+        "repetition": 15,
+        "signatures": 24,
+        "structure": 39,
+        "variation": 20,
+        "vocabulary": 12
+      },
+      "id": "bn_blockchain_education_2017::late_body_220w",
+      "label": "human_pre2020",
+      "labels": {
+        "ensemble_default": "human",
+        "heuristic": "human"
+      },
+      "quality": "pl_clean",
+      "scores": {
+        "ensemble_default": 0.34395288262516266,
+        "heuristic": 0.24,
+        "meld": 0.42641711235046387,
+        "raid": 0.11612178385257721,
+        "tmr": 0.48682083562016487
+      },
+      "source_id": "bn_blockchain_education_2017",
+      "title": "Możliwości wykorzystania technologii blockchain w obszarze edukacji",
+      "url": "https://bibliotekanauki.pl/articles/432201.pdf",
+      "view": "late_body_220w",
+      "window_end_word": 3167,
+      "window_start_word": 2947,
+      "word_count": 220,
+      "year": 2017
+    },
+    {
+      "field": "information_systems",
+      "heuristic_site_metrics": {
+        "entropy": 26,
+        "repetition": 26,
+        "signatures": 20,
+        "structure": 29,
+        "variation": 23,
+        "vocabulary": 15
+      },
+      "id": "bn_it_requirements_2017::early_body_220w",
+      "label": "human_pre2020",
+      "labels": {
+        "ensemble_default": "human",
+        "heuristic": "human"
+      },
+      "quality": "pl_clean",
+      "scores": {
+        "ensemble_default": 0.2171086920052767,
+        "heuristic": 0.23,
+        "meld": 0.1394747942686081,
+        "raid": 0.23877346515655518,
+        "tmr": 0.2754303589463234
+      },
+      "source_id": "bn_it_requirements_2017",
+      "title": "Metoda zbierania wymagań w projektowaniu systemów informatycznych",
+      "url": "https://bibliotekanauki.pl/articles/455086.pdf",
+      "view": "early_body_220w",
+      "window_end_word": 340,
+      "window_start_word": 120,
+      "word_count": 220,
+      "year": 2017
+    },
+    {
+      "field": "information_systems",
+      "heuristic_site_metrics": {
+        "entropy": 25,
+        "repetition": 33,
+        "signatures": 24,
+        "structure": 27,
+        "variation": 13,
+        "vocabulary": 18
+      },
+      "id": "bn_it_requirements_2017::middle_body_220w",
+      "label": "human_pre2020",
+      "labels": {
+        "ensemble_default": "human",
+        "heuristic": "human"
+      },
+      "quality": "pl_clean",
+      "scores": {
+        "ensemble_default": 0.27556233610957864,
+        "heuristic": 0.23,
+        "meld": 0.42852750420570374,
+        "raid": 0.23197710514068604,
+        "tmr": 0.16154709085822105
+      },
+      "source_id": "bn_it_requirements_2017",
+      "title": "Metoda zbierania wymagań w projektowaniu systemów informatycznych",
+      "url": "https://bibliotekanauki.pl/articles/455086.pdf",
+      "view": "middle_body_220w",
+      "window_end_word": 1309,
+      "window_start_word": 1089,
+      "word_count": 220,
+      "year": 2017
+    },
+    {
+      "field": "information_systems",
+      "heuristic_site_metrics": {
+        "entropy": 25,
+        "repetition": 15,
+        "signatures": 18,
+        "structure": 42,
+        "variation": 28,
+        "vocabulary": 16
+      },
+      "id": "bn_it_requirements_2017::late_body_220w",
+      "label": "human_pre2020",
+      "labels": {
+        "ensemble_default": "human",
+        "heuristic": "human"
+      },
+      "quality": "pl_clean",
+      "scores": {
+        "ensemble_default": 0.20809429820626973,
+        "heuristic": 0.24,
+        "meld": 0.3984393775463104,
+        "raid": 0.11032705008983612,
+        "tmr": 0.10974843427538872
+      },
+      "source_id": "bn_it_requirements_2017",
+      "title": "Metoda zbierania wymagań w projektowaniu systemów informatycznych",
+      "url": "https://bibliotekanauki.pl/articles/455086.pdf",
+      "view": "late_body_220w",
+      "window_end_word": 2399,
+      "window_start_word": 2179,
+      "word_count": 220,
+      "year": 2017
+    },
+    {
+      "field": "cybersecurity_education",
+      "heuristic_site_metrics": {
+        "entropy": 27,
+        "repetition": 26,
+        "signatures": 20,
+        "structure": 44,
+        "variation": 13,
+        "vocabulary": 15
+      },
+      "id": "bn_cyber_identity_2017::early_body_220w",
+      "label": "human_pre2020",
+      "labels": {
+        "ensemble_default": "human",
+        "heuristic": "human"
+      },
+      "quality": "pl_clean",
+      "scores": {
+        "ensemble_default": 0.43109274506568906,
+        "heuristic": 0.24,
+        "meld": 0.4092040956020355,
+        "raid": 0.29761752486228943,
+        "tmr": 0.5871199071407318
+      },
+      "source_id": "bn_cyber_identity_2017",
+      "title": "Edukacja w zakresie metod i środków ochrony tożsamości w sieci",
+      "url": "https://bibliotekanauki.pl/articles/457287.pdf",
+      "view": "early_body_220w",
+      "window_end_word": 340,
+      "window_start_word": 120,
+      "word_count": 220,
+      "year": 2017
+    },
+    {
+      "field": "cybersecurity_education",
+      "heuristic_site_metrics": {
+        "entropy": 23,
+        "repetition": 33,
+        "signatures": 18,
+        "structure": 31,
+        "variation": 14,
+        "vocabulary": 12
+      },
+      "id": "bn_cyber_identity_2017::middle_body_220w",
+      "label": "human_pre2020",
+      "labels": {
+        "ensemble_default": "human",
+        "heuristic": "human"
+      },
+      "quality": "pl_clean",
+      "scores": {
+        "ensemble_default": 0.21553654827177526,
+        "heuristic": 0.21,
+        "meld": 0.34430620074272156,
+        "raid": 0.146482914686203,
+        "tmr": 0.1519184187054634
+      },
+      "source_id": "bn_cyber_identity_2017",
+      "title": "Edukacja w zakresie metod i środków ochrony tożsamości w sieci",
+      "url": "https://bibliotekanauki.pl/articles/457287.pdf",
+      "view": "middle_body_220w",
+      "window_end_word": 652,
+      "window_start_word": 432,
+      "word_count": 220,
+      "year": 2017
+    },
+    {
+      "field": "cybersecurity_education",
+      "heuristic_site_metrics": {
+        "entropy": 26,
+        "repetition": 26,
+        "signatures": 18,
+        "structure": 35,
+        "variation": 12,
+        "vocabulary": 12
+      },
+      "id": "bn_cyber_identity_2017::late_body_220w",
+      "label": "human_pre2020",
+      "labels": {
+        "ensemble_default": "human",
+        "heuristic": "human"
+      },
+      "quality": "pl_clean",
+      "scores": {
+        "ensemble_default": 0.18551722179166974,
+        "heuristic": 0.31,
+        "meld": 0.3893345594406128,
+        "raid": 0.11494553089141846,
+        "tmr": 0.04609529208391905
+      },
+      "source_id": "bn_cyber_identity_2017",
+      "title": "Edukacja w zakresie metod i środków ochrony tożsamości w sieci",
+      "url": "https://bibliotekanauki.pl/articles/457287.pdf",
+      "view": "late_body_220w",
+      "window_end_word": 1084,
+      "window_start_word": 864,
+      "word_count": 220,
+      "year": 2017
+    },
+    {
+      "field": "statistics_engineering_education",
+      "heuristic_site_metrics": {
+        "entropy": 26,
+        "repetition": 89,
+        "signatures": 17,
+        "structure": 35,
+        "variation": 35,
+        "vocabulary": 30
+      },
+      "id": "bn_nonparametric_stats_2017::early_body_220w",
+      "label": "human_pre2020",
+      "labels": {
+        "ensemble_default": "human",
+        "heuristic": "human"
+      },
+      "quality": "pl_clean",
+      "scores": {
+        "ensemble_default": 0.3075466090068221,
+        "heuristic": 0.34,
+        "meld": 0.37801021337509155,
+        "raid": 0.4526575207710266,
+        "tmr": 0.08983683213591576
+      },
+      "source_id": "bn_nonparametric_stats_2017",
+      "title": "Wybrane statystyki nieparametryczne",
+      "url": "https://bibliotekanauki.pl/articles/456376.pdf",
+      "view": "early_body_220w",
+      "window_end_word": 340,
+      "window_start_word": 120,
+      "word_count": 220,
+      "year": 2017
+    },
+    {
+      "field": "statistics_engineering_education",
+      "heuristic_site_metrics": {
+        "entropy": 25,
+        "repetition": 68,
+        "signatures": 21,
+        "structure": 40,
+        "variation": 16,
+        "vocabulary": 33
+      },
+      "id": "bn_nonparametric_stats_2017::middle_body_220w",
+      "label": "human_pre2020",
+      "labels": {
+        "ensemble_default": "human",
+        "heuristic": "human"
+      },
+      "quality": "pl_clean",
+      "scores": {
+        "ensemble_default": 0.3795817383565009,
+        "heuristic": 0.3,
+        "meld": 0.38424545526504517,
+        "raid": 0.7034702301025391,
+        "tmr": 0.05088820494711399
+      },
+      "source_id": "bn_nonparametric_stats_2017",
+      "title": "Wybrane statystyki nieparametryczne",
+      "url": "https://bibliotekanauki.pl/articles/456376.pdf",
+      "view": "middle_body_220w",
+      "window_end_word": 724,
+      "window_start_word": 504,
+      "word_count": 220,
+      "year": 2017
+    },
+    {
+      "field": "statistics_engineering_education",
+      "heuristic_site_metrics": {
+        "entropy": 26,
+        "repetition": 33,
+        "signatures": 17,
+        "structure": 42,
+        "variation": 18,
+        "vocabulary": 24
+      },
+      "id": "bn_nonparametric_stats_2017::late_body_220w",
+      "label": "human_pre2020",
+      "labels": {
+        "ensemble_default": "human",
+        "heuristic": "human"
+      },
+      "quality": "pl_clean",
+      "scores": {
+        "ensemble_default": 0.2287536408007145,
+        "heuristic": 0.25,
+        "meld": 0.4143071174621582,
+        "raid": 0.14257171750068665,
+        "tmr": 0.12375925481319427
+      },
+      "source_id": "bn_nonparametric_stats_2017",
+      "title": "Wybrane statystyki nieparametryczne",
+      "url": "https://bibliotekanauki.pl/articles/456376.pdf",
+      "view": "late_body_220w",
+      "window_end_word": 1228,
+      "window_start_word": 1008,
+      "word_count": 220,
+      "year": 2017
+    },
+    {
+      "field": "synthetic_ai_control",
+      "heuristic_site_metrics": {
+        "entropy": 28,
+        "repetition": 15,
+        "signatures": 55,
+        "structure": 41,
+        "variation": 46,
+        "vocabulary": 6
+      },
+      "id": "ai_fixture_polish_generated_style::synthetic_220w",
+      "label": "synthetic_ai_control",
+      "labels": {
+        "ensemble_default": "ai",
+        "heuristic": "ai"
+      },
+      "quality": "synthetic_ai_control",
+      "scores": {
+        "ensemble_default": 0.7893678325414657,
+        "heuristic": 0.53,
+        "meld": 0.42056289315223694,
+        "raid": 0.9956254959106445,
+        "tmr": 0.9630910158157349
+      },
+      "source_id": "ai_fixture_polish_generated_style",
+      "title": "Existing local generated-style Polish technical sample",
+      "url": null,
+      "view": "synthetic_220w",
+      "window_end_word": 182,
+      "window_start_word": 0,
+      "word_count": 182,
+      "year": 2026
+    },
+    {
+      "field": "synthetic_ai_control",
+      "heuristic_site_metrics": {
+        "entropy": 35,
+        "repetition": 11,
+        "signatures": 89,
+        "structure": 45,
+        "variation": 42,
+        "vocabulary": 4
+      },
+      "id": "ai_synthetic_monitoring_generic::synthetic_220w",
+      "label": "synthetic_ai_control",
+      "labels": {
+        "ensemble_default": "human",
+        "heuristic": "ai"
+      },
+      "quality": "synthetic_ai_control",
+      "scores": {
+        "ensemble_default": 0.2810622968524694,
+        "heuristic": 0.99,
+        "meld": 0.4219280481338501,
+        "raid": 0.30080729722976685,
+        "tmr": 0.11618288606405258
+      },
+      "source_id": "ai_synthetic_monitoring_generic",
+      "title": "Synthetic technical monitoring prose",
+      "url": null,
+      "view": "synthetic_220w",
+      "window_end_word": 83,
+      "window_start_word": 0,
+      "word_count": 83,
+      "year": 2026
+    },
+    {
+      "field": "synthetic_ai_control",
+      "heuristic_site_metrics": {
+        "entropy": 37,
+        "repetition": 11,
+        "signatures": 85,
+        "structure": 57,
+        "variation": 58,
+        "vocabulary": 4
+      },
+      "id": "ai_synthetic_methods_generic::synthetic_220w",
+      "label": "synthetic_ai_control",
+      "labels": {
+        "ensemble_default": "human",
+        "heuristic": "ai"
+      },
+      "quality": "synthetic_ai_control",
+      "scores": {
+        "ensemble_default": 0.4814695629477501,
+        "heuristic": 0.8,
+        "meld": 0.4222348928451538,
+        "raid": 0.6297825574874878,
+        "tmr": 0.39418622851371765
+      },
+      "source_id": "ai_synthetic_methods_generic",
+      "title": "Synthetic materials methods prose",
+      "url": null,
+      "view": "synthetic_220w",
+      "window_end_word": 68,
+      "window_start_word": 0,
+      "word_count": 68,
+      "year": 2026
+    },
+    {
+      "field": "synthetic_ai_control",
+      "heuristic_site_metrics": {
+        "entropy": 37,
+        "repetition": 15,
+        "signatures": 68,
+        "structure": 58,
+        "variation": 46,
+        "vocabulary": 4
+      },
+      "id": "ai_synthetic_energy_grid::synthetic_220w",
+      "label": "synthetic_ai_control",
+      "labels": {
+        "ensemble_default": "human",
+        "heuristic": "ai"
+      },
+      "quality": "synthetic_ai_control",
+      "scores": {
+        "ensemble_default": 0.2777577989548445,
+        "heuristic": 0.55,
+        "meld": 0.4240536689758301,
+        "raid": 0.3353425860404968,
+        "tmr": 0.06944393366575241
+      },
+      "source_id": "ai_synthetic_energy_grid",
+      "title": "Synthetic energy grid prose",
+      "url": null,
+      "view": "synthetic_220w",
+      "window_end_word": 67,
+      "window_start_word": 0,
+      "word_count": 67,
+      "year": 2026
+    },
+    {
+      "field": "synthetic_ai_control",
+      "heuristic_site_metrics": {
+        "entropy": 36,
+        "repetition": 11,
+        "signatures": 88,
+        "structure": 47,
+        "variation": 46,
+        "vocabulary": 3
+      },
+      "id": "ai_synthetic_cybersecurity::synthetic_220w",
+      "label": "synthetic_ai_control",
+      "labels": {
+        "ensemble_default": "human",
+        "heuristic": "ai"
+      },
+      "quality": "synthetic_ai_control",
+      "scores": {
+        "ensemble_default": 0.2024318090081215,
+        "heuristic": 0.85,
+        "meld": 0.42212584614753723,
+        "raid": 0.12963707745075226,
+        "tmr": 0.0488751083612442
+      },
+      "source_id": "ai_synthetic_cybersecurity",
+      "title": "Synthetic cybersecurity prose",
+      "url": null,
+      "view": "synthetic_220w",
+      "window_end_word": 62,
+      "window_start_word": 0,
+      "word_count": 62,
+      "year": 2026
+    },
+    {
+      "field": "synthetic_ai_control",
+      "heuristic_site_metrics": {
+        "entropy": 38,
+        "repetition": 11,
+        "signatures": 49,
+        "structure": 60,
+        "variation": 50,
+        "vocabulary": 3
+      },
+      "id": "ai_synthetic_construction_fire::synthetic_220w",
+      "label": "synthetic_ai_control",
+      "labels": {
+        "ensemble_default": "human",
+        "heuristic": "ai"
+      },
+      "quality": "synthetic_ai_control",
+      "scores": {
+        "ensemble_default": 0.4116160908341408,
+        "heuristic": 0.53,
+        "meld": 0.42346540093421936,
+        "raid": 0.5153478980064392,
+        "tmr": 0.2956759035587311
+      },
+      "source_id": "ai_synthetic_construction_fire",
+      "title": "Synthetic construction fire safety prose",
+      "url": null,
+      "view": "synthetic_220w",
+      "window_end_word": 60,
+      "window_start_word": 0,
+      "word_count": 60,
+      "year": 2026
+    },
+    {
+      "field": "synthetic_ai_control",
+      "heuristic_site_metrics": {
+        "entropy": 39,
+        "repetition": 11,
+        "signatures": 62,
+        "structure": 54,
+        "variation": 42,
+        "vocabulary": 2
+      },
+      "id": "ai_synthetic_statistics::synthetic_220w",
+      "label": "synthetic_ai_control",
+      "labels": {
+        "ensemble_default": "human",
+        "heuristic": "ai"
+      },
+      "quality": "synthetic_ai_control",
+      "scores": {
+        "ensemble_default": 0.29975732266902927,
+        "heuristic": 0.52,
+        "meld": 0.4242026209831238,
+        "raid": 0.2873592674732208,
+        "tmr": 0.18393900990486145
+      },
+      "source_id": "ai_synthetic_statistics",
+      "title": "Synthetic nonparametric statistics prose",
+      "url": null,
+      "view": "synthetic_220w",
+      "window_end_word": 61,
+      "window_start_word": 0,
+      "word_count": 61,
+      "year": 2026
+    },
+    {
+      "field": "synthetic_ai_control",
+      "heuristic_site_metrics": {
+        "entropy": 39,
+        "repetition": 11,
+        "signatures": 86,
+        "structure": 55,
+        "variation": 44,
+        "vocabulary": 4
+      },
+      "id": "ai_synthetic_blockchain_education::synthetic_220w",
+      "label": "synthetic_ai_control",
+      "labels": {
+        "ensemble_default": "human",
+        "heuristic": "ai"
+      },
+      "quality": "synthetic_ai_control",
+      "scores": {
+        "ensemble_default": 0.28670041136443614,
+        "heuristic": 0.85,
+        "meld": 0.4227207601070404,
+        "raid": 0.38860023021698,
+        "tmr": 0.044658415019512177
+      },
+      "source_id": "ai_synthetic_blockchain_education",
+      "title": "Synthetic blockchain education prose",
+      "url": null,
+      "view": "synthetic_220w",
+      "window_end_word": 62,
+      "window_start_word": 0,
+      "word_count": 62,
+      "year": 2026
+    }
+  ],
+  "run": {
+    "batch_size": 4,
+    "created_at": "2026-05-24T13:36:53+0200",
+    "device": "cpu",
+    "env": "OMP_NUM_THREADS=4 MKL_NUM_THREADS=4 taskset -c 0-3",
+    "excerpting": "three non-overlapping 220-word windows per clean Polish paper plus diverse synthetic AI controls",
+    "max_chunks": 2,
+    "overlap": 64,
+    "threads": 4,
+    "threshold": 0.5
+  },
+  "score_summary": {
+    "human_pre2020": {
+      "ensemble_default": {
+        "false_positive_at_0_4": 12,
+        "false_positive_at_0_5": 8,
+        "max": 0.785664753317833,
+        "mean": 0.37782903936000145,
+        "median": 0.36290487393736837,
+        "n": 33,
+        "p90": 0.6199495844841004
+      },
+      "heuristic": {
+        "false_positive_at_0_4": 1,
+        "false_positive_at_0_5": 0,
+        "max": 0.44,
+        "mean": 0.2709090909090909,
+        "median": 0.25,
+        "n": 33,
+        "p90": 0.358
+      },
+      "meld": {
+        "false_positive_at_0_4": 14,
+        "false_positive_at_0_5": 0,
+        "max": 0.4352430999279022,
+        "mean": 0.33275007340831286,
+        "median": 0.3958730101585388,
+        "n": 33,
+        "p90": 0.42591601610183716
+      },
+      "raid": {
+        "false_positive_at_0_4": 11,
+        "false_positive_at_0_5": 8,
+        "max": 0.9865915179252625,
+        "mean": 0.3753077316690575,
+        "median": 0.23877346515655518,
+        "n": 33,
+        "p90": 0.9625246167182923
+      },
+      "tmr": {
+        "false_positive_at_0_4": 18,
+        "false_positive_at_0_5": 15,
+        "max": 0.9687984585762024,
+        "mean": 0.4267953422738973,
+        "median": 0.4767384668812156,
+        "n": 33,
+        "p90": 0.8895981371402741
+      }
+    },
+    "synthetic_ai_control": {
+      "ensemble_default": {
+        "false_positive_at_0_4": 3,
+        "false_positive_at_0_5": 1,
+        "max": 0.7893678325414657,
+        "mean": 0.3787703906465322,
+        "median": 0.2932288670167327,
+        "n": 8,
+        "p90": 0.5738390438258647
+      },
+      "heuristic": {
+        "false_positive_at_0_4": 8,
+        "false_positive_at_0_5": 8,
+        "max": 0.99,
+        "mean": 0.7025,
+        "median": 0.675,
+        "n": 8,
+        "p90": 0.8919999999999999
+      },
+      "meld": {
+        "false_positive_at_0_4": 8,
+        "false_positive_at_0_5": 0,
+        "max": 0.4242026209831238,
+        "mean": 0.42266176640987396,
+        "median": 0.4224778264760971,
+        "n": 8,
+        "p90": 0.42409835457801814
+      },
+      "raid": {
+        "false_positive_at_0_4": 3,
+        "false_positive_at_0_5": 3,
+        "max": 0.9956254959106445,
+        "mean": 0.44781280122697353,
+        "median": 0.3619714081287384,
+        "n": 8,
+        "p90": 0.7395354390144347
+      },
+      "tmr": {
+        "false_positive_at_0_4": 1,
+        "false_positive_at_0_5": 1,
+        "max": 0.9630910158157349,
+        "mean": 0.2645065626129508,
+        "median": 0.15006094798445702,
+        "n": 8,
+        "p90": 0.5648576647043226
+      }
+    }
+  }
+}

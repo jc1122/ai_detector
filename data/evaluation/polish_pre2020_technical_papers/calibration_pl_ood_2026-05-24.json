@@ -1,0 +1,356 @@
+{
+  "applies_to": {
+    "domain": "technical_scientific_ood",
+    "language": "pl",
+    "notes": "Use as an operating-point baseline for Polish technical text; not probability calibration."
+  },
+  "description": "Polish technical/OOD operating-point calibration from pre-2020 human papers and synthetic AI controls.",
+  "heuristic_weight": 0.6,
+  "id": "pl_technical_ood_2026_05_24",
+  "method": "grid_search_fixed_model_weights_heuristic_weight_midpoint_threshold",
+  "metrics": {
+    "all": {
+      "ai_control": {
+        "max": 0.7506591441631317,
+        "mean": 0.5930798100456596,
+        "min": 0.4679967130422592,
+        "n": 8
+      },
+      "false_negatives_at_threshold": 0,
+      "false_positives_at_threshold": 0,
+      "human": {
+        "max": 0.3725292056798935,
+        "mean": 0.2999012497348542,
+        "min": 0.20371978479623798,
+        "n": 33
+      },
+      "margin": 0.0954675073623657
+    },
+    "heldout": {
+      "ai_control": {
+        "max": 0.6496014615893364,
+        "mean": 0.5361161779761314,
+        "min": 0.4679967130422592,
+        "n": 3
+      },
+      "false_negatives_at_threshold": 0,
+      "false_positives_at_threshold": 0,
+      "human": {
+        "max": 0.3663429917097092,
+        "mean": 0.290440042564335,
+        "min": 0.22690631175041198,
+        "n": 12
+      },
+      "margin": 0.10165372133255002
+    },
+    "record_selection": {
+      "ai_control_test_n": 3,
+      "ai_control_test_sources": [
+        "ai_synthetic_cybersecurity",
+        "ai_synthetic_energy_grid",
+        "ai_synthetic_statistics"
+      ],
+      "ai_control_total_n": 8,
+      "ai_control_train_n": 5,
+      "fit_heuristic_weight": true,
+      "fixed_weights": {
+        "meld": 0.75,
+        "raid": 0.25,
+        "tmr": 0.0
+      },
+      "heuristic_grid_step": 0.05,
+      "human_quality": "pl_clean",
+      "human_test_n": 12,
+      "human_test_sources": [
+        "bn_cyber_identity_2017",
+        "bn_ecological_engineering_2017",
+        "bn_fire_safety_2016",
+        "pe_distribution_reliability_2017"
+      ],
+      "human_total_n": 33,
+      "human_train_n": 21,
+      "max_heuristic_weight": 0.6,
+      "split_seed": "pl-technical-ood-v2",
+      "test_fraction": 0.34,
+      "view": "all"
+    },
+    "train": {
+      "ai_control": {
+        "max": 0.7506591441631317,
+        "mean": 0.6272579892873764,
+        "min": 0.49657441008090974,
+        "n": 5
+      },
+      "false_negatives_at_threshold": 0,
+      "false_positives_at_threshold": 0,
+      "human": {
+        "max": 0.3725292056798935,
+        "mean": 0.3053076538322937,
+        "min": 0.20371978479623798,
+        "n": 21
+      },
+      "margin": 0.12404520440101624
+    }
+  },
+  "schema_version": 1,
+  "source_result_file": "data/evaluation/polish_pre2020_technical_papers/broad_eval_windows_2026-05-24.json",
+  "source_run": {
+    "batch_size": 4,
+    "created_at": "2026-05-24T13:36:53+0200",
+    "device": "cpu",
+    "env": "OMP_NUM_THREADS=4 MKL_NUM_THREADS=4 taskset -c 0-3",
+    "excerpting": "three non-overlapping 220-word windows per clean Polish paper plus diverse synthetic AI controls",
+    "max_chunks": 2,
+    "overlap": 64,
+    "threads": 4,
+    "threshold": 0.5
+  },
+  "threshold": 0.4345518078804016,
+  "top_candidates": [
+    {
+      "ai_control": {
+        "max": 0.7506591441631317,
+        "mean": 0.6272579892873764,
+        "min": 0.49657441008090974,
+        "n": 5
+      },
+      "false_negatives": 0,
+      "false_positives": 0,
+      "heuristic_weight": 0.6,
+      "human": {
+        "max": 0.3725292056798935,
+        "mean": 0.3053076538322937,
+        "min": 0.20371978479623798,
+        "n": 21
+      },
+      "margin": 0.12404520440101624,
+      "threshold": 0.4345518078804016,
+      "weights": {
+        "meld": 0.75,
+        "raid": 0.25,
+        "tmr": 0.0
+      }
+    },
+    {
+      "ai_control": {
+        "max": 0.7207415371835232,
+        "mean": 0.6131652379482985,
+        "min": 0.49239621134102346,
+        "n": 5
+      },
+      "false_negatives": 0,
+      "false_positives": 0,
+      "heuristic_weight": 0.55,
+      "human": {
+        "max": 0.38784535638988016,
+        "mean": 0.3097211105613304,
+        "min": 0.2004347578957677,
+        "n": 21
+      },
+      "margin": 0.1045508549511433,
+      "threshold": 0.44012078386545184,
+      "weights": {
+        "meld": 0.75,
+        "raid": 0.25,
+        "tmr": 0.0
+      }
+    },
+    {
+      "ai_control": {
+        "max": 0.6908239302039146,
+        "mean": 0.5990724866092205,
+        "min": 0.4882180126011372,
+        "n": 5
+      },
+      "false_negatives": 0,
+      "false_positives": 0,
+      "heuristic_weight": 0.5,
+      "human": {
+        "max": 0.40316150709986687,
+        "mean": 0.3141345672903671,
+        "min": 0.19714973099529742,
+        "n": 21
+      },
+      "margin": 0.08505650550127031,
+      "threshold": 0.445689759850502,
+      "weights": {
+        "meld": 0.75,
+        "raid": 0.25,
+        "tmr": 0.0
+      }
+    },
+    {
+      "ai_control": {
+        "max": 0.6609063232243061,
+        "mean": 0.5849797352701426,
+        "min": 0.48403981386125094,
+        "n": 5
+      },
+      "false_negatives": 0,
+      "false_positives": 0,
+      "heuristic_weight": 0.45,
+      "human": {
+        "max": 0.4184776578098536,
+        "mean": 0.31854802401940385,
+        "min": 0.1938647040948272,
+        "n": 21
+      },
+      "margin": 0.06556215605139737,
+      "threshold": 0.45125873583555226,
+      "weights": {
+        "meld": 0.75,
+        "raid": 0.25,
+        "tmr": 0.0
+      }
+    },
+    {
+      "ai_control": {
+        "max": 0.6309887162446975,
+        "mean": 0.5708869839310646,
+        "min": 0.4798616151213646,
+        "n": 5
+      },
+      "false_negatives": 0,
+      "false_positives": 0,
+      "heuristic_weight": 0.4,
+      "human": {
+        "max": 0.4337938085198403,
+        "mean": 0.32296148074844055,
+        "min": 0.19057967719435692,
+        "n": 21
+      },
+      "margin": 0.04606780660152432,
+      "threshold": 0.45682771182060244,
+      "weights": {
+        "meld": 0.75,
+        "raid": 0.25,
+        "tmr": 0.0
+      }
+    },
+    {
+      "ai_control": {
+        "max": 0.601071109265089,
+        "mean": 0.5567942325919867,
+        "min": 0.4756834163814783,
+        "n": 5
+      },
+      "false_negatives": 0,
+      "false_positives": 0,
+      "heuristic_weight": 0.35,
+      "human": {
+        "max": 0.4491099592298269,
+        "mean": 0.32737493747747726,
+        "min": 0.18729465029388667,
+        "n": 21
+      },
+      "margin": 0.026573457151651436,
+      "threshold": 0.4623966878056526,
+      "weights": {
+        "meld": 0.75,
+        "raid": 0.25,
+        "tmr": 0.0
+      }
+    },
+    {
+      "ai_control": {
+        "max": 0.5718852663040161,
+        "mean": 0.5427014812529087,
+        "min": 0.47150521764159203,
+        "n": 5
+      },
+      "false_negatives": 0,
+      "false_positives": 0,
+      "heuristic_weight": 0.3,
+      "human": {
+        "max": 0.4644261099398136,
+        "mean": 0.33178839420651396,
+        "min": 0.18400962339341642,
+        "n": 21
+      },
+      "margin": 0.007079107701778442,
+      "threshold": 0.4679656637907028,
+      "weights": {
+        "meld": 0.75,
+        "raid": 0.25,
+        "tmr": 0.0
+      }
+    },
+    {
+      "ai_control": {
+        "max": 0.5557464078813792,
+        "mean": 0.5286087299138308,
+        "min": 0.46732701890170575,
+        "n": 5
+      },
+      "false_negatives": 1,
+      "false_positives": 1,
+      "heuristic_weight": 0.25,
+      "human": {
+        "max": 0.4797422606498003,
+        "mean": 0.3362018509355507,
+        "min": 0.18072459649294614,
+        "n": 21
+      },
+      "margin": -0.012415241748094552,
+      "threshold": 0.47353463977575305,
+      "weights": {
+        "meld": 0.75,
+        "raid": 0.25,
+        "tmr": 0.0
+      }
+    },
+    {
+      "ai_control": {
+        "max": 0.557462835073471,
+        "mean": 0.5145159785747528,
+        "min": 0.46314882016181946,
+        "n": 5
+      },
+      "false_negatives": 1,
+      "false_positives": 1,
+      "heuristic_weight": 0.2,
+      "human": {
+        "max": 0.495058411359787,
+        "mean": 0.3406153076645874,
+        "min": 0.17743956959247592,
+        "n": 21
+      },
+      "margin": -0.031909591197967546,
+      "threshold": 0.47910361576080324,
+      "weights": {
+        "meld": 0.75,
+        "raid": 0.25,
+        "tmr": 0.0
+      }
+    },
+    {
+      "ai_control": {
+        "max": 0.559179262265563,
+        "mean": 0.5004232272356749,
+        "min": 0.4589706214219332,
+        "n": 5
+      },
+      "false_negatives": 3,
+      "false_positives": 1,
+      "heuristic_weight": 0.15,
+      "human": {
+        "max": 0.5103745620697737,
+        "mean": 0.34502876439362407,
+        "min": 0.17415454269200564,
+        "n": 21
+      },
+      "margin": -0.05140394064784054,
+      "threshold": 0.4846725917458534,
+      "weights": {
+        "meld": 0.75,
+        "raid": 0.25,
+        "tmr": 0.0
+      }
+    }
+  ],
+  "weights": {
+    "meld": 0.75,
+    "raid": 0.25,
+    "tmr": 0.0
+  }
+}

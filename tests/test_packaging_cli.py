@@ -128,6 +128,8 @@ class PackagingCLITests(unittest.TestCase):
         self.assertEqual(scripts.get("ai-detector"), "run_ensemble:main")
         self.assertEqual(scripts.get("ai-detector-deploy"), "deploy_meld:main")
         self.assertEqual(scripts.get("ai-detector-daemon"), "detector_daemon:main")
+        self.assertEqual(scripts.get("ai-detector-heuristic"), "heuristic_detector:main")
+        self.assertEqual(scripts.get("ai-detector-calibrate"), "calibrate_detector:main")
 
     def test_modules_importable_without_inference_dependencies(self) -> None:
         _run_import_smoke(
@@ -136,6 +138,9 @@ class PackagingCLITests(unittest.TestCase):
         )
         _run_import_smoke("deploy_meld", ("parse_args", "main"))
         _run_import_smoke("detector_daemon", ("parse_args", "main", "DetectorDaemon"))
+        _run_import_smoke("heuristic_detector", ("parse_args", "main", "analyze_text", "build_payload"))
+        _run_import_smoke("calibration_config", ("load_calibration_config", "calibration_payload"))
+        _run_import_smoke("calibrate_detector", ("parse_args", "main", "fit_calibration"))
 
     def test_parse_project_scripts_fallback_parses_quoted_keys_and_inline_comments(self) -> None:
         content = textwrap.dedent(
@@ -165,6 +170,7 @@ class PackagingCLITests(unittest.TestCase):
         self.assertIn("--text-file", output)
         self.assertIn("--quiet", output)
         self.assertIn("--json", output)
+        self.assertIn("--calibration-file", output)
 
     def test_deploy_meld_help_smoke(self) -> None:
         result = _run_subprocess([sys.executable, str(PROJECT_ROOT / "deploy_meld.py"), "--help"])
@@ -182,6 +188,24 @@ class PackagingCLITests(unittest.TestCase):
         self.assertIn("usage:", output)
         self.assertIn("--weights", output)
         self.assertIn("--experts", output)
+        self.assertIn("--calibration-file", output)
+
+    def test_heuristic_detector_help_smoke(self) -> None:
+        result = _run_subprocess([sys.executable, str(PROJECT_ROOT / "heuristic_detector.py"), "--help"])
+        self.assertEqual(result.returncode, 0)
+        output = (result.stdout + result.stderr).lower()
+        self.assertIn("usage:", output)
+        self.assertIn("--text", output)
+        self.assertIn("--text-file", output)
+        self.assertIn("--json", output)
+
+    def test_calibrate_detector_help_smoke(self) -> None:
+        result = _run_subprocess([sys.executable, str(PROJECT_ROOT / "calibrate_detector.py"), "--help"])
+        self.assertEqual(result.returncode, 0)
+        output = (result.stdout + result.stderr).lower()
+        self.assertIn("usage:", output)
+        self.assertIn("--baseline-result", output)
+        self.assertIn("--output", output)
 
     def test_main_json_contract_subprocess(self) -> None:
         script = textwrap.dedent(

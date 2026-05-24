@@ -1,14 +1,13 @@
-# AGENTS.md (ai_detector documentation scope)
+# AGENTS.md (ai_detector production scope)
 
 ## Scope
 
-Allowed file set for this workspace role:
-- `README.md`
-- `AGENTS.md`
-- `data/evaluation/README.md`
-- `reports/iteration_ledger.md`
+This repo now includes detector runtime code, calibration fixtures, tests, and
+GitHub workflows. Agents may edit source, tests, docs, evaluation metadata, and
+workflow files when the task requires it.
 
-Do not edit source code, tests, or model artifacts in this role.
+Do not edit model artifact directories (`meld_model`, `tmr_model`, `raid_model`)
+unless the user explicitly asks for model deployment or refresh.
 
 ## Documentation target
 
@@ -19,6 +18,7 @@ Document the CLI in a way that another agent can:
 - interpret outputs
 - validate quickly
 - run smoke checks
+- use calibration files
 
 ## Mandatory content checklist
 
@@ -42,6 +42,10 @@ Document the CLI in a way that another agent can:
 After any doc change, run and verify:
 - `ai-detector --help` after package install, or `python3 run_ensemble.py --help`
   from a checkout fallback
+- `ai-detector-heuristic --help` after package install, or
+  `python3 heuristic_detector.py --help` from a checkout fallback
+- `ai-detector-calibrate --help` after package install, or
+  `python3 calibrate_detector.py --help` from a checkout fallback
 - quick checks from README
 - heavy smoke test from README
 - output keys expected by operator scripts are still present (`experts.*`, `ensemble`, `calibration`)
@@ -52,9 +56,11 @@ and keep negative evaluation outcomes visible (no hiding of poor OOD/PL cases).
 
 ## Development governance
 
-- Coding and code modifications are done by dedicated small Spark workers, not in this role.
-- This role is reviewable and self-contained: edit only the documentation files
-  listed in the scope above and keep the contract stable.
+- Keep runtime changes covered by unit tests.
+- Keep negative PL/OOD outcomes visible; do not hide false-positive cases when
+  tuning weights, thresholds, or calibration files.
+- Calibration files are operating-point calibrations unless a probability
+  calibration method is explicitly implemented and validated.
 
 ## Daemon usage guidance
 

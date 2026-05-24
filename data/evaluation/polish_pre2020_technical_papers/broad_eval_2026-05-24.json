@@ -1,0 +1,2844 @@
+{
+  "run": {
+    "created_at": "2026-05-24T13:01:27+0200",
+    "device": "cpu",
+    "threads": 4,
+    "env": "OMP_NUM_THREADS=4 MKL_NUM_THREADS=4 taskset -c 0-3",
+    "max_chunks": 4,
+    "batch_size": 4,
+    "overlap": 64,
+    "threshold": 0.5,
+    "excerpting": "span-preserving first 180/700 words"
+  },
+  "records": [
+    {
+      "id": "umk_biomass_2018::short_180w",
+      "source_id": "umk_biomass_2018",
+      "label": "human_pre2020",
+      "view": "short_180w",
+      "field": "environmental_energy",
+      "year": 2018,
+      "title": "Potencjał techniczny odpadowej biomasy stałej na cele energetyczne w Polsce",
+      "url": "https://repozytorium.umk.pl/server/api/core/bitstreams/51364810-2bde-4343-ab1e-0ebf0ae2c12c/content",
+      "quality": "pl_clean",
+      "word_count": 180,
+      "scores": {
+        "heuristic": 0.22,
+        "meld": 0.20360863208770752,
+        "tmr": 0.9108331799507141,
+        "raid": 0.5550102591514587,
+        "ensemble_default": 0.5529552698135376
+      },
+      "labels": {
+        "heuristic": "human",
+        "ensemble_default": "ai"
+      },
+      "heuristic_site_metrics": {
+        "variation": 12,
+        "vocabulary": 20,
+        "entropy": 26,
+        "repetition": 33,
+        "signatures": 17,
+        "structure": 32
+      }
+    },
+    {
+      "id": "umk_biomass_2018::long_700w",
+      "source_id": "umk_biomass_2018",
+      "label": "human_pre2020",
+      "view": "long_700w",
+      "field": "environmental_energy",
+      "year": 2018,
+      "title": "Potencjał techniczny odpadowej biomasy stałej na cele energetyczne w Polsce",
+      "url": "https://repozytorium.umk.pl/server/api/core/bitstreams/51364810-2bde-4343-ab1e-0ebf0ae2c12c/content",
+      "quality": "pl_clean",
+      "word_count": 700,
+      "scores": {
+        "heuristic": 0.29,
+        "meld": 0.36344243586063385,
+        "tmr": 0.8630181103944778,
+        "raid": 0.28572261333465576,
+        "ensemble_default": 0.5026548670232296
+      },
+      "labels": {
+        "heuristic": "human",
+        "ensemble_default": "ai"
+      },
+      "heuristic_site_metrics": {
+        "variation": 12,
+        "vocabulary": 27,
+        "entropy": 16,
+        "repetition": 99,
+        "signatures": 18,
+        "structure": 28
+      }
+    },
+    {
+      "id": "pe_distribution_reliability_2017::short_180w",
+      "source_id": "pe_distribution_reliability_2017",
+      "label": "human_pre2020",
+      "view": "short_180w",
+      "field": "electrical_power",
+      "year": 2017,
+      "title": "Analiza poziomu niezawodności zasilania odbiorców w elektroenergetycznych sieciach dystrybucyjnych",
+      "url": "https://archiwum.pe.org.pl/articles/2017/3/1.pdf",
+      "quality": "pl_clean",
+      "word_count": 180,
+      "scores": {
+        "heuristic": 0.25,
+        "meld": 0.2140895575284958,
+        "tmr": 0.980101466178894,
+        "raid": 0.6601616144180298,
+        "ensemble_default": 0.6140772661566735
+      },
+      "labels": {
+        "heuristic": "human",
+        "ensemble_default": "ai"
+      },
+      "heuristic_site_metrics": {
+        "variation": 19,
+        "vocabulary": 22,
+        "entropy": 29,
+        "repetition": 26,
+        "signatures": 17,
+        "structure": 50
+      }
+    },
+    {
+      "id": "pe_distribution_reliability_2017::long_700w",
+      "source_id": "pe_distribution_reliability_2017",
+      "label": "human_pre2020",
+      "view": "long_700w",
+      "field": "electrical_power",
+      "year": 2017,
+      "title": "Analiza poziomu niezawodności zasilania odbiorców w elektroenergetycznych sieciach dystrybucyjnych",
+      "url": "https://archiwum.pe.org.pl/articles/2017/3/1.pdf",
+      "quality": "pl_clean",
+      "word_count": 700,
+      "scores": {
+        "heuristic": 0.31,
+        "meld": 0.2851080149412155,
+        "tmr": 0.7236936697736382,
+        "raid": 0.7984232306480408,
+        "ensemble_default": 0.5992353022191674
+      },
+      "labels": {
+        "heuristic": "human",
+        "ensemble_default": "ai"
+      },
+      "heuristic_site_metrics": {
+        "variation": 15,
+        "vocabulary": 37,
+        "entropy": 19,
+        "repetition": 99,
+        "signatures": 18,
+        "structure": 33
+      }
+    },
+    {
+      "id": "bn_geology_energy_storage_2017::short_180w",
+      "source_id": "bn_geology_energy_storage_2017",
+      "label": "human_pre2020",
+      "view": "short_180w",
+      "field": "geology_energy",
+      "year": 2017,
+      "title": "Przegląd Geologiczny technical energy/geology article",
+      "url": "https://bibliotekanauki.pl/articles/2075739.pdf",
+      "quality": "pl_clean",
+      "word_count": 180,
+      "scores": {
+        "heuristic": 0.27,
+        "meld": 0.02580740489065647,
+        "tmr": 0.01681463047862053,
+        "raid": 0.3006233870983124,
+        "ensemble_default": 0.11352906346321107
+      },
+      "labels": {
+        "heuristic": "human",
+        "ensemble_default": "human"
+      },
+      "heuristic_site_metrics": {
+        "variation": 14,
+        "vocabulary": 29,
+        "entropy": 33,
+        "repetition": 68,
+        "signatures": 12,
+        "structure": 41
+      }
+    },
+    {
+      "id": "bn_geology_energy_storage_2017::long_700w",
+      "source_id": "bn_geology_energy_storage_2017",
+      "label": "human_pre2020",
+      "view": "long_700w",
+      "field": "geology_energy",
+      "year": 2017,
+      "title": "Przegląd Geologiczny technical energy/geology article",
+      "url": "https://bibliotekanauki.pl/articles/2075739.pdf",
+      "quality": "pl_clean",
+      "word_count": 700,
+      "scores": {
+        "heuristic": 0.43,
+        "meld": 0.04551539570093155,
+        "tmr": 0.2519214227795601,
+        "raid": 0.23792295157909393,
+        "ensemble_default": 0.17712387807667254
+      },
+      "labels": {
+        "heuristic": "human",
+        "ensemble_default": "human"
+      },
+      "heuristic_site_metrics": {
+        "variation": 12,
+        "vocabulary": 35,
+        "entropy": 19,
+        "repetition": 91,
+        "signatures": 19,
+        "structure": 23
+      }
+    },
+    {
+      "id": "bn_building_facades_2016::short_180w",
+      "source_id": "bn_building_facades_2016",
+      "label": "human_pre2020",
+      "view": "short_180w",
+      "field": "construction",
+      "year": 2016,
+      "title": "Elewacje wentylowane - problemy wykonania i odbioru",
+      "url": "https://bibliotekanauki.pl/articles/390322.pdf",
+      "quality": "pl_clean",
+      "word_count": 180,
+      "scores": {
+        "heuristic": 0.21,
+        "meld": 0.30780351161956787,
+        "tmr": 0.45319604873657227,
+        "raid": 0.09893961250782013,
+        "ensemble_default": 0.28685796216130255
+      },
+      "labels": {
+        "heuristic": "human",
+        "ensemble_default": "human"
+      },
+      "heuristic_site_metrics": {
+        "variation": 12,
+        "vocabulary": 9,
+        "entropy": 27,
+        "repetition": 48,
+        "signatures": 13,
+        "structure": 30
+      }
+    },
+    {
+      "id": "bn_building_facades_2016::long_700w",
+      "source_id": "bn_building_facades_2016",
+      "label": "human_pre2020",
+      "view": "long_700w",
+      "field": "construction",
+      "year": 2016,
+      "title": "Elewacje wentylowane - problemy wykonania i odbioru",
+      "url": "https://bibliotekanauki.pl/articles/390322.pdf",
+      "quality": "pl_clean",
+      "word_count": 700,
+      "scores": {
+        "heuristic": 0.41,
+        "meld": 0.4221085458993912,
+        "tmr": 0.5566854849457741,
+        "raid": 0.12880580127239227,
+        "ensemble_default": 0.3697290300577879
+      },
+      "labels": {
+        "heuristic": "human",
+        "ensemble_default": "human"
+      },
+      "heuristic_site_metrics": {
+        "variation": 16,
+        "vocabulary": 14,
+        "entropy": 19,
+        "repetition": 89,
+        "signatures": 13,
+        "structure": 30
+      }
+    },
+    {
+      "id": "bn_road_recycling_2016::short_180w",
+      "source_id": "bn_road_recycling_2016",
+      "label": "human_pre2020",
+      "view": "short_180w",
+      "field": "road_materials",
+      "year": 2016,
+      "title": "Wodoodporność recyklowanej podbudowy z asfaltem spienionym",
+      "url": "https://bibliotekanauki.pl/articles/391058.pdf",
+      "quality": "pl_clean",
+      "word_count": 180,
+      "scores": {
+        "heuristic": 0.27,
+        "meld": 0.3089476227760315,
+        "tmr": 0.3423727974295616,
+        "raid": 0.34170395135879517,
+        "ensemble_default": 0.3307875188440085
+      },
+      "labels": {
+        "heuristic": "human",
+        "ensemble_default": "human"
+      },
+      "heuristic_site_metrics": {
+        "variation": 13,
+        "vocabulary": 25,
+        "entropy": 28,
+        "repetition": 74,
+        "signatures": 13,
+        "structure": 39
+      }
+    },
+    {
+      "id": "bn_road_recycling_2016::long_700w",
+      "source_id": "bn_road_recycling_2016",
+      "label": "human_pre2020",
+      "view": "long_700w",
+      "field": "road_materials",
+      "year": 2016,
+      "title": "Wodoodporność recyklowanej podbudowy z asfaltem spienionym",
+      "url": "https://bibliotekanauki.pl/articles/391058.pdf",
+      "quality": "pl_clean",
+      "word_count": 700,
+      "scores": {
+        "heuristic": 0.38,
+        "meld": 0.4024088829755783,
+        "tmr": 0.4440470691770315,
+        "raid": 0.2616603374481201,
+        "ensemble_default": 0.3697024643979967
+      },
+      "labels": {
+        "heuristic": "human",
+        "ensemble_default": "human"
+      },
+      "heuristic_site_metrics": {
+        "variation": 14,
+        "vocabulary": 30,
+        "entropy": 18,
+        "repetition": 100,
+        "signatures": 14,
+        "structure": 27
+      }
+    },
+    {
+      "id": "bn_fire_safety_2016::short_180w",
+      "source_id": "bn_fire_safety_2016",
+      "label": "human_pre2020",
+      "view": "short_180w",
+      "field": "fire_structural_engineering",
+      "year": 2016,
+      "title": "Projektowanie konstrukcji budowlanych z uwagi na warunki pożarowe",
+      "url": "https://bibliotekanauki.pl/articles/390772.pdf",
+      "quality": "pl_clean",
+      "word_count": 180,
+      "scores": {
+        "heuristic": 0.2,
+        "meld": 0.3982687294483185,
+        "tmr": 0.852625697851181,
+        "raid": 0.10775614529848099,
+        "ensemble_default": 0.45233737625181675
+      },
+      "labels": {
+        "heuristic": "human",
+        "ensemble_default": "human"
+      },
+      "heuristic_site_metrics": {
+        "variation": 11,
+        "vocabulary": 21,
+        "entropy": 28,
+        "repetition": 33,
+        "signatures": 13,
+        "structure": 26
+      }
+    },
+    {
+      "id": "bn_fire_safety_2016::long_700w",
+      "source_id": "bn_fire_safety_2016",
+      "label": "human_pre2020",
+      "view": "long_700w",
+      "field": "fire_structural_engineering",
+      "year": 2016,
+      "title": "Projektowanie konstrukcji budowlanych z uwagi na warunki pożarowe",
+      "url": "https://bibliotekanauki.pl/articles/390772.pdf",
+      "quality": "pl_clean",
+      "word_count": 700,
+      "scores": {
+        "heuristic": 0.32,
+        "meld": 0.38443566858768463,
+        "tmr": 0.5686335666105151,
+        "raid": 0.21024812757968903,
+        "ensemble_default": 0.38773908640258015
+      },
+      "labels": {
+        "heuristic": "human",
+        "ensemble_default": "human"
+      },
+      "heuristic_site_metrics": {
+        "variation": 11,
+        "vocabulary": 29,
+        "entropy": 18,
+        "repetition": 100,
+        "signatures": 15,
+        "structure": 21
+      }
+    },
+    {
+      "id": "bn_ecological_engineering_2017::short_180w",
+      "source_id": "bn_ecological_engineering_2017",
+      "label": "human_pre2020",
+      "view": "short_180w",
+      "field": "ecological_engineering",
+      "year": 2017,
+      "title": "Odniesienia koncepcji retardacja przekształcania zasobów przyrody...",
+      "url": "https://bibliotekanauki.pl/articles/401593.pdf",
+      "quality": "pl_clean",
+      "word_count": 180,
+      "scores": {
+        "heuristic": 0.27,
+        "meld": 0.23913030326366425,
+        "tmr": 0.15016308054327965,
+        "raid": 0.28886526823043823,
+        "ensemble_default": 0.22618365820497277
+      },
+      "labels": {
+        "heuristic": "human",
+        "ensemble_default": "human"
+      },
+      "heuristic_site_metrics": {
+        "variation": 14,
+        "vocabulary": 11,
+        "entropy": 28,
+        "repetition": 26,
+        "signatures": 35,
+        "structure": 34
+      }
+    },
+    {
+      "id": "bn_ecological_engineering_2017::long_700w",
+      "source_id": "bn_ecological_engineering_2017",
+      "label": "human_pre2020",
+      "view": "long_700w",
+      "field": "ecological_engineering",
+      "year": 2017,
+      "title": "Odniesienia koncepcji retardacja przekształcania zasobów przyrody...",
+      "url": "https://bibliotekanauki.pl/articles/401593.pdf",
+      "quality": "pl_clean",
+      "word_count": 700,
+      "scores": {
+        "heuristic": 0.28,
+        "meld": 0.13635754585266113,
+        "tmr": 0.43011243268847466,
+        "raid": 0.7244687676429749,
+        "ensemble_default": 0.42737336169928314
+      },
+      "labels": {
+        "heuristic": "human",
+        "ensemble_default": "human"
+      },
+      "heuristic_site_metrics": {
+        "variation": 11,
+        "vocabulary": 12,
+        "entropy": 18,
+        "repetition": 43,
+        "signatures": 13,
+        "structure": 21
+      }
+    },
+    {
+      "id": "bn_blockchain_education_2017::short_180w",
+      "source_id": "bn_blockchain_education_2017",
+      "label": "human_pre2020",
+      "view": "short_180w",
+      "field": "business_informatics",
+      "year": 2017,
+      "title": "Możliwości wykorzystania technologii blockchain w obszarze edukacji",
+      "url": "https://bibliotekanauki.pl/articles/432201.pdf",
+      "quality": "pl_clean",
+      "word_count": 180,
+      "scores": {
+        "heuristic": 0.24,
+        "meld": 0.3479912579059601,
+        "tmr": 0.7783716320991516,
+        "raid": 0.6728549599647522,
+        "ensemble_default": 0.5972218030691147
+      },
+      "labels": {
+        "heuristic": "human",
+        "ensemble_default": "ai"
+      },
+      "heuristic_site_metrics": {
+        "variation": 11,
+        "vocabulary": 14,
+        "entropy": 29,
+        "repetition": 33,
+        "signatures": 23,
+        "structure": 33
+      }
+    },
+    {
+      "id": "bn_blockchain_education_2017::long_700w",
+      "source_id": "bn_blockchain_education_2017",
+      "label": "human_pre2020",
+      "view": "long_700w",
+      "field": "business_informatics",
+      "year": 2017,
+      "title": "Możliwości wykorzystania technologii blockchain w obszarze edukacji",
+      "url": "https://bibliotekanauki.pl/articles/432201.pdf",
+      "quality": "pl_clean",
+      "word_count": 700,
+      "scores": {
+        "heuristic": 0.27,
+        "meld": 0.2837635278701782,
+        "tmr": 0.6251171678304672,
+        "raid": 0.576958954334259,
+        "ensemble_default": 0.49316471979022025
+      },
+      "labels": {
+        "heuristic": "human",
+        "ensemble_default": "human"
+      },
+      "heuristic_site_metrics": {
+        "variation": 15,
+        "vocabulary": 16,
+        "entropy": 19,
+        "repetition": 78,
+        "signatures": 20,
+        "structure": 25
+      }
+    },
+    {
+      "id": "bn_it_requirements_2017::short_180w",
+      "source_id": "bn_it_requirements_2017",
+      "label": "human_pre2020",
+      "view": "short_180w",
+      "field": "information_systems",
+      "year": 2017,
+      "title": "Metoda zbierania wymagań w projektowaniu systemów informatycznych",
+      "url": "https://bibliotekanauki.pl/articles/455086.pdf",
+      "quality": "pl_clean",
+      "word_count": 180,
+      "scores": {
+        "heuristic": 0.24,
+        "meld": 0.32582587003707886,
+        "tmr": 0.8812500536441803,
+        "raid": 0.4888671338558197,
+        "ensemble_default": 0.5629194676876068
+      },
+      "labels": {
+        "heuristic": "human",
+        "ensemble_default": "ai"
+      },
+      "heuristic_site_metrics": {
+        "variation": 11,
+        "vocabulary": 12,
+        "entropy": 27,
+        "repetition": 33,
+        "signatures": 27,
+        "structure": 29
+      }
+    },
+    {
+      "id": "bn_it_requirements_2017::long_700w",
+      "source_id": "bn_it_requirements_2017",
+      "label": "human_pre2020",
+      "view": "long_700w",
+      "field": "information_systems",
+      "year": 2017,
+      "title": "Metoda zbierania wymagań w projektowaniu systemów informatycznych",
+      "url": "https://bibliotekanauki.pl/articles/455086.pdf",
+      "quality": "pl_clean",
+      "word_count": 700,
+      "scores": {
+        "heuristic": 0.29,
+        "meld": 0.3421895205974579,
+        "tmr": 0.488977606408298,
+        "raid": 0.23577918112277985,
+        "ensemble_default": 0.3555141768883914
+      },
+      "labels": {
+        "heuristic": "human",
+        "ensemble_default": "human"
+      },
+      "heuristic_site_metrics": {
+        "variation": 16,
+        "vocabulary": 14,
+        "entropy": 17,
+        "repetition": 67,
+        "signatures": 18,
+        "structure": 24
+      }
+    },
+    {
+      "id": "bn_cyber_identity_2017::short_180w",
+      "source_id": "bn_cyber_identity_2017",
+      "label": "human_pre2020",
+      "view": "short_180w",
+      "field": "cybersecurity_education",
+      "year": 2017,
+      "title": "Edukacja w zakresie metod i środków ochrony tożsamości w sieci",
+      "url": "https://bibliotekanauki.pl/articles/457287.pdf",
+      "quality": "pl_clean",
+      "word_count": 180,
+      "scores": {
+        "heuristic": 0.26,
+        "meld": 0.29840925335884094,
+        "tmr": 0.974056214094162,
+        "raid": 0.9576119780540466,
+        "ensemble_default": 0.7389096495509148
+      },
+      "labels": {
+        "heuristic": "human",
+        "ensemble_default": "ai"
+      },
+      "heuristic_site_metrics": {
+        "variation": 15,
+        "vocabulary": 34,
+        "entropy": 29,
+        "repetition": 43,
+        "signatures": 20,
+        "structure": 34
+      }
+    },
+    {
+      "id": "bn_cyber_identity_2017::long_700w",
+      "source_id": "bn_cyber_identity_2017",
+      "label": "human_pre2020",
+      "view": "long_700w",
+      "field": "cybersecurity_education",
+      "year": 2017,
+      "title": "Edukacja w zakresie metod i środków ochrony tożsamości w sieci",
+      "url": "https://bibliotekanauki.pl/articles/457287.pdf",
+      "quality": "pl_clean",
+      "word_count": 700,
+      "scores": {
+        "heuristic": 0.29,
+        "meld": 0.3967982977628708,
+        "tmr": 0.5926719857379794,
+        "raid": 0.5129415988922119,
+        "ensemble_default": 0.49976390416733923
+      },
+      "labels": {
+        "heuristic": "human",
+        "ensemble_default": "human"
+      },
+      "heuristic_site_metrics": {
+        "variation": 14,
+        "vocabulary": 35,
+        "entropy": 16,
+        "repetition": 74,
+        "signatures": 13,
+        "structure": 24
+      }
+    },
+    {
+      "id": "bn_nonparametric_stats_2017::short_180w",
+      "source_id": "bn_nonparametric_stats_2017",
+      "label": "human_pre2020",
+      "view": "short_180w",
+      "field": "statistics_engineering_education",
+      "year": 2017,
+      "title": "Wybrane statystyki nieparametryczne",
+      "url": "https://bibliotekanauki.pl/articles/456376.pdf",
+      "quality": "pl_clean",
+      "word_count": 180,
+      "scores": {
+        "heuristic": 0.21,
+        "meld": 0.21579082310199738,
+        "tmr": 0.9797947704792023,
+        "raid": 0.6447489261627197,
+        "ensemble_default": 0.6094682997465134
+      },
+      "labels": {
+        "heuristic": "human",
+        "ensemble_default": "ai"
+      },
+      "heuristic_site_metrics": {
+        "variation": 13,
+        "vocabulary": 15,
+        "entropy": 30,
+        "repetition": 15,
+        "signatures": 19,
+        "structure": 38
+      }
+    },
+    {
+      "id": "bn_nonparametric_stats_2017::long_700w",
+      "source_id": "bn_nonparametric_stats_2017",
+      "label": "human_pre2020",
+      "view": "long_700w",
+      "field": "statistics_engineering_education",
+      "year": 2017,
+      "title": "Wybrane statystyki nieparametryczne",
+      "url": "https://bibliotekanauki.pl/articles/456376.pdf",
+      "quality": "pl_clean",
+      "word_count": 700,
+      "scores": {
+        "heuristic": 0.35,
+        "meld": 0.41512544453144073,
+        "tmr": 0.4909579595550895,
+        "raid": 0.5921977758407593,
+        "ensemble_default": 0.49858404382131993
+      },
+      "labels": {
+        "heuristic": "human",
+        "ensemble_default": "human"
+      },
+      "heuristic_site_metrics": {
+        "variation": 18,
+        "vocabulary": 21,
+        "entropy": 19,
+        "repetition": 99,
+        "signatures": 16,
+        "structure": 32
+      }
+    },
+    {
+      "id": "bn_maritime_technical_2017::short_180w",
+      "source_id": "bn_maritime_technical_2017",
+      "label": "human_pre2020",
+      "view": "short_180w",
+      "field": "maritime_transport",
+      "year": 2017,
+      "title": "Bulletin of the Maritime Institute technical article",
+      "url": "https://bibliotekanauki.pl/articles/111510.pdf",
+      "quality": "mixed_or_english",
+      "word_count": 180,
+      "scores": {
+        "heuristic": 0.25,
+        "meld": 0.01116909645497799,
+        "tmr": 0.9751058220863342,
+        "raid": 0.8026638031005859,
+        "ensemble_default": 0.5904614691063762
+      },
+      "labels": {
+        "heuristic": "human",
+        "ensemble_default": "ai"
+      },
+      "heuristic_site_metrics": {
+        "variation": 17,
+        "vocabulary": 36,
+        "entropy": 32,
+        "repetition": 33,
+        "signatures": 17,
+        "structure": 56
+      }
+    },
+    {
+      "id": "bn_maritime_technical_2017::long_700w",
+      "source_id": "bn_maritime_technical_2017",
+      "label": "human_pre2020",
+      "view": "long_700w",
+      "field": "maritime_transport",
+      "year": 2017,
+      "title": "Bulletin of the Maritime Institute technical article",
+      "url": "https://bibliotekanauki.pl/articles/111510.pdf",
+      "quality": "mixed_or_english",
+      "word_count": 700,
+      "scores": {
+        "heuristic": 0.25,
+        "meld": 0.023276183754205704,
+        "tmr": 0.49736190773546696,
+        "raid": 0.4757547676563263,
+        "ensemble_default": 0.3290424053557217
+      },
+      "labels": {
+        "heuristic": "human",
+        "ensemble_default": "human"
+      },
+      "heuristic_site_metrics": {
+        "variation": 16,
+        "vocabulary": 44,
+        "entropy": 22,
+        "repetition": 93,
+        "signatures": 17,
+        "structure": 39
+      }
+    },
+    {
+      "id": "ai_fixture_polish_generated_style::short_180w",
+      "source_id": "ai_fixture_polish_generated_style",
+      "label": "synthetic_ai_control",
+      "view": "short_180w",
+      "field": "synthetic_ai_control",
+      "year": 2026,
+      "title": "Existing local generated-style Polish technical sample",
+      "url": null,
+      "quality": "synthetic_ai_control",
+      "word_count": 180,
+      "scores": {
+        "heuristic": 0.53,
+        "meld": 0.4213990271091461,
+        "tmr": 0.962300568819046,
+        "raid": 0.9963623881340027,
+        "ensemble_default": 0.7896344450116157
+      },
+      "labels": {
+        "heuristic": "ai",
+        "ensemble_default": "ai"
+      },
+      "heuristic_site_metrics": {
+        "variation": 46,
+        "vocabulary": 6,
+        "entropy": 28,
+        "repetition": 15,
+        "signatures": 55,
+        "structure": 41
+      }
+    },
+    {
+      "id": "ai_fixture_polish_generated_style::long_700w",
+      "source_id": "ai_fixture_polish_generated_style",
+      "label": "synthetic_ai_control",
+      "view": "long_700w",
+      "field": "synthetic_ai_control",
+      "year": 2026,
+      "title": "Existing local generated-style Polish technical sample",
+      "url": null,
+      "quality": "synthetic_ai_control",
+      "word_count": 182,
+      "scores": {
+        "heuristic": 0.53,
+        "meld": 0.42056289315223694,
+        "tmr": 0.9630910158157349,
+        "raid": 0.9956254959106445,
+        "ensemble_default": 0.7893678325414657
+      },
+      "labels": {
+        "heuristic": "ai",
+        "ensemble_default": "ai"
+      },
+      "heuristic_site_metrics": {
+        "variation": 46,
+        "vocabulary": 6,
+        "entropy": 28,
+        "repetition": 15,
+        "signatures": 55,
+        "structure": 41
+      }
+    },
+    {
+      "id": "ai_synthetic_monitoring_generic::short_180w",
+      "source_id": "ai_synthetic_monitoring_generic",
+      "label": "synthetic_ai_control",
+      "view": "short_180w",
+      "field": "synthetic_ai_control",
+      "year": 2026,
+      "title": "Synthetic generic technical monitoring prose",
+      "url": null,
+      "quality": "synthetic_ai_control",
+      "word_count": 180,
+      "scores": {
+        "heuristic": 0.9,
+        "meld": 0.42153969407081604,
+        "tmr": 0.9621002972126007,
+        "raid": 0.9945297837257385,
+        "ensemble_default": 0.7890114226937295
+      },
+      "labels": {
+        "heuristic": "ai",
+        "ensemble_default": "ai"
+      },
+      "heuristic_site_metrics": {
+        "variation": 13,
+        "vocabulary": 7,
+        "entropy": 28,
+        "repetition": 11,
+        "signatures": 77,
+        "structure": 40
+      }
+    },
+    {
+      "id": "ai_synthetic_monitoring_generic::long_700w",
+      "source_id": "ai_synthetic_monitoring_generic",
+      "label": "synthetic_ai_control",
+      "view": "long_700w",
+      "field": "synthetic_ai_control",
+      "year": 2026,
+      "title": "Synthetic generic technical monitoring prose",
+      "url": null,
+      "quality": "synthetic_ai_control",
+      "word_count": 229,
+      "scores": {
+        "heuristic": 0.9,
+        "meld": 0.42028388381004333,
+        "tmr": 0.9411452015240988,
+        "raid": 0.9951381087303162,
+        "ensemble_default": 0.7818700128793716
+      },
+      "labels": {
+        "heuristic": "ai",
+        "ensemble_default": "ai"
+      },
+      "heuristic_site_metrics": {
+        "variation": 41,
+        "vocabulary": 8,
+        "entropy": 26,
+        "repetition": 11,
+        "signatures": 83,
+        "structure": 43
+      }
+    },
+    {
+      "id": "ai_synthetic_methods_generic::short_180w",
+      "source_id": "ai_synthetic_methods_generic",
+      "label": "synthetic_ai_control",
+      "view": "short_180w",
+      "field": "synthetic_ai_control",
+      "year": 2026,
+      "title": "Synthetic generic methods/materials prose",
+      "url": null,
+      "quality": "synthetic_ai_control",
+      "word_count": 145,
+      "scores": {
+        "heuristic": 0.98,
+        "meld": 0.4205625355243683,
+        "tmr": 0.9692830741405487,
+        "raid": 0.994196891784668,
+        "ensemble_default": 0.7909396508336068
+      },
+      "labels": {
+        "heuristic": "ai",
+        "ensemble_default": "ai"
+      },
+      "heuristic_site_metrics": {
+        "variation": 53,
+        "vocabulary": 4,
+        "entropy": 30,
+        "repetition": 11,
+        "signatures": 78,
+        "structure": 45
+      }
+    },
+    {
+      "id": "ai_synthetic_methods_generic::long_700w",
+      "source_id": "ai_synthetic_methods_generic",
+      "label": "synthetic_ai_control",
+      "view": "long_700w",
+      "field": "synthetic_ai_control",
+      "year": 2026,
+      "title": "Synthetic generic methods/materials prose",
+      "url": null,
+      "quality": "synthetic_ai_control",
+      "word_count": 145,
+      "scores": {
+        "heuristic": 0.98,
+        "meld": 0.4205625355243683,
+        "tmr": 0.9692830741405487,
+        "raid": 0.994196891784668,
+        "ensemble_default": 0.7909396508336068
+      },
+      "labels": {
+        "heuristic": "ai",
+        "ensemble_default": "ai"
+      },
+      "heuristic_site_metrics": {
+        "variation": 53,
+        "vocabulary": 4,
+        "entropy": 30,
+        "repetition": 11,
+        "signatures": 78,
+        "structure": 45
+      }
+    }
+  ],
+  "quality": [
+    {
+      "id": "umk_biomass_2018",
+      "field": "environmental_energy",
+      "year": 2018,
+      "title": "Potencjał techniczny odpadowej biomasy stałej na cele energetyczne w Polsce",
+      "url": "https://repozytorium.umk.pl/server/api/core/bitstreams/51364810-2bde-4343-ab1e-0ebf0ae2c12c/content",
+      "word_count": 2286,
+      "pl_stop_hits": 386,
+      "en_stop_hits": 62,
+      "pl_diacritic_ratio": 0.0591,
+      "quality": "pl_clean",
+      "clean_path": "/tmp/ai_detector_polish_papers/txt/umk_biomass_2018.clean.txt"
+    },
+    {
+      "id": "pe_distribution_reliability_2017",
+      "field": "electrical_power",
+      "year": 2017,
+      "title": "Analiza poziomu niezawodności zasilania odbiorców w elektroenergetycznych sieciach dystrybucyjnych",
+      "url": "https://archiwum.pe.org.pl/articles/2017/3/1.pdf",
+      "word_count": 2729,
+      "pl_stop_hits": 541,
+      "en_stop_hits": 75,
+      "pl_diacritic_ratio": 0.0515,
+      "quality": "pl_clean",
+      "clean_path": "/tmp/ai_detector_polish_papers/txt/pe_distribution_reliability_2017.clean.txt"
+    },
+    {
+      "id": "bn_geology_energy_storage_2017",
+      "field": "geology_energy",
+      "year": 2017,
+      "title": "Przegląd Geologiczny technical energy/geology article",
+      "url": "https://bibliotekanauki.pl/articles/2075739.pdf",
+      "word_count": 7222,
+      "pl_stop_hits": 1217,
+      "en_stop_hits": 348,
+      "pl_diacritic_ratio": 0.0424,
+      "quality": "pl_clean",
+      "clean_path": "/tmp/ai_detector_polish_papers/txt/bn_geology_energy_storage_2017.clean.txt"
+    },
+    {
+      "id": "bn_building_facades_2016",
+      "field": "construction",
+      "year": 2016,
+      "title": "Elewacje wentylowane - problemy wykonania i odbioru",
+      "url": "https://bibliotekanauki.pl/articles/390322.pdf",
+      "word_count": 1542,
+      "pl_stop_hits": 282,
+      "en_stop_hits": 7,
+      "pl_diacritic_ratio": 0.0589,
+      "quality": "pl_clean",
+      "clean_path": "/tmp/ai_detector_polish_papers/txt/bn_building_facades_2016.clean.txt"
+    },
+    {
+      "id": "bn_road_recycling_2016",
+      "field": "road_materials",
+      "year": 2016,
+      "title": "Wodoodporność recyklowanej podbudowy z asfaltem spienionym",
+      "url": "https://bibliotekanauki.pl/articles/391058.pdf",
+      "word_count": 2520,
+      "pl_stop_hits": 463,
+      "en_stop_hits": 2,
+      "pl_diacritic_ratio": 0.0555,
+      "quality": "pl_clean",
+      "clean_path": "/tmp/ai_detector_polish_papers/txt/bn_road_recycling_2016.clean.txt"
+    },
+    {
+      "id": "bn_fire_safety_2016",
+      "field": "fire_structural_engineering",
+      "year": 2016,
+      "title": "Projektowanie konstrukcji budowlanych z uwagi na warunki pożarowe",
+      "url": "https://bibliotekanauki.pl/articles/390772.pdf",
+      "word_count": 1961,
+      "pl_stop_hits": 400,
+      "en_stop_hits": 26,
+      "pl_diacritic_ratio": 0.0628,
+      "quality": "pl_clean",
+      "clean_path": "/tmp/ai_detector_polish_papers/txt/bn_fire_safety_2016.clean.txt"
+    },
+    {
+      "id": "bn_ecological_engineering_2017",
+      "field": "ecological_engineering",
+      "year": 2017,
+      "title": "Odniesienia koncepcji retardacja przekształcania zasobów przyrody...",
+      "url": "https://bibliotekanauki.pl/articles/401593.pdf",
+      "word_count": 8129,
+      "pl_stop_hits": 1603,
+      "en_stop_hits": 262,
+      "pl_diacritic_ratio": 0.0546,
+      "quality": "pl_clean",
+      "clean_path": "/tmp/ai_detector_polish_papers/txt/bn_ecological_engineering_2017.clean.txt"
+    },
+    {
+      "id": "bn_blockchain_education_2017",
+      "field": "business_informatics",
+      "year": 2017,
+      "title": "Możliwości wykorzystania technologii blockchain w obszarze edukacji",
+      "url": "https://bibliotekanauki.pl/articles/432201.pdf",
+      "word_count": 3167,
+      "pl_stop_hits": 661,
+      "en_stop_hits": 86,
+      "pl_diacritic_ratio": 0.0544,
+      "quality": "pl_clean",
+      "clean_path": "/tmp/ai_detector_polish_papers/txt/bn_blockchain_education_2017.clean.txt"
+    },
+    {
+      "id": "bn_it_requirements_2017",
+      "field": "information_systems",
+      "year": 2017,
+      "title": "Metoda zbierania wymagań w projektowaniu systemów informatycznych",
+      "url": "https://bibliotekanauki.pl/articles/455086.pdf",
+      "word_count": 2399,
+      "pl_stop_hits": 462,
+      "en_stop_hits": 59,
+      "pl_diacritic_ratio": 0.0555,
+      "quality": "pl_clean",
+      "clean_path": "/tmp/ai_detector_polish_papers/txt/bn_it_requirements_2017.clean.txt"
+    },
+    {
+      "id": "bn_cyber_identity_2017",
+      "field": "cybersecurity_education",
+      "year": 2017,
+      "title": "Edukacja w zakresie metod i środków ochrony tożsamości w sieci",
+      "url": "https://bibliotekanauki.pl/articles/457287.pdf",
+      "word_count": 1084,
+      "pl_stop_hits": 197,
+      "en_stop_hits": 42,
+      "pl_diacritic_ratio": 0.0611,
+      "quality": "pl_clean",
+      "clean_path": "/tmp/ai_detector_polish_papers/txt/bn_cyber_identity_2017.clean.txt"
+    },
+    {
+      "id": "bn_nonparametric_stats_2017",
+      "field": "statistics_engineering_education",
+      "year": 2017,
+      "title": "Wybrane statystyki nieparametryczne",
+      "url": "https://bibliotekanauki.pl/articles/456376.pdf",
+      "word_count": 1228,
+      "pl_stop_hits": 225,
+      "en_stop_hits": 32,
+      "pl_diacritic_ratio": 0.0572,
+      "quality": "pl_clean",
+      "clean_path": "/tmp/ai_detector_polish_papers/txt/bn_nonparametric_stats_2017.clean.txt"
+    },
+    {
+      "id": "bn_maritime_technical_2017",
+      "field": "maritime_transport",
+      "year": 2017,
+      "title": "Bulletin of the Maritime Institute technical article",
+      "url": "https://bibliotekanauki.pl/articles/111510.pdf",
+      "word_count": 3682,
+      "pl_stop_hits": 140,
+      "en_stop_hits": 1083,
+      "pl_diacritic_ratio": 0.0076,
+      "quality": "mixed_or_english",
+      "clean_path": "/tmp/ai_detector_polish_papers/txt/bn_maritime_technical_2017.clean.txt"
+    }
+  ],
+  "score_summary": {
+    "human_pre2020_short_180w": {
+      "heuristic": {
+        "n": 11,
+        "mean": 0.24000000000000002,
+        "median": 0.24,
+        "max": 0.27,
+        "p90": 0.27,
+        "false_positive_at_0_5": 0,
+        "false_positive_at_0_4": 0
+      },
+      "ensemble_default": {
+        "n": 11,
+        "mean": 0.462295212268152,
+        "median": 0.5529552698135376,
+        "max": 0.7389096495509148,
+        "p90": 0.6140772661566735,
+        "false_positive_at_0_5": 6,
+        "false_positive_at_0_4": 7
+      },
+      "meld": {
+        "n": 11,
+        "mean": 0.2623339060016654,
+        "median": 0.29840925335884094,
+        "max": 0.3982687294483185,
+        "p90": 0.3479912579059601,
+        "false_positive_at_0_5": 0,
+        "false_positive_at_0_4": 0
+      },
+      "tmr": {
+        "n": 11,
+        "mean": 0.6654163246805017,
+        "median": 0.852625697851181,
+        "max": 0.980101466178894,
+        "p90": 0.9797947704792023,
+        "false_positive_at_0_5": 7,
+        "false_positive_at_0_4": 8
+      },
+      "raid": {
+        "n": 11,
+        "mean": 0.4651948396455158,
+        "median": 0.4888671338558197,
+        "max": 0.9576119780540466,
+        "p90": 0.6728549599647522,
+        "false_positive_at_0_5": 5,
+        "false_positive_at_0_4": 6
+      }
+    },
+    "synthetic_ai_control_short_180w": {
+      "heuristic": {
+        "n": 3,
+        "mean": 0.8033333333333333,
+        "median": 0.9,
+        "max": 0.98,
+        "p90": 0.964,
+        "false_positive_at_0_5": 3,
+        "false_positive_at_0_4": 3
+      },
+      "ensemble_default": {
+        "n": 3,
+        "mean": 0.789861839512984,
+        "median": 0.7896344450116157,
+        "max": 0.7909396508336068,
+        "p90": 0.7906786096692087,
+        "false_positive_at_0_5": 3,
+        "false_positive_at_0_4": 3
+      },
+      "meld": {
+        "n": 3,
+        "mean": 0.42116708556811017,
+        "median": 0.4213990271091461,
+        "max": 0.42153969407081604,
+        "p90": 0.42151156067848206,
+        "false_positive_at_0_5": 0,
+        "false_positive_at_0_4": 3
+      },
+      "tmr": {
+        "n": 3,
+        "mean": 0.9645613133907318,
+        "median": 0.962300568819046,
+        "max": 0.9692830741405487,
+        "p90": 0.9678865730762483,
+        "false_positive_at_0_5": 3,
+        "false_positive_at_0_4": 3
+      },
+      "raid": {
+        "n": 3,
+        "mean": 0.9950296878814697,
+        "median": 0.9945297837257385,
+        "max": 0.9963623881340027,
+        "p90": 0.9959958672523499,
+        "false_positive_at_0_5": 3,
+        "false_positive_at_0_4": 3
+      }
+    },
+    "human_pre2020_long_700w": {
+      "heuristic": {
+        "n": 11,
+        "mean": 0.3290909090909091,
+        "median": 0.31,
+        "max": 0.43,
+        "p90": 0.41,
+        "false_positive_at_0_5": 0,
+        "false_positive_at_0_4": 2
+      },
+      "ensemble_default": {
+        "n": 11,
+        "mean": 0.42550771223127165,
+        "median": 0.42737336169928314,
+        "max": 0.5992353022191674,
+        "p90": 0.5026548670232296,
+        "false_positive_at_0_5": 2,
+        "false_positive_at_0_4": 6
+      },
+      "meld": {
+        "n": 11,
+        "mean": 0.3161139345981858,
+        "median": 0.36344243586063385,
+        "max": 0.4221085458993912,
+        "p90": 0.41512544453144073,
+        "false_positive_at_0_5": 0,
+        "false_positive_at_0_4": 3
+      },
+      "tmr": {
+        "n": 11,
+        "mean": 0.5487124069001187,
+        "median": 0.5566854849457741,
+        "max": 0.8630181103944778,
+        "p90": 0.7236936697736382,
+        "false_positive_at_0_5": 6,
+        "false_positive_at_0_4": 10
+      },
+      "raid": {
+        "n": 11,
+        "mean": 0.4150117581540888,
+        "median": 0.28572261333465576,
+        "max": 0.7984232306480408,
+        "p90": 0.7244687676429749,
+        "false_positive_at_0_5": 5,
+        "false_positive_at_0_4": 5
+      }
+    },
+    "synthetic_ai_control_long_700w": {
+      "heuristic": {
+        "n": 3,
+        "mean": 0.8033333333333333,
+        "median": 0.9,
+        "max": 0.98,
+        "p90": 0.964,
+        "false_positive_at_0_5": 3,
+        "false_positive_at_0_4": 3
+      },
+      "ensemble_default": {
+        "n": 3,
+        "mean": 0.7873924987514814,
+        "median": 0.7893678325414657,
+        "max": 0.7909396508336068,
+        "p90": 0.7906252871751787,
+        "false_positive_at_0_5": 3,
+        "false_positive_at_0_4": 3
+      },
+      "meld": {
+        "n": 3,
+        "mean": 0.42046977082888287,
+        "median": 0.4205625355243683,
+        "max": 0.42056289315223694,
+        "p90": 0.42056282162666325,
+        "false_positive_at_0_5": 0,
+        "false_positive_at_0_4": 3
+      },
+      "tmr": {
+        "n": 3,
+        "mean": 0.9578397638267941,
+        "median": 0.9630910158157349,
+        "max": 0.9692830741405487,
+        "p90": 0.968044662475586,
+        "false_positive_at_0_5": 3,
+        "false_positive_at_0_4": 3
+      },
+      "raid": {
+        "n": 3,
+        "mean": 0.9949868321418762,
+        "median": 0.9951381087303162,
+        "max": 0.9956254959106445,
+        "p90": 0.995528018474579,
+        "false_positive_at_0_5": 3,
+        "false_positive_at_0_4": 3
+      }
+    },
+    "human_pre2020_all": {
+      "heuristic": {
+        "n": 22,
+        "mean": 0.28454545454545455,
+        "median": 0.27,
+        "max": 0.43,
+        "p90": 0.37700000000000006,
+        "false_positive_at_0_5": 0,
+        "false_positive_at_0_4": 2
+      },
+      "ensemble_default": {
+        "n": 22,
+        "mean": 0.4439014622497119,
+        "median": 0.4727510480210185,
+        "max": 0.7389096495509148,
+        "p90": 0.6084449999937788,
+        "false_positive_at_0_5": 8,
+        "false_positive_at_0_4": 13
+      },
+      "meld": {
+        "n": 22,
+        "mean": 0.2892239202999256,
+        "median": 0.3083755671977997,
+        "max": 0.4221085458993912,
+        "p90": 0.40199486762285236,
+        "false_positive_at_0_5": 0,
+        "false_positive_at_0_4": 3
+      },
+      "tmr": {
+        "n": 22,
+        "mean": 0.6070643657903102,
+        "median": 0.5806527761742473,
+        "max": 0.980101466178894,
+        "p90": 0.9677339106798173,
+        "false_positive_at_0_5": 13,
+        "false_positive_at_0_4": 18
+      },
+      "raid": {
+        "n": 22,
+        "mean": 0.4401032988998023,
+        "median": 0.41528554260730743,
+        "max": 0.9576119780540466,
+        "p90": 0.7193073868751527,
+        "false_positive_at_0_5": 10,
+        "false_positive_at_0_4": 11
+      }
+    },
+    "synthetic_ai_control_all": {
+      "heuristic": {
+        "n": 6,
+        "mean": 0.8033333333333333,
+        "median": 0.9,
+        "max": 0.98,
+        "p90": 0.98,
+        "false_positive_at_0_5": 6,
+        "false_positive_at_0_4": 6
+      },
+      "ensemble_default": {
+        "n": 6,
+        "mean": 0.7886271691322326,
+        "median": 0.7895011387765407,
+        "max": 0.7909396508336068,
+        "p90": 0.7909396508336068,
+        "false_positive_at_0_5": 6,
+        "false_positive_at_0_4": 6
+      },
+      "meld": {
+        "n": 6,
+        "mean": 0.4208184281984965,
+        "median": 0.4205627143383026,
+        "max": 0.42153969407081604,
+        "p90": 0.4214693605899811,
+        "false_positive_at_0_5": 0,
+        "false_positive_at_0_4": 6
+      },
+      "tmr": {
+        "n": 6,
+        "mean": 0.9612005386087629,
+        "median": 0.9626957923173904,
+        "max": 0.9692830741405487,
+        "p90": 0.9692830741405487,
+        "false_positive_at_0_5": 6,
+        "false_positive_at_0_4": 6
+      },
+      "raid": {
+        "n": 6,
+        "mean": 0.995008260011673,
+        "median": 0.9948339462280273,
+        "max": 0.9963623881340027,
+        "p90": 0.9959939420223236,
+        "false_positive_at_0_5": 6,
+        "false_positive_at_0_4": 6
+      }
+    }
+  },
+  "correlations_human_pl_clean": {
+    "short_180w": {
+      "ensemble_default": {
+        "pearson": -0.2897373410432455,
+        "spearman": -0.24426297513037298,
+        "n": 11
+      },
+      "meld": {
+        "pearson": -0.39288573092077017,
+        "spearman": -0.33182894734692175,
+        "n": 11
+      },
+      "tmr": {
+        "pearson": -0.5354411176512681,
+        "spearman": -0.44243859646256234,
+        "n": 11
+      },
+      "raid": {
+        "pearson": 0.2281531911222093,
+        "spearman": 0.1428707967743691,
+        "n": 11
+      }
+    },
+    "long_700w": {
+      "ensemble_default": {
+        "pearson": -0.6619828630256815,
+        "spearman": -0.45873490213598356,
+        "n": 11
+      },
+      "meld": {
+        "pearson": -0.11171543610097691,
+        "spearman": 0.3853373177942262,
+        "n": 11
+      },
+      "tmr": {
+        "pearson": -0.5591760624428692,
+        "spearman": -0.40368671387966554,
+        "n": 11
+      },
+      "raid": {
+        "pearson": -0.5225344226392894,
+        "spearman": -0.4862589962641426,
+        "n": 11
+      }
+    },
+    "all": {
+      "ensemble_default": {
+        "pearson": -0.36181930450040806,
+        "spearman": -0.33976526776521404,
+        "n": 22
+      },
+      "meld": {
+        "pearson": 0.05701220811571947,
+        "spearman": 0.28814817366398787,
+        "n": 22
+      },
+      "tmr": {
+        "pearson": -0.43485714214809523,
+        "spearman": -0.47533104238272017,
+        "n": 22
+      },
+      "raid": {
+        "pearson": -0.23739877588307587,
+        "spearman": -0.16279237370386718,
+        "n": 22
+      }
+    }
+  },
+  "weights": {
+    "grid_step": 0.05,
+    "objective": "human FP@0.5 first, synthetic AI miss@0.5 second, human FP@0.4/tail next; AI controls are sanity only",
+    "top_long": [
+      {
+        "weights": {
+          "meld": 0.85,
+          "tmr": 0.0,
+          "raid": 0.15
+        },
+        "view": "long_700w",
+        "human_n": 11,
+        "ai_control_n": 3,
+        "human_mean": 0.33094860813157123,
+        "human_median": 0.35830753743648525,
+        "human_max": 0.4416862942278385,
+        "human_p90": 0.41421979293227196,
+        "human_fp_at_0_5": 0,
+        "human_fp_at_0_4": 2,
+        "ai_control_mean": 0.5066473300258318,
+        "ai_control_min": 0.5065120175480842,
+        "ai_control_miss_at_0_5": 0,
+        "ai_control_miss_at_0_4": 0,
+        "objective": 41.564451634635525
+      },
+      {
+        "weights": {
+          "meld": 0.8,
+          "tmr": 0.0,
+          "raid": 0.2
+        },
+        "view": "long_700w",
+        "human_n": 11,
+        "ai_control_n": 3,
+        "human_mean": 0.3358934993093664,
+        "human_median": 0.34959816038608554,
+        "human_max": 0.45053991079330447,
+        "human_p90": 0.42002695798873907,
+        "human_fp_at_0_5": 0,
+        "human_fp_at_0_4": 2,
+        "ai_control_mean": 0.5353731830914815,
+        "ai_control_min": 0.535254728794098,
+        "ai_control_miss_at_0_5": 0,
+        "ai_control_miss_at_0_4": 0,
+        "objective": 41.564761606852215
+      },
+      {
+        "weights": {
+          "meld": 0.85,
+          "tmr": 0.05,
+          "raid": 0.1
+        },
+        "view": "long_700w",
+        "human_n": 11,
+        "ai_control_n": 3,
+        "human_mean": 0.33763364056887274,
+        "human_median": 0.37622680938802655,
+        "human_max": 0.436624303413555,
+        "human_p90": 0.41820631227456034,
+        "human_fp_at_0_5": 0,
+        "human_fp_at_0_4": 2,
+        "ai_control_mean": 0.5047899766100777,
+        "ai_control_min": 0.5038123721877734,
+        "ai_control_miss_at_0_5": 0,
+        "ai_control_miss_at_0_4": 0,
+        "objective": 41.586241584762725
+      },
+      {
+        "weights": {
+          "meld": 0.8,
+          "tmr": 0.05,
+          "raid": 0.15
+        },
+        "view": "long_700w",
+        "human_n": 11,
+        "ai_control_n": 3,
+        "human_mean": 0.34257853174666786,
+        "human_median": 0.3767632462084293,
+        "human_max": 0.445477919979021,
+        "human_p90": 0.4240134773310274,
+        "human_fp_at_0_5": 0,
+        "human_fp_at_0_4": 2,
+        "ai_control_mean": 0.5335158296757275,
+        "ai_control_min": 0.5325550834337871,
+        "ai_control_miss_at_0_5": 0,
+        "ai_control_miss_at_0_4": 0,
+        "objective": 41.58655155697941
+      },
+      {
+        "weights": {
+          "meld": 0.75,
+          "tmr": 0.0,
+          "raid": 0.25
+        },
+        "view": "long_700w",
+        "human_n": 11,
+        "ai_control_n": 3,
+        "human_mean": 0.3408383904871615,
+        "human_median": 0.34878285974264145,
+        "human_max": 0.45939352735877037,
+        "human_p90": 0.42583412304520607,
+        "human_fp_at_0_5": 0,
+        "human_fp_at_0_4": 3,
+        "ai_control_mean": 0.5640990361571312,
+        "ai_control_min": 0.5639711245894432,
+        "ai_control_miss_at_0_5": 0,
+        "ai_control_miss_at_0_4": 0,
+        "objective": 61.5650715790689
+      },
+      {
+        "weights": {
+          "meld": 0.75,
+          "tmr": 0.05,
+          "raid": 0.2
+        },
+        "view": "long_700w",
+        "human_n": 11,
+        "ai_control_n": 3,
+        "human_mean": 0.34752342292446303,
+        "human_median": 0.3701768439263105,
+        "human_max": 0.4543315365444869,
+        "human_p90": 0.42982064238749446,
+        "human_fp_at_0_5": 0,
+        "human_fp_at_0_4": 3,
+        "ai_control_mean": 0.5622416827413771,
+        "ai_control_min": 0.5612977946798007,
+        "ai_control_miss_at_0_5": 0,
+        "ai_control_miss_at_0_4": 0,
+        "objective": 61.58686152919609
+      },
+      {
+        "weights": {
+          "meld": 0.7,
+          "tmr": 0.05,
+          "raid": 0.25
+        },
+        "view": "long_700w",
+        "human_n": 11,
+        "ai_control_n": 3,
+        "human_mean": 0.3524683141022582,
+        "human_median": 0.36899126395583154,
+        "human_max": 0.4631851531099528,
+        "human_p90": 0.43562780744396146,
+        "human_fp_at_0_5": 0,
+        "human_fp_at_0_4": 3,
+        "ai_control_mean": 0.5909675358070267,
+        "ai_control_min": 0.5900405059258143,
+        "ai_control_miss_at_0_5": 0,
+        "ai_control_miss_at_0_4": 0,
+        "objective": 61.58717150141278
+      },
+      {
+        "weights": {
+          "meld": 0.7,
+          "tmr": 0.0,
+          "raid": 0.3
+        },
+        "view": "long_700w",
+        "human_n": 11,
+        "ai_control_n": 3,
+        "human_mean": 0.3457832816649567,
+        "human_median": 0.34012648910284043,
+        "human_max": 0.4682471439242363,
+        "human_p90": 0.43910257965326305,
+        "human_fp_at_0_5": 0,
+        "human_fp_at_0_4": 3,
+        "ai_control_mean": 0.5928248892227809,
+        "ai_control_min": 0.5926528424024582,
+        "ai_control_miss_at_0_5": 0,
+        "ai_control_miss_at_0_4": 0,
+        "objective": 61.60268800904353
+      },
+      {
+        "weights": {
+          "meld": 0.7,
+          "tmr": 0.1,
+          "raid": 0.2
+        },
+        "view": "long_700w",
+        "human_n": 11,
+        "ai_control_n": 3,
+        "human_mean": 0.3591533465395597,
+        "human_median": 0.3769056908786297,
+        "human_max": 0.4581231622956693,
+        "human_p90": 0.4396143267862499,
+        "human_fp_at_0_5": 0,
+        "human_fp_at_0_4": 3,
+        "ai_control_mean": 0.5891101823912727,
+        "ai_control_min": 0.5873408605655035,
+        "ai_control_miss_at_0_5": 0,
+        "ai_control_miss_at_0_4": 0,
+        "objective": 61.608961451539976
+      },
+      {
+        "weights": {
+          "meld": 0.65,
+          "tmr": 0.1,
+          "raid": 0.25
+        },
+        "view": "long_700w",
+        "human_n": 11,
+        "ai_control_n": 3,
+        "human_mean": 0.36409823771735483,
+        "human_median": 0.37138556521385907,
+        "human_max": 0.46697677886113526,
+        "human_p90": 0.4572953843511641,
+        "human_fp_at_0_5": 0,
+        "human_fp_at_0_4": 3,
+        "ai_control_mean": 0.6178360354569223,
+        "ai_control_min": 0.6160835718115172,
+        "ai_control_miss_at_0_5": 0,
+        "ai_control_miss_at_0_4": 0,
+        "objective": 61.668640886298896
+      },
+      {
+        "weights": {
+          "meld": 0.65,
+          "tmr": 0.05,
+          "raid": 0.3
+        },
+        "view": "long_700w",
+        "human_n": 11,
+        "ai_control_n": 3,
+        "human_mean": 0.3574132052800534,
+        "human_median": 0.3622662286274135,
+        "human_max": 0.47203876967541875,
+        "human_p90": 0.46103186239488425,
+        "human_fp_at_0_5": 0,
+        "human_fp_at_0_4": 3,
+        "ai_control_mean": 0.6196933888726764,
+        "ai_control_min": 0.6187832171718279,
+        "ai_control_miss_at_0_5": 0,
+        "ai_control_miss_at_0_4": 0,
+        "objective": 61.685465923101745
+      },
+      {
+        "weights": {
+          "meld": 0.65,
+          "tmr": 0.0,
+          "raid": 0.35
+        },
+        "view": "long_700w",
+        "human_n": 11,
+        "ai_control_n": 3,
+        "human_mean": 0.3507281728427519,
+        "human_median": 0.3421964734792709,
+        "human_max": 0.47710076048970224,
+        "human_p90": 0.4647683404386043,
+        "human_fp_at_0_5": 0,
+        "human_fp_at_0_4": 3,
+        "ai_control_mean": 0.6215507422884304,
+        "ai_control_min": 0.6213345602154732,
+        "ai_control_miss_at_0_5": 0,
+        "ai_control_miss_at_0_4": 0,
+        "objective": 61.702290959904595
+      },
+      {
+        "weights": {
+          "meld": 0.85,
+          "tmr": 0.1,
+          "raid": 0.05
+        },
+        "view": "long_700w",
+        "human_n": 11,
+        "ai_control_n": 3,
+        "human_mean": 0.34431867300617425,
+        "human_median": 0.39414608133956786,
+        "human_max": 0.4315623125992715,
+        "human_p90": 0.42219283161684873,
+        "human_fp_at_0_5": 0,
+        "human_fp_at_0_4": 4,
+        "ai_control_mean": 0.5029326231943236,
+        "ai_control_min": 0.5011127268274626,
+        "ai_control_miss_at_0_5": 0,
+        "ai_control_miss_at_0_4": 0,
+        "objective": 81.60803153488992
+      },
+      {
+        "weights": {
+          "meld": 0.8,
+          "tmr": 0.1,
+          "raid": 0.1
+        },
+        "view": "long_700w",
+        "human_n": 11,
+        "ai_control_n": 3,
+        "human_mean": 0.3492635641839694,
+        "human_median": 0.38543670428916815,
+        "human_max": 0.4404159291647375,
+        "human_p90": 0.42799999667331584,
+        "human_fp_at_0_5": 0,
+        "human_fp_at_0_4": 4,
+        "ai_control_mean": 0.5316584762599734,
+        "ai_control_min": 0.5298554380734762,
+        "ai_control_miss_at_0_5": 0,
+        "ai_control_miss_at_0_4": 0,
+        "objective": 81.6083415071066
+      },
+      {
+        "weights": {
+          "meld": 0.75,
+          "tmr": 0.1,
+          "raid": 0.15
+        },
+        "view": "long_700w",
+        "human_n": 11,
+        "ai_control_n": 3,
+        "human_mean": 0.35420845536176454,
+        "human_median": 0.3854604197666049,
+        "human_max": 0.4492695457302034,
+        "human_p90": 0.4338071617297828,
+        "human_fp_at_0_5": 0,
+        "human_fp_at_0_4": 4,
+        "ai_control_mean": 0.560384329325623,
+        "ai_control_min": 0.5585981493194898,
+        "ai_control_miss_at_0_5": 0,
+        "ai_control_miss_at_0_4": 0,
+        "objective": 81.60865147932329
+      }
+    ],
+    "top_short": [
+      {
+        "weights": {
+          "meld": 0.85,
+          "tmr": 0.0,
+          "raid": 0.15
+        },
+        "view": "short_180w",
+        "human_n": 11,
+        "ai_control_n": 3,
+        "human_mean": 0.29276304604824294,
+        "human_median": 0.28100036606192585,
+        "human_max": 0.3972896620631218,
+        "human_p90": 0.3967208132147789,
+        "human_fp_at_0_5": 0,
+        "human_fp_at_0_4": 0,
+        "ai_control_mean": 0.5072464759151142,
+        "ai_control_min": 0.5066076889634132,
+        "ai_control_miss_at_0_5": 0,
+        "ai_control_miss_at_0_4": 0,
+        "objective": 1.4763575901587802
+      },
+      {
+        "weights": {
+          "meld": 0.85,
+          "tmr": 0.05,
+          "raid": 0.1
+        },
+        "view": "short_180w",
+        "human_n": 11,
+        "ai_control_n": 3,
+        "human_mean": 0.30277412029999223,
+        "human_median": 0.2969973586499691,
+        "human_max": 0.4019966468214989,
+        "human_p90": 0.39811187386512753,
+        "human_fp_at_0_5": 0,
+        "human_fp_at_0_4": 1,
+        "ai_control_mean": 0.5057230571905772,
+        "ai_control_min": 0.5053619980812073,
+        "ai_control_miss_at_0_5": 0,
+        "ai_control_miss_at_0_4": 0,
+        "objective": 21.484836312135062
+      },
+      {
+        "weights": {
+          "meld": 0.8,
+          "tmr": 0.0,
+          "raid": 0.2
+        },
+        "view": "short_180w",
+        "human_n": 11,
+        "ai_control_n": 3,
+        "human_mean": 0.3029060927304355,
+        "human_median": 0.30330396890640265,
+        "human_max": 0.4302497982978821,
+        "human_p90": 0.4129639983177186,
+        "human_fp_at_0_5": 0,
+        "human_fp_at_0_4": 2,
+        "ai_control_mean": 0.5359396060307821,
+        "ai_control_min": 0.5352894067764282,
+        "ai_control_miss_at_0_5": 0,
+        "ai_control_miss_at_0_4": 0,
+        "objective": 41.52888038555781
+      },
+      {
+        "weights": {
+          "meld": 0.85,
+          "tmr": 0.1,
+          "raid": 0.05
+        },
+        "view": "short_180w",
+        "human_n": 11,
+        "ai_control_n": 3,
+        "human_mean": 0.31278519455174153,
+        "human_median": 0.313639122992754,
+        "human_max": 0.42917879708111284,
+        "human_p90": 0.4072724804282189,
+        "human_fp_at_0_5": 0,
+        "human_fp_at_0_4": 2,
+        "ai_control_mean": 0.5041996384660403,
+        "ai_control_min": 0.5041163071990014,
+        "ai_control_miss_at_0_5": 0,
+        "ai_control_miss_at_0_4": 0,
+        "objective": 41.53216276367505
+      },
+      {
+        "weights": {
+          "meld": 0.8,
+          "tmr": 0.05,
+          "raid": 0.15
+        },
+        "view": "short_180w",
+        "human_n": 11,
+        "ai_control_n": 3,
+        "human_mean": 0.31291716698218475,
+        "human_median": 0.318334735929966,
+        "human_max": 0.4310720100998878,
+        "human_p90": 0.41823983192443853,
+        "human_fp_at_0_5": 0,
+        "human_fp_at_0_4": 2,
+        "ai_control_mean": 0.5344161873062451,
+        "ai_control_min": 0.5340437158942223,
+        "ai_control_miss_at_0_5": 0,
+        "ai_control_miss_at_0_4": 0,
+        "objective": 41.55678297231595
+      },
+      {
+        "weights": {
+          "meld": 0.75,
+          "tmr": 0.0,
+          "raid": 0.25
+        },
+        "view": "short_180w",
+        "human_n": 11,
+        "ai_control_n": 3,
+        "human_mean": 0.31304913941262796,
+        "human_median": 0.32303034886717796,
+        "human_max": 0.46320993453264236,
+        "human_p90": 0.4292071834206581,
+        "human_fp_at_0_5": 0,
+        "human_fp_at_0_4": 2,
+        "ai_control_mean": 0.56463273614645,
+        "ai_control_min": 0.5639711245894432,
+        "ai_control_miss_at_0_5": 0,
+        "ai_control_miss_at_0_4": 0,
+        "objective": 41.58140318095684
+      },
+      {
+        "weights": {
+          "meld": 0.75,
+          "tmr": 0.05,
+          "raid": 0.2
+        },
+        "view": "short_180w",
+        "human_n": 11,
+        "ai_control_n": 3,
+        "human_mean": 0.32306021366437726,
+        "human_median": 0.33978264108300205,
+        "human_max": 0.4640321463346482,
+        "human_p90": 0.4344830170273781,
+        "human_fp_at_0_5": 0,
+        "human_fp_at_0_4": 2,
+        "ai_control_mean": 0.5631093174219132,
+        "ai_control_min": 0.5627254337072373,
+        "ai_control_miss_at_0_5": 0,
+        "ai_control_miss_at_0_4": 0,
+        "objective": 41.60930576771498
+      },
+      {
+        "weights": {
+          "meld": 0.7,
+          "tmr": 0.0,
+          "raid": 0.3
+        },
+        "view": "short_180w",
+        "human_n": 11,
+        "ai_control_n": 3,
+        "human_mean": 0.3231921860948205,
+        "human_median": 0.3187745213508606,
+        "human_max": 0.4961700707674026,
+        "human_p90": 0.4454503685235977,
+        "human_fp_at_0_5": 0,
+        "human_fp_at_0_4": 2,
+        "ai_control_mean": 0.593325866262118,
+        "ai_control_min": 0.5926528424024582,
+        "ai_control_miss_at_0_5": 0,
+        "ai_control_miss_at_0_4": 0,
+        "objective": 41.63392597635587
+      },
+      {
+        "weights": {
+          "meld": 0.7,
+          "tmr": 0.05,
+          "raid": 0.25
+        },
+        "view": "short_180w",
+        "human_n": 11,
+        "ai_control_n": 3,
+        "human_mean": 0.3332032603465698,
+        "human_median": 0.34835843183100224,
+        "human_max": 0.4969922825694084,
+        "human_p90": 0.45072620213031767,
+        "human_fp_at_0_5": 0,
+        "human_fp_at_0_4": 2,
+        "ai_control_mean": 0.591802447537581,
+        "ai_control_min": 0.5914071515202521,
+        "ai_control_miss_at_0_5": 0,
+        "ai_control_miss_at_0_4": 0,
+        "objective": 41.66182856311401
+      },
+      {
+        "weights": {
+          "meld": 0.85,
+          "tmr": 0.15,
+          "raid": 0.0
+        },
+        "view": "short_180w",
+        "human_n": 11,
+        "ai_control_n": 3,
+        "human_mean": 0.3227962688034908,
+        "human_median": 0.3296123921871185,
+        "human_max": 0.46642227470874786,
+        "human_p90": 0.4125483140349388,
+        "human_fp_at_0_5": 0,
+        "human_fp_at_0_4": 3,
+        "ai_control_mean": 0.5026762197415034,
+        "ai_control_min": 0.5025342583656311,
+        "ai_control_miss_at_0_5": 0,
+        "ai_control_miss_at_0_4": 0,
+        "objective": 61.56006535043319
+      },
+      {
+        "weights": {
+          "meld": 0.8,
+          "tmr": 0.1,
+          "raid": 0.1
+        },
+        "view": "short_180w",
+        "human_n": 11,
+        "ai_control_n": 3,
+        "human_mean": 0.32292824123393404,
+        "human_median": 0.3350870281457901,
+        "human_max": 0.43189422190189364,
+        "human_p90": 0.4235156655311585,
+        "human_fp_at_0_5": 0,
+        "human_fp_at_0_4": 3,
+        "ai_control_mean": 0.5328927685817083,
+        "ai_control_min": 0.5327980250120163,
+        "ai_control_miss_at_0_5": 0,
+        "ai_control_miss_at_0_4": 0,
+        "objective": 61.58468555907408
+      },
+      {
+        "weights": {
+          "meld": 0.7,
+          "tmr": 0.1,
+          "raid": 0.2
+        },
+        "view": "short_180w",
+        "human_n": 11,
+        "ai_control_n": 3,
+        "human_mean": 0.34321433459831907,
+        "human_median": 0.3779828384518623,
+        "human_max": 0.49781449437141423,
+        "human_p90": 0.4560020357370377,
+        "human_fp_at_0_5": 0,
+        "human_fp_at_0_4": 3,
+        "ai_control_mean": 0.5902790288130443,
+        "ai_control_min": 0.5901614606380463,
+        "ai_control_miss_at_0_5": 0,
+        "ai_control_miss_at_0_4": 0,
+        "objective": 61.689731149872145
+      },
+      {
+        "weights": {
+          "meld": 0.8,
+          "tmr": 0.15,
+          "raid": 0.05
+        },
+        "view": "short_180w",
+        "human_n": 11,
+        "ai_control_n": 3,
+        "human_mean": 0.3329393154856834,
+        "human_median": 0.35129494667053224,
+        "human_max": 0.45189664550125597,
+        "human_p90": 0.43271643370389945,
+        "human_fp_at_0_5": 0,
+        "human_fp_at_0_4": 4,
+        "ai_control_mean": 0.5313693498571714,
+        "ai_control_min": 0.5312732890248298,
+        "ai_control_miss_at_0_5": 0,
+        "ai_control_miss_at_0_4": 0,
+        "objective": 81.63221281866232
+      },
+      {
+        "weights": {
+          "meld": 0.75,
+          "tmr": 0.1,
+          "raid": 0.15
+        },
+        "view": "short_180w",
+        "human_n": 11,
+        "ai_control_n": 3,
+        "human_mean": 0.33307128791612656,
+        "human_median": 0.3565349332988262,
+        "human_max": 0.4648543581366539,
+        "human_p90": 0.4397588506340981,
+        "human_fp_at_0_5": 0,
+        "human_fp_at_0_4": 4,
+        "ai_control_mean": 0.5615858986973762,
+        "ai_control_min": 0.5614797428250313,
+        "ai_control_miss_at_0_5": 0,
+        "ai_control_miss_at_0_4": 0,
+        "objective": 81.63720835447312
+      },
+      {
+        "weights": {
+          "meld": 0.8,
+          "tmr": 0.2,
+          "raid": 0.0
+        },
+        "view": "short_180w",
+        "human_n": 11,
+        "ai_control_n": 3,
+        "human_mean": 0.3429503897374327,
+        "human_median": 0.3672919392585755,
+        "human_max": 0.489140123128891,
+        "human_p90": 0.43691070675849913,
+        "human_fp_at_0_5": 0,
+        "human_fp_at_0_4": 4,
+        "ai_control_mean": 0.5298459311326346,
+        "ai_control_min": 0.5295793354511261,
+        "ai_control_miss_at_0_5": 0,
+        "ai_control_miss_at_0_4": 0,
+        "objective": 81.65470760265985
+      }
+    ],
+    "top_all": [
+      {
+        "weights": {
+          "meld": 0.85,
+          "tmr": 0.0,
+          "raid": 0.15
+        },
+        "view": "all",
+        "human_n": 22,
+        "ai_control_n": 6,
+        "human_mean": 0.31185582708990706,
+        "human_median": 0.3390124507248401,
+        "human_max": 0.4416862942278385,
+        "human_p90": 0.3972327771782875,
+        "human_fp_at_0_5": 0,
+        "human_fp_at_0_4": 2,
+        "ai_control_mean": 0.506946902970473,
+        "ai_control_min": 0.5065120175480842,
+        "ai_control_miss_at_0_5": 0,
+        "ai_control_miss_at_0_4": 0,
+        "objective": 41.47921698292096
+      },
+      {
+        "weights": {
+          "meld": 0.85,
+          "tmr": 0.05,
+          "raid": 0.1
+        },
+        "view": "all",
+        "human_n": 22,
+        "ai_control_n": 6,
+        "human_mean": 0.3202038804344325,
+        "human_median": 0.34862835509702567,
+        "human_max": 0.436624303413555,
+        "human_p90": 0.40174769397825005,
+        "human_fp_at_0_5": 0,
+        "human_fp_at_0_4": 3,
+        "ai_control_mean": 0.5052565169003275,
+        "ai_control_min": 0.5038123721877734,
+        "ai_control_miss_at_0_5": 0,
+        "ai_control_miss_at_0_4": 0,
+        "objective": 61.503481952990924
+      },
+      {
+        "weights": {
+          "meld": 0.8,
+          "tmr": 0.0,
+          "raid": 0.2
+        },
+        "view": "all",
+        "human_n": 22,
+        "ai_control_n": 6,
+        "human_mean": 0.31939979601990093,
+        "human_median": 0.3412844128906727,
+        "human_max": 0.45053991079330447,
+        "human_p90": 0.41932066202163704,
+        "human_fp_at_0_5": 0,
+        "human_fp_at_0_4": 4,
+        "ai_control_mean": 0.5356563945611318,
+        "ai_control_min": 0.535254728794098,
+        "ai_control_miss_at_0_5": 0,
+        "ai_control_miss_at_0_4": 0,
+        "objective": 81.56094691554705
+      },
+      {
+        "weights": {
+          "meld": 0.8,
+          "tmr": 0.05,
+          "raid": 0.15
+        },
+        "view": "all",
+        "human_n": 22,
+        "ai_control_n": 6,
+        "human_mean": 0.3277478493644263,
+        "human_median": 0.3561639780877158,
+        "human_max": 0.445477919979021,
+        "human_p90": 0.4234361127903685,
+        "human_fp_at_0_5": 0,
+        "human_fp_at_0_4": 4,
+        "ai_control_mean": 0.5339660084909863,
+        "ai_control_min": 0.5325550834337871,
+        "ai_control_miss_at_0_5": 0,
+        "ai_control_miss_at_0_4": 0,
+        "objective": 81.58321455546086
+      },
+      {
+        "weights": {
+          "meld": 0.75,
+          "tmr": 0.0,
+          "raid": 0.25
+        },
+        "view": "all",
+        "human_n": 22,
+        "ai_control_n": 6,
+        "human_mean": 0.32694376494989474,
+        "human_median": 0.3332646833732724,
+        "human_max": 0.46320993453264236,
+        "human_p90": 0.4288698773831129,
+        "human_fp_at_0_5": 0,
+        "human_fp_at_0_4": 5,
+        "ai_control_mean": 0.5643658861517906,
+        "ai_control_min": 0.5639711245894432,
+        "ai_control_miss_at_0_5": 0,
+        "ai_control_miss_at_0_4": 0,
+        "objective": 101.57998350076377
+      },
+      {
+        "weights": {
+          "meld": 0.75,
+          "tmr": 0.05,
+          "raid": 0.2
+        },
+        "view": "all",
+        "human_n": 22,
+        "ai_control_n": 6,
+        "human_mean": 0.3352918182944202,
+        "human_median": 0.3591391752241179,
+        "human_max": 0.4640321463346482,
+        "human_p90": 0.43401677956338974,
+        "human_fp_at_0_5": 0,
+        "human_fp_at_0_4": 5,
+        "ai_control_mean": 0.5626755000816451,
+        "ai_control_min": 0.5612977946798007,
+        "ai_control_miss_at_0_5": 0,
+        "ai_control_miss_at_0_4": 0,
+        "objective": 101.60740839773531
+      },
+      {
+        "weights": {
+          "meld": 0.7,
+          "tmr": 0.0,
+          "raid": 0.3
+        },
+        "view": "all",
+        "human_n": 22,
+        "ai_control_n": 6,
+        "human_mean": 0.33448773387988856,
+        "human_median": 0.337122105807066,
+        "human_max": 0.4961700707674026,
+        "human_p90": 0.44481558963656426,
+        "human_fp_at_0_5": 0,
+        "human_fp_at_0_4": 5,
+        "ai_control_mean": 0.5930753777424494,
+        "ai_control_min": 0.5926528424024582,
+        "ai_control_miss_at_0_5": 0,
+        "ai_control_miss_at_0_4": 0,
+        "objective": 101.63100257044037
+      },
+      {
+        "weights": {
+          "meld": 0.7,
+          "tmr": 0.05,
+          "raid": 0.25
+        },
+        "view": "all",
+        "human_n": 22,
+        "ai_control_n": 6,
+        "human_mean": 0.342835787224414,
+        "human_median": 0.3583711264654994,
+        "human_max": 0.4969922825694084,
+        "human_p90": 0.4492163626616821,
+        "human_fp_at_0_5": 0,
+        "human_fp_at_0_4": 5,
+        "ai_control_mean": 0.5913849916723039,
+        "ai_control_min": 0.5900405059258143,
+        "ai_control_miss_at_0_5": 0,
+        "ai_control_miss_at_0_4": 0,
+        "objective": 101.65469682163611
+      },
+      {
+        "weights": {
+          "meld": 0.85,
+          "tmr": 0.1,
+          "raid": 0.05
+        },
+        "view": "all",
+        "human_n": 22,
+        "ai_control_n": 6,
+        "human_mean": 0.32855193377895786,
+        "human_median": 0.3530900767073035,
+        "human_max": 0.4315623125992715,
+        "human_p90": 0.4220636587124318,
+        "human_fp_at_0_5": 0,
+        "human_fp_at_0_4": 6,
+        "ai_control_mean": 0.503566130830182,
+        "ai_control_min": 0.5011127268274626,
+        "ai_control_miss_at_0_5": 0,
+        "ai_control_miss_at_0_4": 0,
+        "objective": 121.60675216273198
+      },
+      {
+        "weights": {
+          "meld": 0.7,
+          "tmr": 0.1,
+          "raid": 0.2
+        },
+        "view": "all",
+        "human_n": 22,
+        "ai_control_n": 6,
+        "human_mean": 0.35118384056893936,
+        "human_median": 0.377444264665246,
+        "human_max": 0.49781449437141423,
+        "human_p90": 0.45436326484195894,
+        "human_fp_at_0_5": 0,
+        "human_fp_at_0_4": 6,
+        "ai_control_mean": 0.5896946056021585,
+        "ai_control_min": 0.5873408605655035,
+        "ai_control_miss_at_0_5": 0,
+        "ai_control_miss_at_0_4": 0,
+        "objective": 121.68212171860763
+      },
+      {
+        "weights": {
+          "meld": 0.8,
+          "tmr": 0.1,
+          "raid": 0.1
+        },
+        "view": "all",
+        "human_n": 22,
+        "ai_control_n": 6,
+        "human_mean": 0.3360959027089518,
+        "human_median": 0.3637582682538778,
+        "human_max": 0.4404159291647375,
+        "human_p90": 0.4275515635591001,
+        "human_fp_at_0_5": 0,
+        "human_fp_at_0_4": 7,
+        "ai_control_mean": 0.5322756224208408,
+        "ai_control_min": 0.5298554380734762,
+        "ai_control_miss_at_0_5": 0,
+        "ai_control_miss_at_0_4": 0,
+        "objective": 141.60548219537463
+      },
+      {
+        "weights": {
+          "meld": 0.75,
+          "tmr": 0.1,
+          "raid": 0.15
+        },
+        "view": "all",
+        "human_n": 22,
+        "ai_control_n": 6,
+        "human_mean": 0.34363987163894555,
+        "human_median": 0.36930276653729377,
+        "human_max": 0.4648543581366539,
+        "human_p90": 0.43916368174366655,
+        "human_fp_at_0_5": 0,
+        "human_fp_at_0_4": 8,
+        "ai_control_mean": 0.5609851140114996,
+        "ai_control_min": 0.5585981493194898,
+        "ai_control_miss_at_0_5": 0,
+        "ai_control_miss_at_0_4": 0,
+        "objective": 161.63483329470685
+      },
+      {
+        "weights": {
+          "meld": 0.7,
+          "tmr": 0.15,
+          "raid": 0.15
+        },
+        "view": "all",
+        "human_n": 22,
+        "ai_control_n": 6,
+        "human_mean": 0.35953189391346474,
+        "human_median": 0.391138729872182,
+        "human_max": 0.49863670617341993,
+        "human_p90": 0.4521151389461011,
+        "human_fp_at_0_5": 0,
+        "human_fp_at_0_4": 8,
+        "ai_control_mean": 0.5880042195320129,
+        "ai_control_min": 0.5846412152051925,
+        "ai_control_miss_at_0_5": 0,
+        "ai_control_miss_at_0_4": 0,
+        "objective": 161.67257147519848
+      },
+      {
+        "weights": {
+          "meld": 0.75,
+          "tmr": 0.15,
+          "raid": 0.1
+        },
+        "view": "all",
+        "human_n": 22,
+        "ai_control_n": 6,
+        "human_mean": 0.3519879249834709,
+        "human_median": 0.3840891529340297,
+        "human_max": 0.46567656993865963,
+        "human_p90": 0.44356616753153505,
+        "human_fp_at_0_5": 0,
+        "human_fp_at_0_4": 9,
+        "ai_control_mean": 0.5592947279413542,
+        "ai_control_min": 0.555898503959179,
+        "ai_control_miss_at_0_5": 0,
+        "ai_control_miss_at_0_4": 0,
+        "objective": 181.65853610971632
+      },
+      {
+        "weights": {
+          "meld": 0.8,
+          "tmr": 0.15,
+          "raid": 0.05
+        },
+        "view": "all",
+        "human_n": 22,
+        "ai_control_n": 6,
+        "human_mean": 0.3444439560534771,
+        "human_median": 0.3677244202233851,
+        "human_max": 0.45189664550125597,
+        "human_p90": 0.4343151596933603,
+        "human_fp_at_0_5": 0,
+        "human_fp_at_0_4": 10,
+        "ai_control_mean": 0.5305852363506953,
+        "ai_control_min": 0.5271557927131654,
+        "ai_control_miss_at_0_5": 0,
+        "ai_control_miss_at_0_4": 0,
+        "objective": 201.6409905621161
+      }
+    ],
+    "selected": [
+      {
+        "weights": {
+          "meld": 0.34,
+          "tmr": 0.33,
+          "raid": 0.33
+        },
+        "view": "short_180w",
+        "human_mean": 0.462295212268152,
+        "human_median": 0.5529552698135376,
+        "human_max": 0.7389096495509148,
+        "human_p90": 0.6140772661566735,
+        "human_fp_at_0_5": 6,
+        "human_fp_at_0_4": 7,
+        "ai_control_mean": 0.789861839512984,
+        "ai_control_min": 0.7890114226937295,
+        "ai_control_miss_at_0_5": 0,
+        "ai_control_miss_at_0_4": 0
+      },
+      {
+        "weights": {
+          "meld": 0.34,
+          "tmr": 0.33,
+          "raid": 0.33
+        },
+        "view": "long_700w",
+        "human_mean": 0.42550771223127165,
+        "human_median": 0.42737336169928314,
+        "human_max": 0.5992353022191674,
+        "human_p90": 0.5026548670232296,
+        "human_fp_at_0_5": 2,
+        "human_fp_at_0_4": 6,
+        "ai_control_mean": 0.7873924987514814,
+        "ai_control_min": 0.7818700128793716,
+        "ai_control_miss_at_0_5": 0,
+        "ai_control_miss_at_0_4": 0
+      },
+      {
+        "weights": {
+          "meld": 0.34,
+          "tmr": 0.33,
+          "raid": 0.33
+        },
+        "view": "all",
+        "human_mean": 0.4439014622497119,
+        "human_median": 0.4727510480210185,
+        "human_max": 0.7389096495509148,
+        "human_p90": 0.6084449999937788,
+        "human_fp_at_0_5": 8,
+        "human_fp_at_0_4": 13,
+        "ai_control_mean": 0.7886271691322326,
+        "ai_control_min": 0.7818700128793716,
+        "ai_control_miss_at_0_5": 0,
+        "ai_control_miss_at_0_4": 0
+      },
+      {
+        "weights": {
+          "meld": 0.0,
+          "tmr": 0.5,
+          "raid": 0.5
+        },
+        "view": "short_180w",
+        "human_mean": 0.5653055821630087,
+        "human_median": 0.68505859375,
+        "human_max": 0.9658340960741043,
+        "human_p90": 0.8201315402984619,
+        "human_fp_at_0_5": 6,
+        "human_fp_at_0_4": 7,
+        "ai_control_mean": 0.9797955006361008,
+        "ai_control_min": 0.9783150404691696,
+        "ai_control_miss_at_0_5": 0,
+        "ai_control_miss_at_0_4": 0
+      },
+      {
+        "weights": {
+          "meld": 0.0,
+          "tmr": 0.5,
+          "raid": 0.5
+        },
+        "view": "long_700w",
+        "human_mean": 0.4818620825271038,
+        "human_median": 0.5415778676979244,
+        "human_max": 0.7610584502108395,
+        "human_p90": 0.6010380610823631,
+        "human_fp_at_0_5": 6,
+        "human_fp_at_0_4": 6,
+        "ai_control_mean": 0.9764132979843353,
+        "ai_control_min": 0.9681416551272075,
+        "ai_control_miss_at_0_5": 0,
+        "ai_control_miss_at_0_4": 0
+      },
+      {
+        "weights": {
+          "meld": 0.0,
+          "tmr": 0.5,
+          "raid": 0.5
+        },
+        "view": "all",
+        "human_mean": 0.5235838323450562,
+        "human_median": 0.54719233000651,
+        "human_max": 0.9658340960741043,
+        "human_p90": 0.807150508509949,
+        "human_fp_at_0_5": 12,
+        "human_fp_at_0_4": 13,
+        "ai_control_mean": 0.978104399310218,
+        "ai_control_min": 0.9681416551272075,
+        "ai_control_miss_at_0_5": 0,
+        "ai_control_miss_at_0_4": 0
+      },
+      {
+        "weights": {
+          "meld": 0.1,
+          "tmr": 0.45,
+          "raid": 0.45
+        },
+        "view": "short_180w",
+        "human_mean": 0.5350084145468744,
+        "human_median": 0.6491353213787079,
+        "human_max": 0.899091611802578,
+        "human_p90": 0.7595273420214652,
+        "human_fp_at_0_5": 6,
+        "human_fp_at_0_4": 7,
+        "ai_control_mean": 0.9239326591293017,
+        "ai_control_min": 0.9226375058293343,
+        "ai_control_miss_at_0_5": 0,
+        "ai_control_miss_at_0_4": 0
+      },
+      {
+        "weights": {
+          "meld": 0.1,
+          "tmr": 0.45,
+          "raid": 0.45
+        },
+        "view": "long_700w",
+        "human_mean": 0.4652872677342119,
+        "human_median": 0.5289326253812761,
+        "human_max": 0.7134634066838771,
+        "human_p90": 0.5693106077611447,
+        "human_fp_at_0_5": 6,
+        "human_fp_at_0_4": 6,
+        "ai_control_mean": 0.92081894526879,
+        "ai_control_min": 0.9133558779954911,
+        "ai_control_miss_at_0_5": 0,
+        "ai_control_miss_at_0_4": 0
+      },
+      {
+        "weights": {
+          "meld": 0.1,
+          "tmr": 0.45,
+          "raid": 0.45
+        },
+        "view": "all",
+        "human_mean": 0.5001478411405432,
+        "human_median": 0.5310649600578472,
+        "human_max": 0.899091611802578,
+        "human_p90": 0.748707711887546,
+        "human_fp_at_0_5": 12,
+        "human_fp_at_0_4": 13,
+        "ai_control_mean": 0.9223758021990459,
+        "ai_control_min": 0.9133558779954911,
+        "ai_control_miss_at_0_5": 0,
+        "ai_control_miss_at_0_4": 0
+      },
+      {
+        "weights": {
+          "meld": 0.0,
+          "tmr": 0.3,
+          "raid": 0.7
+        },
+        "view": "short_180w",
+        "human_mean": 0.5252612851560116,
+        "human_median": 0.6065820097923278,
+        "human_max": 0.9625452488660813,
+        "human_p90": 0.7561435699462891,
+        "human_fp_at_0_5": 6,
+        "human_fp_at_0_4": 6,
+        "ai_control_mean": 0.9858891755342483,
+        "ai_control_min": 0.9848009377717971,
+        "ai_control_miss_at_0_5": 0,
+        "ai_control_miss_at_0_4": 0
+      },
+      {
+        "weights": {
+          "meld": 0.0,
+          "tmr": 0.3,
+          "raid": 0.7
+        },
+        "view": "long_700w",
+        "human_mean": 0.45512195277789774,
+        "human_median": 0.4589112624526024,
+        "human_max": 0.7760043623857199,
+        "human_p90": 0.6361618671566247,
+        "human_fp_at_0_5": 5,
+        "human_fp_at_0_4": 6,
+        "ai_control_mean": 0.9838427116473515,
+        "ai_control_min": 0.9789402365684509,
+        "ai_control_miss_at_0_5": 0,
+        "ai_control_miss_at_0_4": 0
+      },
+      {
+        "weights": {
+          "meld": 0.0,
+          "tmr": 0.3,
+          "raid": 0.7
+        },
+        "view": "all",
+        "human_mean": 0.4901916189669546,
+        "human_median": 0.49788598869927225,
+        "human_max": 0.9625452488660813,
+        "human_p90": 0.7550554808974267,
+        "human_fp_at_0_5": 11,
+        "human_fp_at_0_4": 12,
+        "ai_control_mean": 0.9848659435907998,
+        "ai_control_min": 0.9789402365684509,
+        "ai_control_miss_at_0_5": 0,
+        "ai_control_miss_at_0_4": 0
+      },
+      {
+        "weights": {
+          "meld": 0.0,
+          "tmr": 0.7,
+          "raid": 0.3
+        },
+        "view": "short_180w",
+        "human_mean": 0.6053498791700059,
+        "human_median": 0.7467166304588317,
+        "human_max": 0.9691229432821273,
+        "human_p90": 0.8841195106506347,
+        "human_fp_at_0_5": 7,
+        "human_fp_at_0_4": 7,
+        "ai_control_mean": 0.9737018257379532,
+        "ai_control_min": 0.971829143166542,
+        "ai_control_miss_at_0_5": 0,
+        "ai_control_miss_at_0_4": 0
+      },
+      {
+        "weights": {
+          "meld": 0.0,
+          "tmr": 0.7,
+          "raid": 0.3
+        },
+        "view": "long_700w",
+        "human_mean": 0.5086022122763096,
+        "human_median": 0.5184193331748247,
+        "human_max": 0.7461125380359589,
+        "human_p90": 0.6898294612765312,
+        "human_fp_at_0_5": 6,
+        "human_fp_at_0_4": 9,
+        "ai_control_mean": 0.9689838843213187,
+        "ai_control_min": 0.9573430736859639,
+        "ai_control_miss_at_0_5": 0,
+        "ai_control_miss_at_0_4": 0
+      },
+      {
+        "weights": {
+          "meld": 0.0,
+          "tmr": 0.7,
+          "raid": 0.3
+        },
+        "view": "all",
+        "human_mean": 0.5569760457231578,
+        "human_median": 0.5450413870625197,
+        "human_max": 0.9691229432821273,
+        "human_p90": 0.8717615458369256,
+        "human_fp_at_0_5": 13,
+        "human_fp_at_0_4": 16,
+        "ai_control_mean": 0.9713428550296359,
+        "ai_control_min": 0.9573430736859639,
+        "ai_control_miss_at_0_5": 0,
+        "ai_control_miss_at_0_4": 0
+      },
+      {
+        "weights": {
+          "meld": 0.0,
+          "tmr": 0.0,
+          "raid": 1.0
+        },
+        "view": "short_180w",
+        "human_mean": 0.4651948396455158,
+        "human_median": 0.4888671338558197,
+        "human_max": 0.9576119780540466,
+        "human_p90": 0.6728549599647522,
+        "human_fp_at_0_5": 5,
+        "human_fp_at_0_4": 6,
+        "ai_control_mean": 0.9950296878814697,
+        "ai_control_min": 0.994196891784668,
+        "ai_control_miss_at_0_5": 0,
+        "ai_control_miss_at_0_4": 0
+      },
+      {
+        "weights": {
+          "meld": 0.0,
+          "tmr": 0.0,
+          "raid": 1.0
+        },
+        "view": "long_700w",
+        "human_mean": 0.4150117581540888,
+        "human_median": 0.28572261333465576,
+        "human_max": 0.7984232306480408,
+        "human_p90": 0.7244687676429749,
+        "human_fp_at_0_5": 5,
+        "human_fp_at_0_4": 5,
+        "ai_control_mean": 0.9949868321418762,
+        "ai_control_min": 0.994196891784668,
+        "ai_control_miss_at_0_5": 0,
+        "ai_control_miss_at_0_4": 0
+      },
+      {
+        "weights": {
+          "meld": 0.0,
+          "tmr": 0.0,
+          "raid": 1.0
+        },
+        "view": "all",
+        "human_mean": 0.4401032988998023,
+        "human_median": 0.41528554260730743,
+        "human_max": 0.9576119780540466,
+        "human_p90": 0.7193073868751527,
+        "human_fp_at_0_5": 10,
+        "human_fp_at_0_4": 11,
+        "ai_control_mean": 0.995008260011673,
+        "ai_control_min": 0.994196891784668,
+        "ai_control_miss_at_0_5": 0,
+        "ai_control_miss_at_0_4": 0
+      },
+      {
+        "weights": {
+          "meld": 0.0,
+          "tmr": 1.0,
+          "raid": 0.0
+        },
+        "view": "short_180w",
+        "human_mean": 0.6654163246805017,
+        "human_median": 0.852625697851181,
+        "human_max": 0.980101466178894,
+        "human_p90": 0.9797947704792023,
+        "human_fp_at_0_5": 7,
+        "human_fp_at_0_4": 8,
+        "ai_control_mean": 0.9645613133907318,
+        "ai_control_min": 0.9621002972126007,
+        "ai_control_miss_at_0_5": 0,
+        "ai_control_miss_at_0_4": 0
+      },
+      {
+        "weights": {
+          "meld": 0.0,
+          "tmr": 1.0,
+          "raid": 0.0
+        },
+        "view": "long_700w",
+        "human_mean": 0.5487124069001187,
+        "human_median": 0.5566854849457741,
+        "human_max": 0.8630181103944778,
+        "human_p90": 0.7236936697736382,
+        "human_fp_at_0_5": 6,
+        "human_fp_at_0_4": 10,
+        "ai_control_mean": 0.9578397638267941,
+        "ai_control_min": 0.9411452015240988,
+        "ai_control_miss_at_0_5": 0,
+        "ai_control_miss_at_0_4": 0
+      },
+      {
+        "weights": {
+          "meld": 0.0,
+          "tmr": 1.0,
+          "raid": 0.0
+        },
+        "view": "all",
+        "human_mean": 0.6070643657903102,
+        "human_median": 0.5806527761742473,
+        "human_max": 0.980101466178894,
+        "human_p90": 0.9677339106798173,
+        "human_fp_at_0_5": 13,
+        "human_fp_at_0_4": 18,
+        "ai_control_mean": 0.9612005386087629,
+        "ai_control_min": 0.9411452015240988,
+        "ai_control_miss_at_0_5": 0,
+        "ai_control_miss_at_0_4": 0
+      },
+      {
+        "weights": {
+          "meld": 1.0,
+          "tmr": 0.0,
+          "raid": 0.0
+        },
+        "view": "short_180w",
+        "human_mean": 0.2623339060016654,
+        "human_median": 0.29840925335884094,
+        "human_max": 0.3982687294483185,
+        "human_p90": 0.3479912579059601,
+        "human_fp_at_0_5": 0,
+        "human_fp_at_0_4": 0,
+        "ai_control_mean": 0.42116708556811017,
+        "ai_control_min": 0.4205625355243683,
+        "ai_control_miss_at_0_5": 3,
+        "ai_control_miss_at_0_4": 0
+      },
+      {
+        "weights": {
+          "meld": 1.0,
+          "tmr": 0.0,
+          "raid": 0.0
+        },
+        "view": "long_700w",
+        "human_mean": 0.3161139345981858,
+        "human_median": 0.36344243586063385,
+        "human_max": 0.4221085458993912,
+        "human_p90": 0.41512544453144073,
+        "human_fp_at_0_5": 0,
+        "human_fp_at_0_4": 3,
+        "ai_control_mean": 0.42046977082888287,
+        "ai_control_min": 0.42028388381004333,
+        "ai_control_miss_at_0_5": 3,
+        "ai_control_miss_at_0_4": 0
+      },
+      {
+        "weights": {
+          "meld": 1.0,
+          "tmr": 0.0,
+          "raid": 0.0
+        },
+        "view": "all",
+        "human_mean": 0.2892239202999256,
+        "human_median": 0.3083755671977997,
+        "human_max": 0.4221085458993912,
+        "human_p90": 0.40199486762285236,
+        "human_fp_at_0_5": 0,
+        "human_fp_at_0_4": 3,
+        "ai_control_mean": 0.4208184281984965,
+        "ai_control_min": 0.42028388381004333,
+        "ai_control_miss_at_0_5": 6,
+        "ai_control_miss_at_0_4": 0
+      }
+    ]
+  }
+}

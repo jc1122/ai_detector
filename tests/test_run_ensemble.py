@@ -315,6 +315,38 @@ class RunEnsembleTests(unittest.TestCase, _ArgparseUtils):
                 else:
                     self.assertTrue(payload["loaded"])
 
+    def test_short_default_profile_input_marks_heuristic_calibration_unapplied(self) -> None:
+        args = run_ensemble.parse_args(["--text", "hello"])
+        with patch.object(run_ensemble, "_ensure_torch", return_value=DummyTorch()), patch.object(
+            run_ensemble, "load_meld"
+        ) as load_meld, patch.object(run_ensemble, "load_tmr") as load_tmr, patch.object(
+            run_ensemble, "load_raid"
+        ) as load_raid, patch.object(
+            run_ensemble,
+            "_score_with_model",
+            side_effect=[
+                run_ensemble.ExpertResult(ai_probability=0.2, chunks=1),
+                run_ensemble.ExpertResult(ai_probability=0.4, chunks=1),
+            ],
+        ):
+            fake_model = MagicMock()
+            fake_tokenizer = MagicMock()
+            load_meld.return_value = (fake_model, fake_tokenizer, 512)
+            load_tmr.return_value = (fake_model, fake_tokenizer, 512)
+            load_raid.return_value = (fake_model, fake_tokenizer, 512)
+
+            result = run_ensemble.run_ensemble("hello", args)
+
+        load_meld.assert_called_once()
+        load_tmr.assert_not_called()
+        load_raid.assert_called_once()
+        self.assertEqual(result["ensemble"]["heuristic_weight"], 0.0)
+        self.assertEqual(result["weights"], {"meld": 0.75, "tmr": 0.0, "raid": 0.25})
+        self.assertFalse(result["experts"]["heuristic"]["loaded"])
+        self.assertTrue(result["calibration"]["applied_to_weights"])
+        self.assertTrue(result["calibration"]["applied_to_threshold"])
+        self.assertFalse(result["calibration"]["applied_to_heuristic_weight"])
+
     def test_model_with_zero_weight_is_not_loaded(self) -> None:
         with patch.object(run_ensemble, "_ensure_torch", return_value=DummyTorch()), patch.object(
             run_ensemble, "load_meld"

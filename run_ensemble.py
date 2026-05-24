@@ -12,6 +12,8 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Callable, Iterator, Protocol
 
+import calibration_config
+
 
 def _ensure_torch() -> object:
     try:
@@ -139,6 +141,37 @@ def _parse_weights(value: str) -> dict[str, float]:
         "tmr": values[1] / total,
         "raid": values[2] / total,
     }
+
+
+def _cli_option_provided(argv: list[str], option: str) -> bool:
+    return option in argv or any(arg.startswith(f"{option}=") for arg in argv)
+
+
+def apply_calibration_args(args: argparse.Namespace, argv: list[str]) -> argparse.Namespace:
+    args.calibration = None
+    args.calibration_applied_to_weights = False
+    args.calibration_applied_to_threshold = False
+    args.calibration_applied_to_heuristic_weight = False
+    calibration = None
+    profile = getattr(args, "profile", "legacy-default")
+    if profile != "legacy-default":
+        calibration = calibration_config.load_builtin_profile(profile)
+    if getattr(args, "calibration_file", None):
+        calibration = calibration_config.load_calibration_config(args.calibration_file)
+    if calibration is None:
+        return args
+
+    if not _cli_option_provided(argv, "--weights"):
+        args.weights = calibration.weights
+        args.calibration_applied_to_weights = True
+    if not _cli_option_provided(argv, "--threshold"):
+        args.threshold = calibration.threshold
+        args.calibration_applied_to_threshold = True
+    if not _cli_option_provided(argv, "--heuristic-weight"):
+        args.heuristic_weight = calibration.heuristic_weight
+        args.calibration_applied_to_heuristic_weight = True
+    args.calibration = calibration
+    return args
 
 
 def _parse_probability(value: str) -> float:
@@ -412,45 +445,98 @@ def run_ensemble(text: str, args: argparse.Namespace) -> dict[str, object]:
             max_chunks=args.max_chunks,
         )
 
-    ai_probability = sum(
+    model_ai_probability = sum(
         args.weights[name] * expert_results[name].ai_probability for name in expert_names
     )
+    heuristic_weight = getattr(args, "heuristic_weight", 0.0)
+    heuristic_payload = None
+    heuristic_error = None
+    if heuristic_weight:
+        import heuristic_detector
+
+        try:
+            heuristic_payload = heuristic_detector.build_payload(text, threshold=args.threshold)["experts"]["heuristic"]
+        except RuntimeError as exc:
+            heuristic_error = str(exc)
+            heuristic_weight = 0.0
+        if heuristic_payload is not None:
+            ai_probability = (1.0 - heuristic_weight) * model_ai_probability + (
+                heuristic_weight * heuristic_payload["ai_probability"]
+            )
+        else:
+            ai_probability = model_ai_probability
+    else:
+        ai_probability = model_ai_probability
     human_probability = 1.0 - ai_probability
     label = "ai" if ai_probability >= args.threshold else "human"
+    experts_payload = {
+        "meld": _score_payload(expert_results["meld"]),
+        "tmr": _score_payload(expert_results["tmr"]),
+        "raid": _score_payload(expert_results["raid"]),
+    }
+    if heuristic_payload is not None:
+        experts_payload["heuristic"] = heuristic_payload
+    elif heuristic_error is not None:
+        experts_payload["heuristic"] = {
+            "ai_score": None,
+            "human_score": None,
+            "ai_probability": None,
+            "human_probability": None,
+            "chunks": 0,
+            "loaded": False,
+            "notes": f"Heuristic not applied: {heuristic_error}",
+        }
+    output_weights = dict(args.weights)
+    if heuristic_weight:
+        output_weights = {
+            "meld": (1.0 - heuristic_weight) * args.weights["meld"],
+            "tmr": (1.0 - heuristic_weight) * args.weights["tmr"],
+            "raid": (1.0 - heuristic_weight) * args.weights["raid"],
+            "heuristic": heuristic_weight,
+        }
 
     return {
         "text_preview": text[:250],
-        "weights": args.weights,
-        "experts": {
-            "meld": _score_payload(expert_results["meld"]),
-            "tmr": _score_payload(expert_results["tmr"]),
-            "raid": _score_payload(expert_results["raid"]),
-        },
+        "weights": output_weights,
+        "experts": experts_payload,
         "ensemble": {
             "ai_score": ai_probability,
             "human_score": human_probability,
             "ai_probability": ai_probability,
             "human_probability": human_probability,
+            "model_ai_probability": model_ai_probability,
+            "heuristic_weight": heuristic_weight,
             "threshold": args.threshold,
             "label": label,
         },
-        "calibration": {
-            "status": "uncalibrated",
-            "calibrated": False,
-            "message": "Scores are uncalibrated raw model probabilities. "
-            "Provide and use a calibrated model to get calibrated scores.",
-        },
+        "calibration": calibration_config.calibration_payload(
+            getattr(args, "calibration", None),
+            applied_to_weights=getattr(args, "calibration_applied_to_weights", False),
+            applied_to_threshold=getattr(args, "calibration_applied_to_threshold", False),
+            applied_to_heuristic_weight=(
+                getattr(args, "calibration_applied_to_heuristic_weight", False)
+                and heuristic_payload is not None
+                and heuristic_weight > 0
+            ),
+        ),
         "device": str(device),
     }
 
 
-def parse_args() -> argparse.Namespace:
+def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
+    raw_argv = list(sys.argv[1:] if argv is None else argv)
     parser = argparse.ArgumentParser(description="Run MELD, TMR, and MAGE ModernBERT models as an ensemble.")
     parser.add_argument("--meld-dir", default="meld_model", help="Path to the MELD checkpoint directory.")
     parser.add_argument("--tmr-dir", default="tmr_model", help="Path to the TMR checkpoint directory.")
     parser.add_argument("--raid-dir", default="raid_model", help="Path to the MAGE ModernBERT checkpoint directory.")
     parser.add_argument("--text", help="Input text as CLI argument.")
     parser.add_argument("--text-file", dest="text_file", help="Read input text from a file.")
+    parser.add_argument(
+        "--profile",
+        choices=["legacy-default", *sorted(calibration_config.BUILTIN_PROFILES)],
+        default="pl-technical-ood",
+        help="Built-in operating profile. Use legacy-default for raw 0.34,0.33,0.33 weights.",
+    )
     parser.add_argument(
         "--weights",
         default="0.34,0.33,0.33",
@@ -462,6 +548,16 @@ def parse_args() -> argparse.Namespace:
         type=_parse_probability,
         default=0.5,
         help="Decision threshold on AI probability.",
+    )
+    parser.add_argument(
+        "--heuristic-weight",
+        type=_parse_probability,
+        default=0.0,
+        help="Blend the fast heuristic score into the final ensemble with this weight.",
+    )
+    parser.add_argument(
+        "--calibration-file",
+        help="JSON calibration file that supplies default weights and threshold unless explicitly overridden.",
     )
     parser.add_argument(
         "--overlap",
@@ -498,7 +594,8 @@ def parse_args() -> argparse.Namespace:
         action="store_true",
         help="Suppress third-party stderr output during model loading and scoring.",
     )
-    return parser.parse_args()
+    args = parser.parse_args(argv)
+    return apply_calibration_args(args, raw_argv)
 
 
 def main() -> None:

@@ -1,0 +1,152 @@
+{
+  "description": "Durable local source-paper cache for the pre-2020 Polish technical-paper evaluation fixture.",
+  "items": [
+    {
+      "clean_text_path": "data/evaluation/polish_pre2020_technical_papers/sources/text/umk_biomass_2018.clean.txt",
+      "clean_text_sha256": "50e1d86c50971e794736896b012583a91ffbe0a5a2f258df9768ccc4765b77f8",
+      "clean_text_size_bytes": 17837,
+      "download_url": "https://repozytorium.umk.pl/server/api/core/bitstreams/51364810-2bde-4343-ab1e-0ebf0ae2c12c/content",
+      "id": "umk_biomass_2018",
+      "pdf_path": "data/evaluation/polish_pre2020_technical_papers/sources/pdf/umk_biomass_2018.pdf",
+      "pdf_sha256": "105e2b91d4669390d963c22816831897a0176ca3f09d2ecb0b6e92a50e61c2bd",
+      "pdf_size_bytes": 691846,
+      "title": "Potencjał techniczny odpadowej biomasy stałej na cele energetyczne w Polsce",
+      "year": 2018
+    },
+    {
+      "clean_text_path": "data/evaluation/polish_pre2020_technical_papers/sources/text/pe_distribution_reliability_2017.clean.txt",
+      "clean_text_sha256": "448ab7ac2102d4744a18eea4c4fdb52273afe307b8c68ec87284759f86c0e229",
+      "clean_text_size_bytes": 22815,
+      "download_url": "https://archiwum.pe.org.pl/articles/2017/3/1.pdf",
+      "id": "pe_distribution_reliability_2017",
+      "pdf_path": "data/evaluation/polish_pre2020_technical_papers/sources/pdf/pe_distribution_reliability_2017.pdf",
+      "pdf_sha256": "211e8f8af6838af747e222ada41c49ae1e1f4ede75a4ace2849e128164994686",
+      "pdf_size_bytes": 326700,
+      "title": "Analiza poziomu niezawodności zasilania odbiorców w elektroenergetycznych sieciach dystrybucyjnych",
+      "year": 2017
+    },
+    {
+      "clean_text_path": "data/evaluation/polish_pre2020_technical_papers/sources/text/bn_geology_energy_storage_2017.clean.txt",
+      "clean_text_sha256": "2822809010ac920ac08da287f7434b5f79f901467dbd103087043ea36adecbef",
+      "clean_text_size_bytes": 61227,
+      "download_url": "https://bibliotekanauki.pl/articles/2075739.pdf",
+      "id": "bn_geology_energy_storage_2017",
+      "pdf_path": "data/evaluation/polish_pre2020_technical_papers/sources/pdf/bn_geology_energy_storage_2017.pdf",
+      "pdf_sha256": "0665b0ff338f2098ea34fb29268c79465efa94f5a7c07dd48ac75b3af7a1c4d6",
+      "pdf_size_bytes": 317827,
+      "title": "Przegląd Geologiczny technical energy/geology article",
+      "year": 2017
+    },
+    {
+      "clean_text_path": "data/evaluation/polish_pre2020_technical_papers/sources/text/bn_building_facades_2016.clean.txt",
+      "clean_text_sha256": "92b87d901c2be1ea1b2ae93d72fbd8a63378507dc72d096f240523abca827529",
+      "clean_text_size_bytes": 14057,
+      "download_url": "https://bibliotekanauki.pl/articles/390322.pdf",
+      "id": "bn_building_facades_2016",
+      "pdf_path": "data/evaluation/polish_pre2020_technical_papers/sources/pdf/bn_building_facades_2016.pdf",
+      "pdf_sha256": "22090941929e77eb53b0bcf32d9765b4fdf10105b7bc2a412e9d8d6f8f13111f",
+      "pdf_size_bytes": 1362445,
+      "title": "Elewacje wentylowane - problemy wykonania i odbioru",
+      "year": 2016
+    },
+    {
+      "clean_text_path": "data/evaluation/polish_pre2020_technical_papers/sources/text/bn_road_recycling_2016.clean.txt",
+      "clean_text_sha256": "c7ce0fe090936bb9e58fd10b78e4cc7951e916026bc1fb930ce6be7d7cfe70fd",
+      "clean_text_size_bytes": 22294,
+      "download_url": "https://bibliotekanauki.pl/articles/391058.pdf",
+      "id": "bn_road_recycling_2016",
+      "pdf_path": "data/evaluation/polish_pre2020_technical_papers/sources/pdf/bn_road_recycling_2016.pdf",
+      "pdf_sha256": "84ee19d44e20342058e6a2e13f467055161eadc4ea82c1b63de79fbdf53e4bd3",
+      "pdf_size_bytes": 650843,
+      "title": "Wodoodporność recyklowanej podbudowy z asfaltem spienionym",
+      "year": 2016
+    },
+    {
+      "clean_text_path": "data/evaluation/polish_pre2020_technical_papers/sources/text/bn_fire_safety_2016.clean.txt",
+      "clean_text_sha256": "d1750b8d6f667e167126981ad8f50a319c06ce437716a4e3f55ca5f113a8760f",
+      "clean_text_size_bytes": 16668,
+      "download_url": "https://bibliotekanauki.pl/articles/390772.pdf",
+      "id": "bn_fire_safety_2016",
+      "pdf_path": "data/evaluation/polish_pre2020_technical_papers/sources/pdf/bn_fire_safety_2016.pdf",
+      "pdf_sha256": "8f65403e78e2b6ff51eb1677b25966128c3804d34b311eed9fc03b1aefd58ee2",
+      "pdf_size_bytes": 1111327,
+      "title": "Projektowanie konstrukcji budowlanych z uwagi na warunki pożarowe",
+      "year": 2016
+    },
+    {
+      "clean_text_path": "data/evaluation/polish_pre2020_technical_papers/sources/text/bn_ecological_engineering_2017.clean.txt",
+      "clean_text_sha256": "a2728d0b5be3640a68f17f328689ec31ebed37899ec8d2ae86f724f18edbb757",
+      "clean_text_size_bytes": 67832,
+      "download_url": "https://bibliotekanauki.pl/articles/401593.pdf",
+      "id": "bn_ecological_engineering_2017",
+      "pdf_path": "data/evaluation/polish_pre2020_technical_papers/sources/pdf/bn_ecological_engineering_2017.pdf",
+      "pdf_sha256": "21770833ac93bf67f8ff219309f8e563e99b302ab34050e091e3603b2c596de8",
+      "pdf_size_bytes": 1107873,
+      "title": "Odniesienia koncepcji retardacja przekształcania zasobów przyrody...",
+      "year": 2017
+    },
+    {
+      "clean_text_path": "data/evaluation/polish_pre2020_technical_papers/sources/text/bn_blockchain_education_2017.clean.txt",
+      "clean_text_sha256": "65320adc9c3b15014142125b333c8c1953f2d2ff232d0edac18a68d1296e6518",
+      "clean_text_size_bytes": 26884,
+      "download_url": "https://bibliotekanauki.pl/articles/432201.pdf",
+      "id": "bn_blockchain_education_2017",
+      "pdf_path": "data/evaluation/polish_pre2020_technical_papers/sources/pdf/bn_blockchain_education_2017.pdf",
+      "pdf_sha256": "38f8704814daf7dd17eb37a224ee4bee13fd64b390da302ea741f97efc09b137",
+      "pdf_size_bytes": 747265,
+      "title": "Możliwości wykorzystania technologii blockchain w obszarze edukacji",
+      "year": 2017
+    },
+    {
+      "clean_text_path": "data/evaluation/polish_pre2020_technical_papers/sources/text/bn_it_requirements_2017.clean.txt",
+      "clean_text_sha256": "f22d1c2f5784e465b81a103186497da300162659988fcd658e3c0aaf0fe9b254",
+      "clean_text_size_bytes": 20476,
+      "download_url": "https://bibliotekanauki.pl/articles/455086.pdf",
+      "id": "bn_it_requirements_2017",
+      "pdf_path": "data/evaluation/polish_pre2020_technical_papers/sources/pdf/bn_it_requirements_2017.pdf",
+      "pdf_sha256": "4dfcab1a34711597f5cef2a5a12865ddd3597db3de18d8d5c5b7e21c18be2a68",
+      "pdf_size_bytes": 574019,
+      "title": "Metoda zbierania wymagań w projektowaniu systemów informatycznych",
+      "year": 2017
+    },
+    {
+      "clean_text_path": "data/evaluation/polish_pre2020_technical_papers/sources/text/bn_cyber_identity_2017.clean.txt",
+      "clean_text_sha256": "e01b867c3af39094dbc688b9e7dc90e4b65ff5120e5e84720c5b3a7ae89bb6b9",
+      "clean_text_size_bytes": 9158,
+      "download_url": "https://bibliotekanauki.pl/articles/457287.pdf",
+      "id": "bn_cyber_identity_2017",
+      "pdf_path": "data/evaluation/polish_pre2020_technical_papers/sources/pdf/bn_cyber_identity_2017.pdf",
+      "pdf_sha256": "0697f67635308944e3dc8846786a4cb4c52f7256f2721fb554941ebc4de60644",
+      "pdf_size_bytes": 384401,
+      "title": "Edukacja w zakresie metod i środków ochrony tożsamości w sieci",
+      "year": 2017
+    },
+    {
+      "clean_text_path": "data/evaluation/polish_pre2020_technical_papers/sources/text/bn_nonparametric_stats_2017.clean.txt",
+      "clean_text_sha256": "5ca6561ca6baa74e8edb1256bf374d07e38b6bd5728d870eff22a1fff27d8390",
+      "clean_text_size_bytes": 10090,
+      "download_url": "https://bibliotekanauki.pl/articles/456376.pdf",
+      "id": "bn_nonparametric_stats_2017",
+      "pdf_path": "data/evaluation/polish_pre2020_technical_papers/sources/pdf/bn_nonparametric_stats_2017.pdf",
+      "pdf_sha256": "e826099bdb2a0ec184c3326bdf458678a35d68c32a4e0fe1d04fc6b7e3d89b57",
+      "pdf_size_bytes": 598531,
+      "title": "Wybrane statystyki nieparametryczne",
+      "year": 2017
+    },
+    {
+      "clean_text_path": "data/evaluation/polish_pre2020_technical_papers/sources/text/bn_maritime_technical_2017.clean.txt",
+      "clean_text_sha256": "bc3b453dbbab0a52878f08fe0888bc83d4bd3d05bf7b7185f352f23ea43690d6",
+      "clean_text_size_bytes": 25245,
+      "download_url": "https://bibliotekanauki.pl/articles/111510.pdf",
+      "id": "bn_maritime_technical_2017",
+      "pdf_path": "data/evaluation/polish_pre2020_technical_papers/sources/pdf/bn_maritime_technical_2017.pdf",
+      "pdf_sha256": "2818ffde1cb3ba10f6af11cf17344267da820a1fe9b8e77f8e09092ff1711900",
+      "pdf_size_bytes": 960620,
+      "title": "Bulletin of the Maritime Institute technical article",
+      "year": 2017
+    }
+  ],
+  "notes": "Contains the original downloaded PDFs and clean extracted full text used to produce excerpts/windows. Checksums are SHA-256 over committed files.",
+  "schema_version": 1,
+  "source_dir": "data/evaluation/polish_pre2020_technical_papers/sources"
+}

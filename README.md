@@ -1,7 +1,12 @@
 # AI Detector CLI
 
-This repo provides a 3-expert ensemble CLI for text classification:
-MELD, TMR, and MAGE (ModernBERT from `raid_model`).
+This repo provides:
+- `ai-detector`: 3-expert ensemble classification with MELD, TMR, and MAGE
+  (ModernBERT from `raid_model`).
+- `ai-detector-heuristic`: fast local rule-based scoring for triage before
+  running the heavier model ensemble.
+- `ai-detector-calibrate`: grid-search operating-point calibration from stored
+  evaluation scores.
 
 ## CLI install
 
@@ -15,6 +20,8 @@ Then use the installed entrypoints:
 
 ```bash
 ai-detector --help
+ai-detector-heuristic --help
+ai-detector-calibrate --help
 ai-detector-deploy --help
 ```
 
@@ -29,6 +36,17 @@ use `.venv/bin/python -m pip install -e . --no-deps`.
 - `--weights` accepts `meld,tmr` (mapped to `meld,tmr,0`) or `meld,tmr,raid`.
 - In local practice, `tmr`-only runs are the reference for Polish/OOD quick checks
   because sample outputs are stored in `data/evaluation/*`.
+- The default runtime profile is `pl-technical-ood`, a packaged hybrid
+  operating point for this PL/OOD use case. It uses model weights
+  `meld,tmr,raid = 0.75,0.00,0.25`, blends in the fast heuristic with
+  `heuristic_weight = 0.60`, and sets `threshold = 0.434552`.
+- Use `--profile legacy-default` to run the old raw default weights
+  `0.34,0.33,0.33`.
+- TMR and RAID catch synthetic AI controls, but both over-call many Polish
+  pre-2020 technical papers at the default `0.5` threshold; do not use TMR-only
+  as a reliability proxy for Polish OOD text.
+- The heuristic CLI is separate and model-free. Use it for cheap triage; use
+  `ai-detector` for detailed model-based analysis.
 
 ## 2) Model folders and deployment
 
@@ -79,7 +97,7 @@ that backbone, before expecting fully offline MELD inference.
 ## 3) Run ensemble inference
 
 ```bash
-# default weights 34/33/33, default threshold 0.5
+# default profile: pl-technical-ood
 ai-detector --text "The sky is blue and clear."
 
 # input from stdin (pipe)
@@ -98,6 +116,15 @@ ai-detector \
 
 # zero-weight expert skip
 ai-detector --weights 1.0,0.0,0.0 --text "The sky is blue and clear." --json
+
+# explicit Polish/OOD profile
+ai-detector \
+  --profile pl-technical-ood \
+  --text-file ./input.txt \
+  --json
+
+# legacy raw default weights
+ai-detector --profile legacy-default --weights 0.34,0.33,0.33 --text-file ./input.txt --json
 ```
 
 Notes:
@@ -105,11 +132,64 @@ Notes:
 - `--batch-size` controls chunk batch size for scoring.
 - `--max-chunks` caps the number of chunks scored per expert.
 - `--threshold` compares only the final ensemble value.
+- `--profile` selects a packaged operating profile; the default is
+  `pl-technical-ood`.
+- `--calibration-file` supplies default weights, threshold, and optional
+  heuristic blend weight from an external JSON operating-point calibration
+  unless the corresponding CLI options are explicitly passed.
+- `--heuristic-weight` blends the heuristic score into the final ensemble; the
+  PL/OOD profile sets this automatically.
 - `--text`, `--text-file`, stdin pipe, and `--json` output mode are supported.
 - `--quiet` suppresses third-party stderr chatter during model loading/scoring;
   user-facing `Error: ...` messages are still printed on failure.
 
-## 4) Output contract (AI / human)
+## 4) Fast heuristic triage
+
+The heuristic path is a local Python port of the reviewed browser-side detector
+style: sentence variation, entropy, n-gram repetition, punctuation/list markers,
+Polish/English AI phrase markers, and AI-style word stems. It does not load model
+weights and is intended as a red-flag signal only.
+
+```bash
+# direct text
+ai-detector-heuristic --text "Warto zauważyć, że to krótki test operatora z pełnym zdaniem."
+
+# stdin pipe
+printf "Warto zauważyć, że w dzisiejszym świecie AI odgrywa kluczową rolę.\n" \
+  | ai-detector-heuristic --json
+
+# file input
+ai-detector-heuristic --text-file ./input.txt --json
+```
+
+Heuristic JSON uses the same top-level operator sections:
+- `experts.heuristic.ai_probability`, `human_probability`, `site_metrics`, `categories`, `signals`, `metrics`
+- `ensemble.ai_probability`, `ensemble.human_probability`, `ensemble.threshold`, `ensemble.label`
+- `calibration.status = uncalibrated_heuristic`
+
+Operator fields:
+- `experts.heuristic.site_metrics.*.ai_probability_percent` mirrors the site UI
+  category bars: `Zmienność tekstu`, `Słownictwo`, `Entropia`,
+  `Powtarzalność`, `Sygnatury AI`, `Struktura`.
+- `experts.heuristic.categories.*.score` is the internal human-like score used
+  to compute those bars; the site-style AI percentage is `100 - score`.
+- `experts.heuristic.signals` lists detected AI phrases, AI-style words, and
+  em/en dash count for quick review.
+
+Parity smoke against the reviewed web-detector behavior:
+- Polish marker-heavy sample: `ai_probability = 0.99`
+- plain Polish narrative sample: `ai_probability = 0.29`
+- English marker-heavy sample: `ai_probability = 0.99`
+- very short text is rejected before scoring
+
+These are raw uncalibrated rule scores, not proof of authorship.
+
+The initial six-sample smoke showed moderate heuristic-vs-ensemble agreement
+(`Pearson=0.690`, `Spearman=0.771`), but the broader pre-2020 Polish technical
+paper set showed weak or negative correlation with model scores. Treat the
+heuristic as a separate triage signal, not a model-score substitute.
+
+## 5) Output contract (AI / human)
 
 JSON fields used by operators:
 - `weights`
@@ -120,15 +200,25 @@ JSON fields used by operators:
 - `calibration.status`, `calibration.calibrated`, `calibration.message`
 
 Decision logic:
-- `ensemble.ai_probability` is the weighted average of loaded experts.
+- `ensemble.model_ai_probability` is the weighted average of loaded model
+  experts.
+- `ensemble.ai_probability` is `ensemble.model_ai_probability` unless a
+  non-zero `heuristic_weight` is active; with heuristic blending it is
+  `(1 - heuristic_weight) * model_ai_probability + heuristic_weight * heuristic_ai_probability`.
 - `ensemble.label` is `ai` if `ensemble.ai_probability >= threshold`, else `human`.
 - `ensemble.human_probability` is `1 - ensemble.ai_probability`.
+- `weights` reports effective final weights. With the default PL/OOD profile
+  this is `meld=0.30`, `tmr=0.00`, `raid=0.10`, `heuristic=0.60`.
 
 Scoring details:
 - For loaded experts, `human_probability = 1 - ai_probability`.
 - For skipped experts (`loaded: false`, typically due to zero weight), all score/probability
   fields are `null` and `notes` explains the skip.
 - Without calibration configuration, all probabilities are **raw uncalibrated scores**.
+- With `--profile pl-technical-ood` or `--calibration-file`,
+  `calibration.status` becomes `operating_point_calibrated`. This means
+  weights/threshold were selected from local validation data; individual expert
+  probabilities are still raw scores, not probability-calibrated estimates.
 
 Privacy note:
 - `text_preview` in JSON output is the first 250 characters of raw input text.
@@ -138,7 +228,7 @@ Privacy note:
 - Keep `text_preview` as a debug aid only; it is not a sanitized/safe-to-keep
   artifact when input confidentiality is required.
 
-## 5) Polish and OOD local evaluation (`data/evaluation/`, TMR-only)
+## 6) Polish and OOD local evaluation (`data/evaluation/`, TMR-only)
 
 See [`data/evaluation/README.md`](data/evaluation/README.md) for the local
 sample inventory, source notes, commands, and interpretation.
@@ -163,22 +253,54 @@ Interpretation:
 - this is intentionally a **negative** control and should not be interpreted as a successful detection.
 - negative or counterintuitive cases should be kept visible for tuning decisions.
 
-## 6) Limits and caveats
+Broader PL/OOD smoke:
+- Source fixture: `data/evaluation/polish_pre2020_technical_papers/`.
+- Baseline result: `data/evaluation/polish_pre2020_technical_papers/broad_eval_2026-05-24.json`.
+- Calibration: `data/evaluation/polish_pre2020_technical_papers/calibration_pl_ood_2026-05-24.json`.
+- Source cache: original PDFs and clean extracted full text under
+  `data/evaluation/polish_pre2020_technical_papers/sources/`, with SHA-256
+  checksums in `sources/manifest.json`.
+- Corpus: 12 pre-2020 technical/scientific papers; 11 clean Polish entries used
+  for fitting, one mixed English/Polish entry kept for audit only.
+- Default ensemble (`0.34,0.33,0.33`) on long 700-word human excerpts:
+  `2/11` false positives at threshold `0.5`, `6/11` at threshold `0.4`.
+- Source-group split hybrid profile `0.75,0.00,0.25` plus
+  `heuristic_weight=0.60`, threshold `0.434552`: heldout window smoke
+  `0/12` false positives, `0/3` false negatives; all window records `0/33`
+  false positives, `0/8` false negatives, margin `0.095468`.
+
+## 7) Limits and caveats
 
 - PL language support is limited; model quality can drop for Polish text.
 - OOD (out-of-distribution) inputs are not guaranteed and can produce unstable
   scores. Thresholds should be adjusted only after local validation.
 - Zero-weight models are not loaded to avoid unnecessary compute.
+- The heuristic CLI can false-positive formal Polish prose with common AI-like
+  markers and false-negative edited AI text without those markers.
+- Heuristic scores are useful for fast triage, not enforcement or final labeling.
 
-## 7) Pre-merge checks
+## 8) Pre-merge checks
 
 Quick checks:
 ```bash
 ai-detector --help
-ai-detector --text "quick smoke test" --json
-printf "quick smoke test\n" > /tmp/ai_detector_input.txt
+ai-detector-heuristic --help
+ai-detector-calibrate --help
+ai-detector --text "quick smoke test with enough words for heuristic profile metadata" --json
+printf "quick smoke test with enough words for heuristic profile metadata\n" > /tmp/ai_detector_input.txt
 ai-detector --text-file /tmp/ai_detector_input.txt --json
-printf "quick smoke test\n" | ai-detector --json
+printf "quick smoke test with enough words for heuristic profile metadata\n" | ai-detector --json
+ai-detector-heuristic --text "Warto zauważyć, że to szybki test lokalny z pełnym zdaniem operatora." --json
+ai-detector-calibrate \
+  --baseline-result data/evaluation/polish_pre2020_technical_papers/broad_eval_windows_2026-05-24.json \
+  --output /tmp/ai_detector_calibration.json \
+  --id pl_technical_ood_2026_05_24 \
+  --grid-step 0.05 \
+  --fixed-weights 0.75,0,0.25 \
+  --fit-heuristic-weight \
+  --heuristic-grid-step 0.05 \
+  --max-heuristic-weight 0.60 \
+  --split-seed pl-technical-ood-v2
 ```
 
 Heavy smoke test:
@@ -216,7 +338,18 @@ recommended to run these commands after activating the project virtualenv. From 
 checkout without package entrypoints, replace `ai-detector` with
 `python3 run_ensemble.py`.
 
-## 8) Preloaded daemon (`ai-detector-daemon`)
+## 9) GitHub CI/CD
+
+- `.github/workflows/ci.yml` runs on pull requests and pushes to `main`.
+  It checks entrypoint help, syntax, evaluation JSON artifacts, calibration
+  regeneration, `pytest`, and package build.
+- `.github/workflows/release.yml` builds source/wheel distributions on manual
+  dispatch and on GitHub Release publish. Release publish also attempts PyPI
+  trusted publishing through the `pypi` environment.
+- `.github/workflows/runtime-smoke.yml` is scheduled/manual and downloads cached
+  Hugging Face model artifacts before running a real calibrated inference smoke.
+
+## 10) Preloaded daemon (`ai-detector-daemon`)
 
 Use the daemon when you send repeated local scoring requests. It keeps models
 preloaded and scores JSONL requests sequentially in one process, so you avoid
@@ -257,7 +390,7 @@ printf '%s\n' '{"command":"health"}' >&"${DAEMON[1]}"
 read -r health_resp <&"${DAEMON[0]}"
 echo "health: $health_resp"
 
-# Scoring request (uses daemon default weights)
+# Scoring request (uses daemon default profile)
 printf '%s\n' '{"text":"This is a review sentence with enough context to score.","threshold":0.5}' >&"${DAEMON[1]}"
 read -r score_resp <&"${DAEMON[0]}"
 echo "score: $score_resp"
@@ -272,10 +405,10 @@ wait "$DAEMON_PID"
 Expected response shapes:
 - Health:
   `{"status":"ok","command":"health","loaded_experts":["meld","tmr","raid"],"device":"cpu","threads":4,"local_files_only":true}`
-- Scoring (default request weights):
-  `{"text_preview":"...","weights":{"meld":0.34,"tmr":0.33,"raid":0.33},"experts":{...},"ensemble":{...},"calibration":{...},"device":"cpu"}`
+- Scoring (default PL/OOD profile):
+  `{"text_preview":"...","weights":{"meld":0.30,"tmr":0.00,"raid":0.10,"heuristic":0.60},"experts":{...},"ensemble":{...},"calibration":{...},"device":"cpu"}`
 - Shutdown:
-  `{"status":"ok","command":"shutdown"}`
+  `{"status":"ok","command":"shutdown","ack":true,"loaded_experts":[]}`
 
 - Sending `{"command":"shutdown"}` is the unload path for this daemon. The daemon is
   designed to be torn down cleanly this way.
@@ -285,8 +418,9 @@ Expected response shapes:
 `--experts` subset behavior:
 - Start with `--experts tmr,raid` to preload only those two.
 - If a request does not provide `weights`, defaults are remapped only to the
-  preloaded set (for example, with default `0.34,0.33,0.33`, `tmr,raid` becomes
-  `tmr=0.5`, `raid=0.5` internally).
+  preloaded set. For legacy behavior, launch with `--profile legacy-default`;
+  with raw default `0.34,0.33,0.33`, `tmr,raid` becomes `tmr=0.5`, `raid=0.5`
+  internally.
 - If a request provides explicit positive weight for a non-preloaded expert, the
   daemon returns an error.
 
@@ -298,7 +432,7 @@ Output behavior and privacy:
 - `text_preview` is still emitted exactly like the CLI and keeps the first
   250 characters; avoid sending sensitive text if this output may be logged.
 
-## 9) Runtime dependencies
+## 11) Runtime dependencies
 
 ```bash
 python3 -m venv .venv

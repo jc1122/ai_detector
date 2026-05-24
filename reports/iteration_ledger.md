@@ -29,6 +29,12 @@ iteration/review loop happened.
 | 18 | `dc6c125` | Verify deploy success call order | Follow-up to deploy success-path review. |
 | 19 | `35d342f` | Assert nested JSON CLI contract | Reviewed in final audit; OOD evidence and ledger gaps fixed next. |
 | 20 | `HEAD` | Refresh Polish OOD evidence and add process ledger | Final closeout iteration, to be reviewed after commit. |
+| 21 | `HEAD` | Add fast heuristic detector CLI | Local browser-detector-style heuristic port with parity smoke tests. |
+| 22 | `HEAD` | Compare heuristic with ensemble samples | Six-sample heuristic-vs-ensemble smoke showed moderate positive correlation. |
+| 23 | `HEAD` | Add broad pre-2020 Polish technical-paper smoke | Source fixture and baseline scores show TMR/RAID over-call PL/OOD human text; provisional calibration added. |
+| 24 | `HEAD` | Add PL/OOD operating-point calibration | Runtime profile and `--calibration-file` support; source-group split model calibration set weights `0.75,0.00,0.25`, threshold `0.513591`. |
+| 25 | `HEAD` | Add expanded window smoke and hybrid PL/OOD profile | Three non-overlapping windows per paper plus heuristic blend reduced observed FP/FN on expanded local smoke. |
+| 26 | `HEAD` | Make hybrid profile reproducible and persist source papers | Calibration artifact now regenerates the shipped hybrid profile from expanded windows; original PDFs/full clean text are cached with checksums. |
 
 ## Current Evaluation Evidence
 
@@ -37,3 +43,18 @@ benchmarks. The chemistry-article excerpt is deliberately kept as a negative
 OOD result: current TMR-only scoring labels it `ai` with
 `ai_probability = 0.6433479888364673`, despite the source text being human
 pre-2020 Polish chemistry/polymer prose.
+
+The broad pre-2020 Polish technical-paper fixture is stored under
+`data/evaluation/polish_pre2020_technical_papers/`. The 2026-05-24 baseline
+keeps 11 clean Polish known-human entries and one mixed-language audit entry.
+Default legacy weights `0.34,0.33,0.33` produced `2/11` false positives on long
+clean Polish human excerpts at threshold `0.5`. The expanded window smoke uses
+three non-overlapping 220-word windows per clean Polish paper. The packaged
+`pl-technical-ood` profile uses model weights `0.75,0.00,0.25`, heuristic
+weight `0.60`, and threshold `0.434552`; on the expanded window smoke it
+produced heldout `0/12` false positives and `0/3` false negatives, and all-window
+`0/33` false positives and `0/8` false negatives. The runtime calibration is
+regenerated from `broad_eval_windows_2026-05-24.json` with fixed model weights
+and fitted heuristic weight. Original source PDFs and clean extracted full text
+are stored under `data/evaluation/polish_pre2020_technical_papers/sources/`
+with SHA-256 checksums.

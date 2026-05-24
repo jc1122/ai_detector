@@ -13,6 +13,7 @@ from pathlib import Path
 from typing import Callable, Sequence
 
 import run_ensemble
+import calibration_config
 
 
 ExpertName = str
@@ -121,6 +122,7 @@ def _normalize_weight_triplet(raw_weights: dict[ExpertName, float], *, strict_ke
 
 
 def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
+    raw_argv = list(sys.argv[1:] if argv is None else argv)
     parser = argparse.ArgumentParser(description="Run a preloaded JSONL inference daemon.")
     parser.add_argument("--meld-dir", default="meld_model", help="Path to the MELD checkpoint directory.")
     parser.add_argument("--tmr-dir", default="tmr_model", help="Path to the TMR checkpoint directory.")
@@ -130,6 +132,12 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         type=_parse_experts,
         default="meld,tmr,raid",
         help="Comma-separated experts to preload: meld,tmr,raid.",
+    )
+    parser.add_argument(
+        "--profile",
+        choices=["legacy-default", *sorted(calibration_config.BUILTIN_PROFILES)],
+        default="pl-technical-ood",
+        help="Built-in operating profile. Use legacy-default for raw 0.34,0.33,0.33 weights.",
     )
     parser.add_argument(
         "--weights",
@@ -142,6 +150,16 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         type=run_ensemble._parse_probability,
         default=0.5,
         help="Default decision threshold on AI probability.",
+    )
+    parser.add_argument(
+        "--heuristic-weight",
+        type=run_ensemble._parse_probability,
+        default=0.0,
+        help="Blend the fast heuristic score into the final ensemble with this default weight.",
+    )
+    parser.add_argument(
+        "--calibration-file",
+        help="JSON calibration file that supplies default weights and threshold unless explicitly overridden.",
     )
     parser.add_argument(
         "--overlap",
@@ -183,7 +201,8 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         action="store_true",
         help="Suppress third-party stderr output during scoring.",
     )
-    return parser.parse_args(argv)
+    args = parser.parse_args(argv)
+    return run_ensemble.apply_calibration_args(args, raw_argv)
 
 
 def _normalize_weights_from_request(
@@ -382,7 +401,21 @@ class DetectorDaemon:
                 run_model=run_model,
             )
 
-    def _build_payload(self, *, text: str, weights: dict[str, float], threshold: float, overlap: int, batch_size: int, max_chunks: int | None, quiet: bool) -> dict[str, object]:
+    def _build_payload(
+        self,
+        *,
+        text: str,
+        weights: dict[str, float],
+        threshold: float,
+        overlap: int,
+        batch_size: int,
+        max_chunks: int | None,
+        quiet: bool,
+        heuristic_weight: float,
+        calibration_applied_to_weights: bool,
+        calibration_applied_to_threshold: bool,
+        calibration_applied_to_heuristic_weight: bool,
+    ) -> dict[str, object]:
         expert_names = [name for name, weight in weights.items() if weight > 0]
         if not expert_names:
             raise RuntimeError("No active experts to run. Provide at least one positive weight.")
@@ -423,10 +456,30 @@ class DetectorDaemon:
                 expert_results[name].ai_probability, name=f"{name} ai_probability"
             )
 
-        weighted_ai_probability = _validate_probability(
+        model_ai_probability = _validate_probability(
             sum(weights[name] * expert_probabilities[name] for name in expert_names),
             name="ensemble ai_probability",
         )
+        heuristic_payload = None
+        heuristic_error = None
+        if heuristic_weight:
+            import heuristic_detector
+
+            try:
+                heuristic_payload = heuristic_detector.build_payload(text, threshold=threshold)["experts"]["heuristic"]
+            except RuntimeError as exc:
+                heuristic_error = str(exc)
+                heuristic_weight = 0.0
+            if heuristic_payload is not None:
+                weighted_ai_probability = _validate_probability(
+                    (1.0 - heuristic_weight) * model_ai_probability
+                    + heuristic_weight * heuristic_payload["ai_probability"],
+                    name="ensemble ai_probability",
+                )
+            else:
+                weighted_ai_probability = model_ai_probability
+        else:
+            weighted_ai_probability = model_ai_probability
         human_probability = 1.0 - weighted_ai_probability
         human_probability = _validate_probability(human_probability, name="ensemble human_probability")
         label = "ai" if weighted_ai_probability >= threshold else "human"
@@ -436,25 +489,51 @@ class DetectorDaemon:
             "tmr": run_ensemble._score_payload(expert_results["tmr"]),
             "raid": run_ensemble._score_payload(expert_results["raid"]),
         }
+        if heuristic_payload is not None:
+            experts_payload["heuristic"] = heuristic_payload
+        elif heuristic_error is not None:
+            experts_payload["heuristic"] = {
+                "ai_score": None,
+                "human_score": None,
+                "ai_probability": None,
+                "human_probability": None,
+                "chunks": 0,
+                "loaded": False,
+                "notes": f"Heuristic not applied: {heuristic_error}",
+            }
+        output_weights = dict(weights)
+        if heuristic_weight:
+            output_weights = {
+                "meld": (1.0 - heuristic_weight) * weights["meld"],
+                "tmr": (1.0 - heuristic_weight) * weights["tmr"],
+                "raid": (1.0 - heuristic_weight) * weights["raid"],
+                "heuristic": heuristic_weight,
+            }
 
         return {
             "text_preview": text[:250],
-            "weights": weights,
+            "weights": output_weights,
             "experts": experts_payload,
             "ensemble": {
                 "ai_score": weighted_ai_probability,
                 "human_score": human_probability,
                 "ai_probability": weighted_ai_probability,
                 "human_probability": human_probability,
+                "model_ai_probability": model_ai_probability,
+                "heuristic_weight": heuristic_weight,
                 "threshold": threshold,
                 "label": label,
             },
-            "calibration": {
-                "status": "uncalibrated",
-                "calibrated": False,
-                "message": "Scores are uncalibrated raw model probabilities. "
-                "Provide and use a calibrated model to get calibrated scores.",
-            },
+            "calibration": calibration_config.calibration_payload(
+                getattr(self.args, "calibration", None),
+                applied_to_weights=calibration_applied_to_weights,
+                applied_to_threshold=calibration_applied_to_threshold,
+                applied_to_heuristic_weight=(
+                    calibration_applied_to_heuristic_weight
+                    and heuristic_payload is not None
+                    and heuristic_weight > 0
+                ),
+            ),
             "device": self.device,
         }
 
@@ -486,14 +565,23 @@ class DetectorDaemon:
         if not text:
             raise RuntimeError("No input text provided.")
 
+        request_weights = request.get("weights")
         weights = _normalize_weights_from_request(
-            request.get("weights"),
+            request_weights,
             self.args.weights,
             self.args.experts,
         )
+        request_has_threshold = "threshold" in request
         threshold = _to_float_inclusive_0_1(request.get("threshold", self.args.threshold), name="threshold")
         if threshold is None:
             threshold = self.args.threshold
+        request_has_heuristic_weight = "heuristic_weight" in request
+        heuristic_weight = _to_float_inclusive_0_1(
+            request.get("heuristic_weight", self.args.heuristic_weight),
+            name="heuristic_weight",
+        )
+        if heuristic_weight is None:
+            heuristic_weight = self.args.heuristic_weight
         overlap = _to_non_negative_int(request.get("overlap", self.args.overlap), name="overlap")
         batch_size = _to_positive_int(request.get("batch_size", self.args.batch_size), name="batch_size")
         max_chunks = request.get("max_chunks", self.args.max_chunks)
@@ -509,6 +597,17 @@ class DetectorDaemon:
             batch_size=batch_size,
             max_chunks=max_chunks,
             quiet=quiet,
+            heuristic_weight=heuristic_weight,
+            calibration_applied_to_weights=(
+                request_weights is None and getattr(self.args, "calibration_applied_to_weights", False)
+            ),
+            calibration_applied_to_threshold=(
+                not request_has_threshold and getattr(self.args, "calibration_applied_to_threshold", False)
+            ),
+            calibration_applied_to_heuristic_weight=(
+                not request_has_heuristic_weight
+                and getattr(self.args, "calibration_applied_to_heuristic_weight", False)
+            ),
         )
 
     def _handle_line(self, line: str) -> dict[str, object] | None:

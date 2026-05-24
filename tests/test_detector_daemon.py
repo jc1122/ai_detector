@@ -141,7 +141,7 @@ class DaemonScoringTests(unittest.TestCase):
             self.assertLessEqual(value, 1.0)
 
         experts = payload["experts"]
-        self.assertEqual(set(experts), {"meld", "tmr", "raid"})
+        self.assertTrue({"meld", "tmr", "raid"}.issubset(set(experts)))
         for expert_payload in experts.values():
             for key in ("ai_score", "human_score", "ai_probability", "human_probability", "chunks", "loaded"):
                 self.assertIn(key, expert_payload)
@@ -263,7 +263,7 @@ class DaemonScoringTests(unittest.TestCase):
             "_score_with_model",
             side_effect=lambda *args, **kwargs: next(score),
         ):
-            daemon = self._build_daemon("--experts", "tmr")
+            daemon = self._build_daemon("--profile", "legacy-default", "--experts", "tmr")
             response = daemon._handle_request({"text": "hello"})
 
         load_tmr.assert_called_once()
@@ -339,6 +339,10 @@ class DaemonScoringTests(unittest.TestCase):
                     batch_size=1,
                     max_chunks=None,
                     quiet=False,
+                    heuristic_weight=0.0,
+                    calibration_applied_to_weights=False,
+                    calibration_applied_to_threshold=False,
+                    calibration_applied_to_heuristic_weight=False,
                 )
 
     def test_quiet_request_strings_are_parsed_explicitly(self) -> None:
@@ -393,7 +397,9 @@ class DaemonScoringTests(unittest.TestCase):
             ],
         ):
             daemon = self._build_daemon()
-            input_stream = io.StringIO('{"text":"hello world"}\n')
+            input_stream = io.StringIO(
+                '{"text":"To jest dłuższy tekst testowy dla lokalnego sprawdzenia profilu kalibracji."}\n'
+            )
             output_stream = io.StringIO()
             daemon.serve(stream_in=input_stream, stream_out=output_stream)
 
@@ -401,7 +407,40 @@ class DaemonScoringTests(unittest.TestCase):
         self.assertEqual(len(lines), 1)
         response = json.loads(lines[0])
         self._assert_scoring_contract(response)
-        self.assertAlmostEqual(response["weights"]["meld"], 0.34)
+        self.assertAlmostEqual(response["weights"]["meld"], 0.3)
+        self.assertAlmostEqual(response["weights"]["tmr"], 0.0)
+        self.assertAlmostEqual(response["weights"]["raid"], 0.1)
+        self.assertAlmostEqual(response["weights"]["heuristic"], 0.6)
+        self.assertEqual(response["calibration"]["status"], "operating_point_calibrated")
+
+    def test_short_default_profile_request_marks_heuristic_calibration_unapplied(self) -> None:
+        torch = _FakeTorchForScoring()
+        fake_model = _FakeModel()
+        fake_tokenizer = MagicMock()
+        with patch.object(detector_daemon.run_ensemble, "_ensure_torch", return_value=torch), patch.object(
+            detector_daemon.run_ensemble, "load_meld", return_value=(fake_model, fake_tokenizer, 128)
+        ), patch.object(
+            detector_daemon.run_ensemble, "load_tmr", return_value=(fake_model, fake_tokenizer, 128)
+        ), patch.object(
+            detector_daemon.run_ensemble, "load_raid", return_value=(fake_model, fake_tokenizer, 128)
+        ), patch.object(
+            detector_daemon.run_ensemble,
+            "_score_with_model",
+            side_effect=[
+                run_ensemble.ExpertResult(ai_probability=0.2, chunks=1),
+                run_ensemble.ExpertResult(ai_probability=0.4, chunks=1),
+            ],
+        ):
+            daemon = self._build_daemon()
+            response = daemon._handle_request({"text": "hello"})
+
+        self._assert_scoring_contract(response)
+        self.assertEqual(response["ensemble"]["heuristic_weight"], 0.0)
+        self.assertEqual(response["weights"], {"meld": 0.75, "tmr": 0.0, "raid": 0.25})
+        self.assertFalse(response["experts"]["heuristic"]["loaded"])
+        self.assertTrue(response["calibration"]["applied_to_weights"])
+        self.assertTrue(response["calibration"]["applied_to_threshold"])
+        self.assertFalse(response["calibration"]["applied_to_heuristic_weight"])
 
     def test_serve_rejects_non_finite_numeric_outputs(self) -> None:
         torch = _FakeTorchForScoring()
