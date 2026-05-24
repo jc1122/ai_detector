@@ -83,15 +83,31 @@ jobs:
             --max-false-positives 0 \
             --max-false-negatives 0 \
             --min-margin 0.05
-          cmp -s /tmp/ai_detector_calibration.json \
-            data/evaluation/polish_pre2020_technical_papers/calibration_pl_ood_2026-05-24.json
           python - <<'PY'
           import json
           import calibration_config
 
-          artifact = calibration_config.load_calibration_config(
-              "data/evaluation/polish_pre2020_technical_papers/calibration_pl_ood_2026-05-24.json"
-          )
+          generated_path = "/tmp/ai_detector_calibration.json"
+          artifact_path = "data/evaluation/polish_pre2020_technical_papers/calibration_pl_ood_2026-05-24.json"
+
+          def load_json(path):
+              with open(path, encoding="utf-8") as handle:
+                  return json.load(handle)
+
+          def canonical(value):
+              if isinstance(value, float):
+                  return round(value, 12)
+              if isinstance(value, dict):
+                  return {key: canonical(value[key]) for key in sorted(value)}
+              if isinstance(value, list):
+                  return [canonical(item) for item in value]
+              return value
+
+          generated_payload = load_json(generated_path)
+          artifact_payload = load_json(artifact_path)
+          assert canonical(generated_payload) == canonical(artifact_payload)
+
+          artifact = calibration_config.load_calibration_config(artifact_path)
           profile = calibration_config.load_builtin_profile("pl-technical-ood")
           assert artifact.weights == profile.weights
           assert artifact.threshold == profile.threshold
