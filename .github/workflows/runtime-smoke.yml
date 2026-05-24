@@ -59,17 +59,10 @@ jobs:
       - name: Download model artifacts
         run: |
           ai-detector-deploy \
-            --model-id anon-review-meld-2026/meld \
-            --revision "${MELD_REVISION}" \
-            --target-dir meld_model
-          ai-detector-deploy \
-            --model-id Oxidane/tmr-ai-text-detector \
-            --revision "${TMR_REVISION}" \
-            --target-dir tmr_model
-          ai-detector-deploy \
-            --model-id GeorgeDrayson/modernbert-ai-detection-raid-mage \
-            --revision "${RAID_REVISION}" \
-            --target-dir raid_model
+            --all \
+            --meld-revision "${MELD_REVISION}" \
+            --tmr-revision "${TMR_REVISION}" \
+            --raid-revision "${RAID_REVISION}"
 
       - name: Calibrated inference smoke
         env:

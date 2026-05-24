@@ -54,6 +54,7 @@ jobs:
         run: |
           ai-detector --help
           ai-detector-deploy --help
+          ai-detector-deploy --list-models
           ai-detector-daemon --help
           ai-detector-heuristic --help
           ai-detector-calibrate --help
@@ -140,5 +141,6 @@ jobs:
 
       - name: Build distribution
         run: |
-          python -m pip install build
+          python -m pip install build twine
           python -m build --sdist --wheel
+          python -m twine check dist/*

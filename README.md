@@ -50,8 +50,42 @@ use `.venv/bin/python -m pip install -e . --no-deps`.
 
 ## 2) Model folders and deployment
 
-Use the installed deploy entrypoint to pull Hugging Face models into local
-folders.
+Runtime model weights are large Hugging Face artifacts, so they are not vendored
+inside the Python wheel. The package declares the code dependencies in
+`pyproject.toml`; `ai-detector-deploy` materializes the model data dependency
+into the local runtime folders.
+
+Fresh checkout deployment:
+
+```bash
+ai-detector-deploy --all
+```
+
+This downloads the packaged model set:
+
+| expert | Hugging Face model | local folder |
+| --- | --- | --- |
+| MELD | `anon-review-meld-2026/meld` | `./meld_model` |
+| TMR | `Oxidane/tmr-ai-text-detector` | `./tmr_model` |
+| MAGE/RAID | `GeorgeDrayson/modernbert-ai-detection-raid-mage` | `./raid_model` |
+
+List the packaged sources without downloading:
+
+```bash
+ai-detector-deploy --list-models
+```
+
+For reproducible deployment, pin immutable revisions per model:
+
+```bash
+ai-detector-deploy \
+  --all \
+  --meld-revision <immutable_meld_commit_or_tag> \
+  --tmr-revision <immutable_tmr_commit_or_tag> \
+  --raid-revision <immutable_raid_commit_or_tag>
+```
+
+You can still pull a single custom Hugging Face model into a local folder:
 
 ```bash
 ai-detector-deploy \
@@ -70,7 +104,9 @@ ai-detector-deploy \
 
 Defaults and behavior:
 - `ai-detector-deploy` default target is `./meld_model` (override with `--target-dir`).
-- `--revision` defaults to `main`; treat `main` as a mutable pointer.
+- `--revision` defaults to `main`; with `--all`, it is the shared fallback
+  revision unless `--meld-revision`, `--tmr-revision`, or `--raid-revision` is
+  provided. Treat `main` as a mutable pointer.
   For reproducible deployments, use an immutable revision (commit SHA or tag) from
   the model page under Commits/Versions.
 - Re-running the same command is idempotent; unchanged files are skipped.
@@ -284,6 +320,8 @@ Broader PL/OOD smoke:
 Quick checks:
 ```bash
 ai-detector --help
+ai-detector-deploy --help
+ai-detector-deploy --list-models
 ai-detector-heuristic --help
 ai-detector-calibrate --help
 ai-detector --text "quick smoke test with enough words for heuristic profile metadata" --json
@@ -342,10 +380,10 @@ checkout without package entrypoints, replace `ai-detector` with
 
 - `.github/workflows/ci.yml` runs on pull requests and pushes to `main`.
   It checks entrypoint help, syntax, evaluation JSON artifacts, calibration
-  regeneration, `pytest`, and package build.
+  regeneration, `pytest`, package build, and `twine check`.
 - `.github/workflows/release.yml` builds source/wheel distributions on manual
-  dispatch and on GitHub Release publish. Release publish also attempts PyPI
-  trusted publishing through the `pypi` environment.
+  dispatch and on GitHub Release publish, then runs `twine check`. Release
+  publish also attempts PyPI trusted publishing through the `pypi` environment.
 - `.github/workflows/runtime-smoke.yml` is scheduled/manual and downloads cached
   Hugging Face model artifacts before running a real calibrated inference smoke.
 

@@ -13,6 +13,7 @@ import urllib.error
 import urllib.parse
 import urllib.request
 import sys
+from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
@@ -22,6 +23,36 @@ REVISION = "main"
 DEFAULT_TARGET_DIR = Path("meld_model")
 MANIFEST_FILENAME = "ai_detector_model_manifest.json"
 CHUNK_SIZE = 1024 * 256
+
+
+@dataclass(frozen=True)
+class ModelSpec:
+    name: str
+    model_id: str
+    target_dir: Path
+    description: str
+
+
+MODEL_REGISTRY: tuple[ModelSpec, ...] = (
+    ModelSpec(
+        name="meld",
+        model_id=MODEL_ID,
+        target_dir=DEFAULT_TARGET_DIR,
+        description="MELD detector head and tokenizer.",
+    ),
+    ModelSpec(
+        name="tmr",
+        model_id="Oxidane/tmr-ai-text-detector",
+        target_dir=Path("tmr_model"),
+        description="TMR AI text detector.",
+    ),
+    ModelSpec(
+        name="raid",
+        model_id="GeorgeDrayson/modernbert-ai-detection-raid-mage",
+        target_dir=Path("raid_model"),
+        description="MAGE/RAID ModernBERT detector.",
+    ),
+)
 
 
 def _human_bytes(size: int) -> str:
@@ -241,9 +272,43 @@ def download_model(model_id: str, revision: str, target_dir: Path) -> list[dict[
     return downloaded_files
 
 
+def _revision_for_model(args: argparse.Namespace, model_name: str) -> str:
+    override = getattr(args, f"{model_name}_revision", None)
+    if override:
+        return override
+    return args.revision
+
+
+def _print_model_registry() -> None:
+    for spec in MODEL_REGISTRY:
+        print(f"{spec.name}:")
+        print(f"  model_id: {spec.model_id}")
+        print(f"  target_dir: {spec.target_dir}")
+        print(f"  description: {spec.description}")
+
+
+def _deploy_all(args: argparse.Namespace) -> None:
+    for spec in MODEL_REGISTRY:
+        revision = _revision_for_model(args, spec.name)
+        print(f"Deploying {spec.name}: {spec.model_id} @ {revision} to {spec.target_dir.resolve()}")
+        download_model(spec.model_id, revision, spec.target_dir)
+
+    print("Deployment complete.")
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="Download Hugging Face model files into the working directory."
+    )
+    parser.add_argument(
+        "--all",
+        action="store_true",
+        help="Download all packaged runtime models into ./meld_model, ./tmr_model, and ./raid_model.",
+    )
+    parser.add_argument(
+        "--list-models",
+        action="store_true",
+        help="List packaged Hugging Face model sources and target directories, then exit.",
     )
     parser.add_argument(
         "--target-dir",
@@ -262,7 +327,22 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--revision",
         default=REVISION,
-        help="Model revision used in API and file download URL (default: main).",
+        help="Model revision used in API and file download URL (default: main). With --all, this is the shared fallback revision.",
+    )
+    parser.add_argument(
+        "--meld-revision",
+        default=None,
+        help="MELD revision used by --all; defaults to --revision.",
+    )
+    parser.add_argument(
+        "--tmr-revision",
+        default=None,
+        help="TMR revision used by --all; defaults to --revision.",
+    )
+    parser.add_argument(
+        "--raid-revision",
+        default=None,
+        help="MAGE/RAID revision used by --all; defaults to --revision.",
     )
     return parser.parse_args()
 
@@ -270,6 +350,16 @@ def parse_args() -> argparse.Namespace:
 def main() -> None:
     try:
         args = parse_args()
+        if getattr(args, "list_models", False):
+            _print_model_registry()
+            return
+
+        if getattr(args, "all", False):
+            if args.target_dir is not None:
+                raise RuntimeError("--target-dir is only valid for single-model deployment.")
+            _deploy_all(args)
+            return
+
         target = args.target_dir or DEFAULT_TARGET_DIR
         model_id = args.model_id
         revision = args.revision

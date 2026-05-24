@@ -25,6 +25,8 @@ Document the CLI in a way that another agent can:
 `README.md` MUST include all of the points below:
 - Ensemble review summary for MELD / TMR / MAGE
 - Explicit local model folders (`meld_model`, `tmr_model`, `raid_model`)
+- Hugging Face model sources for each expert and the one-command
+  `ai-detector-deploy --all` deployment path
 - Input/Output review:
   - AI / human decision logic
   - `ai_probability` and `human_probability` meaning
@@ -42,6 +44,9 @@ Document the CLI in a way that another agent can:
 After any doc change, run and verify:
 - `ai-detector --help` after package install, or `python3 run_ensemble.py --help`
   from a checkout fallback
+- `ai-detector-deploy --help` and `ai-detector-deploy --list-models` after
+  package install, or `python3 deploy_meld.py --help` and
+  `python3 deploy_meld.py --list-models` from a checkout fallback
 - `ai-detector-heuristic --help` after package install, or
   `python3 heuristic_detector.py --help` from a checkout fallback
 - `ai-detector-calibrate --help` after package install, or
@@ -57,6 +62,11 @@ and keep negative evaluation outcomes visible (no hiding of poor OOD/PL cases).
 ## Development governance
 
 - Keep runtime changes covered by unit tests.
+- Treat model weights as external runtime data dependencies, not source files.
+  Use `ai-detector-deploy --all` for the packaged Hugging Face model set unless
+  the user explicitly asks for a custom model deployment or refresh.
+- Keep source-distribution fixtures in sync through `MANIFEST.in`; tests and
+  calibration examples rely on `data/evaluation/` being present in the sdist.
 - Keep negative PL/OOD outcomes visible; do not hide false-positive cases when
   tuning weights, thresholds, or calibration files.
 - Calibration files are operating-point calibrations unless a probability

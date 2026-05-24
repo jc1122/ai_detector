@@ -269,3 +269,77 @@ class DeployMeldTests(TestCase):
             self.assertIn(f"to {default_target}", stdout.getvalue())
             self.assertIn("Deployment complete.", stdout.getvalue())
             self.assertEqual(stderr.getvalue(), "")
+
+    def test_list_models_prints_packaged_huggingface_sources_without_download(self) -> None:
+        with patch.object(sys, "argv", ["deploy_meld.py", "--list-models"]):
+            stdout = io.StringIO()
+            stderr = io.StringIO()
+
+            with patch.object(
+                deploy_meld, "download_model", return_value=[]
+            ) as mocked_download, patch("sys.stdout", new=stdout), patch("sys.stderr", new=stderr):
+                deploy_meld.main()
+
+        mocked_download.assert_not_called()
+        output = stdout.getvalue()
+        self.assertIn("meld:", output)
+        self.assertIn("anon-review-meld-2026/meld", output)
+        self.assertIn("tmr:", output)
+        self.assertIn("Oxidane/tmr-ai-text-detector", output)
+        self.assertIn("raid:", output)
+        self.assertIn("GeorgeDrayson/modernbert-ai-detection-raid-mage", output)
+        self.assertEqual(stderr.getvalue(), "")
+
+    def test_all_deploys_packaged_models_with_per_model_revisions(self) -> None:
+        argv = [
+            "deploy_meld.py",
+            "--all",
+            "--revision",
+            "fallback",
+            "--meld-revision",
+            "meld-sha",
+            "--raid-revision",
+            "raid-sha",
+        ]
+        with patch.object(sys, "argv", argv):
+            stdout = io.StringIO()
+            stderr = io.StringIO()
+
+            with patch.object(
+                deploy_meld, "download_model", return_value=[]
+            ) as mocked_download, patch("sys.stdout", new=stdout), patch("sys.stderr", new=stderr):
+                deploy_meld.main()
+
+        mocked_download.assert_any_call(
+            "anon-review-meld-2026/meld",
+            "meld-sha",
+            Path("meld_model"),
+        )
+        mocked_download.assert_any_call(
+            "Oxidane/tmr-ai-text-detector",
+            "fallback",
+            Path("tmr_model"),
+        )
+        mocked_download.assert_any_call(
+            "GeorgeDrayson/modernbert-ai-detection-raid-mage",
+            "raid-sha",
+            Path("raid_model"),
+        )
+        self.assertEqual(mocked_download.call_count, 3)
+        self.assertIn("Deploying meld:", stdout.getvalue())
+        self.assertIn("Deployment complete.", stdout.getvalue())
+        self.assertEqual(stderr.getvalue(), "")
+
+    def test_all_rejects_single_model_target_dir(self) -> None:
+        with patch.object(sys, "argv", ["deploy_meld.py", "--all", "--target-dir", "models"]):
+            with patch.object(deploy_meld, "download_model", return_value=[]) as mocked_download:
+                with patch("sys.stdout", new=io.StringIO()) as stdout, patch(
+                    "sys.stderr", new=io.StringIO()
+                ) as stderr:
+                    with self.assertRaises(SystemExit) as exc:
+                        deploy_meld.main()
+
+        self.assertEqual(exc.exception.code, 1)
+        mocked_download.assert_not_called()
+        self.assertIn("--target-dir is only valid for single-model deployment.", stderr.getvalue())
+        self.assertEqual(stdout.getvalue(), "")
