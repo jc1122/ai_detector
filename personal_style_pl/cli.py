@@ -84,6 +84,14 @@ def _cmd_rank(args) -> int:
     return 0
 
 
+def _cmd_describe_profile(args) -> int:
+    from .profile.report import profile_to_markdown
+    profile = joblib.load(args.profile)
+    ensure_parent(args.output).write_text(profile_to_markdown(profile), encoding="utf-8")
+    print(f"Profile summary written to {args.output}", file=sys.stderr)
+    return 0
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="personal-style-pl",
                                      description="Polish personal writing-style similarity.")
@@ -113,6 +121,11 @@ def build_parser() -> argparse.ArgumentParser:
     rk.add_argument("--candidates-dir", required=True)
     rk.add_argument("--output", required=True)
     rk.set_defaults(func=_cmd_rank)
+
+    dp = sub.add_parser("describe-profile", help="Summarize a profile as Markdown.")
+    dp.add_argument("--profile", required=True)
+    dp.add_argument("--output", required=True)
+    dp.set_defaults(func=_cmd_describe_profile)
 
     return parser
 
