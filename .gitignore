@@ -1,8 +1,10 @@
 meld_model/
 tmr_model/
 raid_model/
-models/
+/models/
 .venv/
+.venv-style/
+artifacts/
 __pycache__/
 data/human_articles/pdfs/
 data/human_articles/text/

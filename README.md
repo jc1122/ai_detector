@@ -477,3 +477,95 @@ python3 -m venv .venv
 . .venv/bin/activate
 python -m pip install torch transformers safetensors
 ```
+
+## 12) Personal Polish style similarity (`personal_style_pl`)
+
+A separate, local tool that learns **your** Polish writing style from your own
+samples and scores how much new text resembles it. It reuses this repo's
+Polish tokenizer and AI-marker phrase lists, and can attach the existing
+heuristic AI-likeness score via `--with-heuristics`.
+
+**What it does:** builds a personal style profile, scores/ranks drafts by
+similarity to your style, explains which features match/diverge, and suggests
+conservative, meaning-preserving edits.
+
+**What it does NOT do:** it is **style similarity, not authorship verification**
+and not proof of AI authorship. It never invents facts and never rewrites
+names, dates, numbers, quotes, URLs, citations, or code.
+
+### Setup (single Python 3.12 env)
+
+StyloMetrix pins `spacy==3.7.2`, which has no wheels above CPython 3.12, so the
+whole project standardizes on **Python 3.12** with `numpy<2`. Use the scripted,
+reproducible setup (requires [`uv`](https://astral.sh/uv)):
+
+```bash
+./scripts/setup_style_env.sh
+```
+
+This builds `.venv` on 3.12, installs `.[test,style,style-stylometrix]`, and
+installs the Polish `pl_nask` model `--no-deps` from the TLS-valid Hugging Face
+mirror (the official IPI PAN host has an expired certificate). Surface-only mode
+needs just `pip install -e ".[style]"` and runs with `--no-stylometrix`.
+
+### Commands
+
+```bash
+# Build a profile from a folder of your texts (surface-only / degraded mode)
+python -m personal_style_pl.cli build-profile \
+  --samples-dir examples/my_style_samples \
+  --output artifacts/profile.joblib --no-stylometrix
+
+# Build with StyloMetrix (172 Polish features; needs the style-stylometrix env)
+python -m personal_style_pl.cli build-profile \
+  --samples-dir examples/my_style_samples --output artifacts/profile.joblib
+
+# Build from CSV (columns: text,source,date,genre)
+python -m personal_style_pl.cli build-profile --csv examples/style_samples.csv \
+  --text-col text --output artifacts/profile.joblib
+
+# Score one text (JSON), optionally attaching heuristic AI-likeness
+python -m personal_style_pl.cli score --profile artifacts/profile.joblib \
+  --text-file examples/candidates/draft_a.txt --json --with-heuristics
+
+# Rank candidate drafts -> CSV
+python -m personal_style_pl.cli rank --profile artifacts/profile.joblib \
+  --candidates-dir examples/candidates --output artifacts/ranking.csv
+
+# Human-readable profile summary
+python -m personal_style_pl.cli describe-profile \
+  --profile artifacts/profile.joblib --output artifacts/profile_summary.md
+
+# Conservative suggestions / deterministic edit
+python -m personal_style_pl.cli suggest-edits --profile artifacts/profile.joblib \
+  --text-file examples/candidates/draft_a.txt --output artifacts/suggestions.md --mode light
+python -m personal_style_pl.cli edit --profile artifacts/profile.joblib \
+  --text-file examples/candidates/draft_a.txt --output artifacts/draft_a.edited.txt --mode light
+
+# Optional supervised mine-vs-other classifier (CSV labels: mine|other)
+python -m personal_style_pl.cli train-supervised --csv data/contrast.csv \
+  --text-col text --label-col label --output artifacts/supervised_style_model.joblib
+```
+
+### Score interpretation
+
+`style_match_score` is 0–100. Labels: **80–100** `close_to_my_style`,
+**55–79** `mixed`, **0–54** `far_from_my_style`; `insufficient_text` when the
+candidate is too short. `confidence` is `high`/`medium`/`low` based on profile
+size and candidate length. The score blends a robust per-feature z-distance
+(70%) with cosine-to-centroid (30%), with temperature calibrated from your
+training chunks.
+
+### Limitations & ethics
+
+- Provide **at least 10–20 samples or 5,000+ words** for a meaningful profile;
+  smaller profiles emit a weak-profile warning and force low confidence.
+- N-grams are topic-sensitive and off by default (`--include-ngrams`).
+- Domain/genre mismatch reduces reliability.
+- Use it to understand and match *your own* style — not to impersonate others or
+  to evade AI detectors.
+
+### License note
+
+`stylo_metrix` and the `pl_nask` model are **GPL-3.0**. They are optional extras;
+if you redistribute the project as a whole with them, GPL obligations apply.

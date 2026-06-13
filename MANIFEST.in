@@ -4,3 +4,4 @@ recursive-include .github/workflows *.yml
 recursive-include data/evaluation *
 recursive-include reports *.json *.md
 recursive-include scripts *.py
+recursive-include examples *
