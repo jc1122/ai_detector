@@ -19,11 +19,18 @@ ai-detector-deploy = "deploy_meld:main"
 ai-detector-daemon = "detector_daemon:main"
 ai-detector-heuristic = "heuristic_detector:main"
 ai-detector-calibrate = "calibrate_detector:main"
+personal-style-pl = "personal_style_pl.cli:main"
 
 [project.optional-dependencies]
 test = [
   "pytest>=8.3",
 ]
+# Personal Polish style similarity feature. `style` are hard deps of the feature
+# (imported directly). `style-stylometrix` requires Python <3.13 and numpy<2; the
+# pl_nask model is installed separately by scripts/setup_style_env.sh (see README).
+style = ["numpy<2", "pandas", "scikit-learn", "scipy", "joblib", "rich", "regex"]
+style-stylometrix = ["stylo_metrix", "spacy==3.7.2", "spacy-transformers>=1.3,<1.4", "numpy<2"]
+style-ml = ["lightgbm", "shap"]
 
 [tool.setuptools]
 py-modules = [
@@ -33,4 +40,12 @@ py-modules = [
   "heuristic_detector",
   "calibration_config",
   "calibrate_detector",
+]
+packages = [
+  "personal_style_pl",
+  "personal_style_pl.features",
+  "personal_style_pl.profile",
+  "personal_style_pl.edit",
+  "personal_style_pl.models",
+  "personal_style_pl.utils",
 ]
