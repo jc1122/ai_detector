@@ -92,6 +92,26 @@ def _cmd_describe_profile(args) -> int:
     return 0
 
 
+def _cmd_suggest_edits(args) -> int:
+    from .edit.style_editor import suggestions_to_markdown
+    profile = joblib.load(args.profile)
+    text = Path(args.text_file).read_text(encoding="utf-8")
+    ensure_parent(args.output).write_text(
+        suggestions_to_markdown(profile, text, args.mode), encoding="utf-8")
+    print(f"Suggestions written to {args.output}", file=sys.stderr)
+    return 0
+
+
+def _cmd_edit(args) -> int:
+    from .edit.style_editor import conservative_edit
+    profile = joblib.load(args.profile)
+    text = Path(args.text_file).read_text(encoding="utf-8")
+    ensure_parent(args.output).write_text(
+        conservative_edit(profile, text, args.mode), encoding="utf-8")
+    print(f"Edited text written to {args.output}", file=sys.stderr)
+    return 0
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="personal-style-pl",
                                      description="Polish personal writing-style similarity.")
@@ -126,6 +146,20 @@ def build_parser() -> argparse.ArgumentParser:
     dp.add_argument("--profile", required=True)
     dp.add_argument("--output", required=True)
     dp.set_defaults(func=_cmd_describe_profile)
+
+    se = sub.add_parser("suggest-edits", help="Suggest conservative edits (Markdown).")
+    se.add_argument("--profile", required=True)
+    se.add_argument("--text-file", required=True)
+    se.add_argument("--output", required=True)
+    se.add_argument("--mode", choices=["light", "medium", "strong"], default="light")
+    se.set_defaults(func=_cmd_suggest_edits)
+
+    ed = sub.add_parser("edit", help="Apply conservative deterministic edits.")
+    ed.add_argument("--profile", required=True)
+    ed.add_argument("--text-file", required=True)
+    ed.add_argument("--output", required=True)
+    ed.add_argument("--mode", choices=["light", "medium", "strong"], default="light")
+    ed.set_defaults(func=_cmd_edit)
 
     return parser
 
