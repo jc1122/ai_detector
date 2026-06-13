@@ -9,6 +9,11 @@ workflow files when the task requires it.
 Do not edit model artifact directories (`meld_model`, `tmr_model`, `raid_model`)
 unless the user explicitly asks for model deployment or refresh.
 
+The repo also ships the `personal_style_pl` package (Polish personal writing-style
+similarity). It has its own rules in `personal_style_pl/AGENTS.md` and its design
+spec/plan in `docs/superpowers/`. It shares the single Python 3.12 `.venv`
+(see `scripts/setup_style_env.sh`).
+
 ## Documentation target
 
 Keep docs short, operator-focused, and runnable.
@@ -51,6 +56,8 @@ After any doc change, run and verify:
   `python3 heuristic_detector.py --help` from a checkout fallback
 - `ai-detector-calibrate --help` after package install, or
   `python3 calibrate_detector.py --help` from a checkout fallback
+- `personal-style-pl --help` after package install, or
+  `python3 -m personal_style_pl.cli --help` from a checkout fallback
 - quick checks from README
 - heavy smoke test from README
 - output keys expected by operator scripts are still present (`experts.*`, `ensemble`, `calibration`)
