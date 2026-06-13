@@ -112,6 +112,15 @@ def _cmd_edit(args) -> int:
     return 0
 
 
+def _cmd_train_supervised(args) -> int:
+    from .models.supervised import train_supervised, save_model
+    model = train_supervised(args.csv, text_col=args.text_col, label_col=args.label_col)
+    save_model(model, args.output)
+    print(f"Supervised model written to {args.output} "
+          f"(cv_accuracy={model.cv_accuracy})", file=sys.stderr)
+    return 0
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="personal-style-pl",
                                      description="Polish personal writing-style similarity.")
@@ -160,6 +169,13 @@ def build_parser() -> argparse.ArgumentParser:
     ed.add_argument("--output", required=True)
     ed.add_argument("--mode", choices=["light", "medium", "strong"], default="light")
     ed.set_defaults(func=_cmd_edit)
+
+    tsup = sub.add_parser("train-supervised", help="Train a mine-vs-other classifier.")
+    tsup.add_argument("--csv", required=True)
+    tsup.add_argument("--text-col", default="text")
+    tsup.add_argument("--label-col", default="label")
+    tsup.add_argument("--output", required=True)
+    tsup.set_defaults(func=_cmd_train_supervised)
 
     return parser
 
