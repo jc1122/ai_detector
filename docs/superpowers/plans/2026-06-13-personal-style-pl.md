@@ -1110,7 +1110,9 @@ from ..config import Z_CLIP
 
 
 def chunk_distance(profile, feature_row: np.ndarray) -> float:
-    """Median robust z-distance over stable features (clipped)."""
+    """Median robust z-distance over stable features (clipped). Returns 0.0 when the
+    profile has no stable features (degenerate uniform corpus); real varied corpora
+    always have stable features."""
     mask = profile.stable_mask
     center = profile.robust_center[mask]
     scale = profile.robust_scale[mask]
