@@ -25,6 +25,12 @@ uv pip install --python .venv/bin/python -e ".[test,style,style-stylometrix]" "n
 uv pip install --python .venv/bin/python --no-deps \
   "https://huggingface.co/ipipan/pl_nask/resolve/main/pl_nask-0.0.7.tar.gz"
 
+# Rich-metrics v2 extras (interpretable AI-leaning signals).
+uv pip install --python .venv/bin/python -e ".[rich]" "numpy<2"
+# Polish LM for perplexity/curvature features (~500 MB; required for --with-perplexity).
+# VERIFIED: loads in ~21s and computes per-sentence perplexity on the 3.12 env.
+.venv/bin/python -c "from transformers import AutoModelForCausalLM, AutoTokenizer; AutoTokenizer.from_pretrained('dkleczek/papuGaPT2'); AutoModelForCausalLM.from_pretrained('dkleczek/papuGaPT2'); print('papuGaPT2 fetched')"
+
 echo "Done. Verify:"
 echo "  .venv/bin/python -c \"import stylo_metrix as sm; print(sm.StyloMetrix('pl').transform(['Ala ma kota.']).shape)\""
 echo "  .venv/bin/python -m pytest -q"

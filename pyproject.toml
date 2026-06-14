@@ -31,6 +31,11 @@ test = [
 style = ["numpy<2", "pandas", "scikit-learn", "scipy", "joblib", "rich", "regex"]
 style-stylometrix = ["stylo_metrix", "spacy==3.7.2", "spacy-transformers>=1.3,<1.4", "numpy<2"]
 style-ml = ["lightgbm", "shap"]
+# Rich-metrics v2: interpretable AI-leaning signals. `rich` are cheap pure-Python/spaCy
+# deps; perplexity relies on the existing torch+transformers plus the papuGaPT2 model,
+# which scripts/setup_style_env.sh fetches (like pl_nask).
+rich = ["lexicalrichness", "textdescriptives"]
+rich-perplexity = []  # uses existing torch+transformers; papuGaPT2 fetched by setup script
 
 [tool.setuptools]
 py-modules = [
