@@ -18,6 +18,13 @@
 - The `ai-markers` overlay is advisory: **never emit a confident AI/human label for
   Polish/OOD** — abstain (`ood_or_unreliable`, low confidence). Perplexity is an
   advisory signal, not a verdict.
+- v2.1 Polish calibration (`Marker.reliable_pl`, `PL_UNRELIABLE_MARKERS`,
+  `PL_PERPLEXITY_AI_THRESHOLD` in `ai_markers.py`): on Polish, `mattr` / `em_dash_per_1k`
+  / `repeated_4gram_ratio` are advisory-only (polarity flips / typography / terminology
+  artifacts) and excluded from the score; `burstiness_coeff`, `sentence_len_cv`,
+  `transition_per_1k`, `boilerplate_per_1k` are counted. Derived from a windowed
+  human-vs-AI study (artifacts/doktorat_style/, audit 2026-06-14) — a small-corpus domain
+  heuristic, not a universal classifier. All markers are counted on non-Polish input.
 
 ## Environment
 - Single Python 3.12 venv (`.venv`). Surface features + scoring need only

@@ -609,6 +609,22 @@ of authorship**. On **Polish / out-of-distribution** input the overlay **abstain
 label — false positives are the dominant harm, and Polish-LM perplexity did *not*
 cleanly separate human from AI-assisted text in our audit, so it is advisory only.
 
+**Polish-register calibration (v2.1).** A windowed human-vs-AI study on Polish
+polymer-chemistry prose (pre-2020 human papers vs generated AI text) found that some
+markers are unreliable on this register and are therefore **advisory-only on Polish**
+(shown but not counted in the score): `mattr` (terse, term-repeating scientific prose
+has *lower* diversity than verbose AI — the polarity flips), `em_dash_per_1k` (Polish
+journals use en-dashes for numeric ranges, e.g. `23–70°C`), and `repeated_4gram_ratio`
+(real papers repeat terminology). The markers that separated correctly — and are
+**counted** on Polish — are `burstiness_coeff`, `sentence_len_cv`, `transition_per_1k`,
+and `boilerplate_per_1k`. Median perplexity is surfaced as an **advisory
+`perplexity_flag`** (calibrated threshold ≈47; modest TPR≈0.65 / FPR≈0.22), never a
+verdict. On non-Polish input all markers are counted, since e.g. em-dash overuse is a
+genuine English tell. Each marker row carries `reliable`/`counted` so you can see what
+fed the score. (Caveat: calibrated on a small, single-author/single-AI-model corpus —
+treat as a domain heuristic, not a universal classifier; terse "humanized" AI without
+boilerplate/transitions can still evade the marker-based score.)
+
 ### License note
 
 `stylo_metrix` and the `pl_nask` model are **GPL-3.0**. They are optional extras;
