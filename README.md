@@ -7,6 +7,32 @@ This repo provides:
   running the heavier model ensemble.
 - `ai-detector-calibrate`: grid-search operating-point calibration from stored
   evaluation scores.
+- `personal-style-pl`: Polish personal writing-style similarity + an interpretable,
+  OOD-aware **AI-leaning** overlay (`ai-markers`).
+
+## Quick start (TL;DR)
+
+Full env (detector + style + the papuGaPT2 perplexity model): `./scripts/setup_style_env.sh`.
+Detector only: `python -m pip install -e .`.
+
+```bash
+# A. Fast AI-text triage (no model weights). --rich adds the interpretable
+#    rich-metric + AI-leaning block (needs the style extras).
+ai-detector-heuristic --text-file examples/candidates/draft_b.txt --json --rich
+
+# B. "Is this AI, or my own human style?" — score a candidate against a KNOWN-HUMAN
+#    baseline you build once from reference samples (a folder of .txt files):
+personal-style-pl build-profile --samples-dir examples/my_style_samples \
+  --output artifacts/human.joblib --no-stylometrix
+personal-style-pl ai-markers --text-file examples/candidates/draft_b.txt \
+  --profile artifacts/human.joblib --json
+#    (append --with-perplexity to BOTH commands for the papuGaPT2 perplexity signal)
+```
+
+Read `ai_leaning_score` (0–100, vs your baseline), each marker's `leaning` + `counted`, and
+(with perplexity) `perplexity_flag`. **Advisory triage, not proof of authorship; it abstains on
+Polish** (`ood_or_unreliable: true`, low confidence). Details: detector in §1–11, style +
+AI-vs-human in §12 ("Judging AI-generated vs human text").
 
 ## CLI install
 
