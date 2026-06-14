@@ -116,7 +116,8 @@ def _cmd_edit(args) -> int:
 
 def _cmd_train_supervised(args) -> int:
     from .models.supervised import train_supervised, save_model
-    model = train_supervised(args.csv, text_col=args.text_col, label_col=args.label_col)
+    model = train_supervised(args.csv, text_col=args.text_col, label_col=args.label_col,
+                             feature_set=args.features)
     save_model(model, args.output)
     print(f"Supervised model written to {args.output} "
           f"(cv_accuracy={model.cv_accuracy})", file=sys.stderr)
@@ -200,6 +201,7 @@ def build_parser() -> argparse.ArgumentParser:
     tsup.add_argument("--text-col", default="text")
     tsup.add_argument("--label-col", default="label")
     tsup.add_argument("--output", required=True)
+    tsup.add_argument("--features", choices=["surface", "rich"], default="surface")
     tsup.set_defaults(func=_cmd_train_supervised)
 
     am = sub.add_parser("ai-markers", help="Interpretable AI-leaning marker report.")
