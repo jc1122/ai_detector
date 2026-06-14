@@ -565,7 +565,54 @@ training chunks.
 - Use it to understand and match *your own* style — not to impersonate others or
   to evade AI detectors.
 
+### Rich metrics & AI-leaning markers (v2)
+
+An interpretable, **length-normalized** metric layer plus an **AI-direction
+overlay**. It measures length-robust lexical diversity (MATTR / MTLD / HD-D,
+borrowed from [LexicalRichness](https://github.com/LSYS/LexicalRichness)),
+sentence-length **burstiness**, repeated higher-order n-grams, and per-1,000-token
+densities of em-dashes, boilerplate, transition and hedge phrases. These features
+are **on by default** in every profile (disable with `--no-rich`). An optional,
+gated [TextDescriptives](https://github.com/HLasse/TextDescriptives) block adds
+dependency-distance and POS-proportion features over `pl_nask` (entropy/perplexity
+are excluded — they are NaN for Polish).
+
+The `ai-markers` command reads those metrics against literature-backed AI
+directionality (e.g. low burstiness, em-dash and boilerplate over-use, repeated
+n-grams) and, when given a profile, scores each marker **against your own
+baseline**:
+
+```bash
+# Interpretable AI-leaning report vs your style (advisory; abstains on Polish)
+python -m personal_style_pl.cli ai-markers \
+  --text-file examples/candidates/draft_b.txt \
+  --profile artifacts/profile.joblib --json
+
+# Optional Polish-LM perplexity signal (papuGaPT2; ~500 MB, fetched by the setup
+# script). Build the baseline with it, then score the perplexity markers too:
+python -m personal_style_pl.cli build-profile --samples-dir examples/my_style_samples \
+  --output artifacts/profile_ppl.joblib --no-stylometrix --with-perplexity
+python -m personal_style_pl.cli ai-markers --text-file examples/candidates/draft_b.txt \
+  --profile artifacts/profile_ppl.joblib --with-perplexity --json
+
+# The lean detector can attach the same block (lazy-imports; no effect on its deps):
+python heuristic_detector.py --text-file examples/candidates/draft_b.txt --json --rich
+```
+
+`suggest-edits` also appends an advisory "AI-leaning markers" section, and
+`train-supervised --features rich` trains the mine-vs-other classifier on
+surface + rich features.
+
+**Stance (important):** these markers are an interpretable **heuristic, not proof
+of authorship**. On **Polish / out-of-distribution** input the overlay **abstains**
+(`ood_or_unreliable: true`, low confidence) rather than emit a confident AI/human
+label — false positives are the dominant harm, and Polish-LM perplexity did *not*
+cleanly separate human from AI-assisted text in our audit, so it is advisory only.
+
 ### License note
 
 `stylo_metrix` and the `pl_nask` model are **GPL-3.0**. They are optional extras;
 if you redistribute the project as a whole with them, GPL obligations apply.
+The rich-metrics extras are permissive: **LexicalRichness** (MIT) and
+**TextDescriptives** (Apache-2.0); the optional **papuGaPT2** model
+(`dkleczek/papuGaPT2`) is MIT.
