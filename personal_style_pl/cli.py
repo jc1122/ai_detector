@@ -123,6 +123,25 @@ def _cmd_train_supervised(args) -> int:
     return 0
 
 
+def _cmd_ai_markers(args) -> int:
+    import joblib
+    from .ai_markers import ai_marker_report
+    from .utils.json import dumps_json
+    text = Path(args.text_file).read_text(encoding="utf-8")
+    profile = joblib.load(args.profile) if args.profile else None
+    report = ai_marker_report(text, profile=profile, with_perplexity=args.with_perplexity)
+    if args.json:
+        print(dumps_json(report, indent=2))
+    else:
+        print(f"language={report['language']} ai_leaning_score={report['ai_leaning_score']} "
+              f"confidence={report['confidence']}")
+        for r in report["markers"]:
+            print(f"- {r['feature']}={r['value']} ({r.get('leaning','-')})")
+        for w in report["warnings"]:
+            print(f"  ! {w}")
+    return 0
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="personal-style-pl",
                                      description="Polish personal writing-style similarity.")
@@ -182,6 +201,13 @@ def build_parser() -> argparse.ArgumentParser:
     tsup.add_argument("--label-col", default="label")
     tsup.add_argument("--output", required=True)
     tsup.set_defaults(func=_cmd_train_supervised)
+
+    am = sub.add_parser("ai-markers", help="Interpretable AI-leaning marker report.")
+    am.add_argument("--text-file", required=True)
+    am.add_argument("--profile")
+    am.add_argument("--with-perplexity", action="store_true")
+    am.add_argument("--json", action="store_true")
+    am.set_defaults(func=_cmd_ai_markers)
 
     return parser
 

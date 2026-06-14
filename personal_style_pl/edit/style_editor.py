@@ -88,6 +88,18 @@ def suggestions_to_markdown(profile, text: str, mode: str) -> str:
     lines.append("## Warnings")
     for w in result.warnings:
         lines.append(f"- {w}")
+
+    from ..ai_markers import ai_marker_report
+    overlay = ai_marker_report(text, profile=profile)
+    lines.append("")
+    lines.append("## AI-leaning markers (advisory)")
+    if overlay["ai_leaning_score"] is not None:
+        lines.append(f"- Overall AI-leaning vs your style: {overlay['ai_leaning_score']}/100")
+    for r in overlay["markers"]:
+        if r.get("leaning") == "AI-leaning" and r.get("suggestion"):
+            lines.append(f"- `{r['feature']}` ({r['rationale']}) → {r['suggestion']}")
+    for w in overlay["warnings"]:
+        lines.append(f"- _{w}_")
     return "\n".join(lines) + "\n"
 
 
