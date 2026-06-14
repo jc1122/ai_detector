@@ -62,6 +62,12 @@ def _features_for_chunks(profile, texts: list[str]) -> np.ndarray:
         blocks.append(StyloMetrixFeatureExtractor(enabled=True).fit_transform(texts))
     if profile.ngram_extractor is not None:
         blocks.append(profile.ngram_extractor.transform(texts))
+    if profile.config.get("include_rich"):
+        from ..features.rich_metrics import RichMetricsExtractor
+        blocks.append(RichMetricsExtractor().fit_transform(texts))
+    if profile.config.get("include_perplexity"):
+        from ..features.perplexity_features import PerplexityExtractor
+        blocks.append(PerplexityExtractor().fit_transform(texts))
     return blocks[0] if len(blocks) == 1 else np.hstack(blocks)
 
 

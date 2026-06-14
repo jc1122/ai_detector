@@ -25,6 +25,8 @@ def _cmd_build_profile(args) -> int:
     profile = build_profile(
         docs, use_stylometrix=not args.no_stylometrix,
         include_ngrams=args.include_ngrams,
+        include_rich=not args.no_rich,
+        include_perplexity=args.with_perplexity,
         chunk_sentences=args.chunk_sentences, min_chunk_tokens=args.min_chunk_tokens)
     joblib.dump(profile, ensure_parent(args.output))
     if args.report:
@@ -136,6 +138,10 @@ def build_parser() -> argparse.ArgumentParser:
     bp.add_argument("--chunk-sentences", type=int, default=8)
     bp.add_argument("--include-ngrams", action="store_true")
     bp.add_argument("--no-stylometrix", action="store_true")
+    bp.add_argument("--no-rich", action="store_true",
+                    help="Disable the always-on rich-metrics baseline block.")
+    bp.add_argument("--with-perplexity", action="store_true",
+                    help="Add papuGaPT2 perplexity features to the baseline (heavy; gated).")
     bp.set_defaults(func=_cmd_build_profile)
 
     sc = sub.add_parser("score", help="Score one text against a profile.")

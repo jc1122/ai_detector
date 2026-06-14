@@ -52,6 +52,8 @@ def build_profile(
     *,
     use_stylometrix: bool = False,
     include_ngrams: bool = False,
+    include_rich: bool = True,
+    include_perplexity: bool = False,
     chunk_sentences: int = 8,
     min_chunk_tokens: int = 120,
 ) -> StyleProfile:
@@ -82,6 +84,17 @@ def build_profile(
         ngram_extractor = NgramFeatureExtractor(min_df=2).fit(chunk_texts)
         blocks.append(ngram_extractor.transform(chunk_texts))
         feature_names += list(ngram_extractor.get_feature_names_out())
+
+    if include_rich:
+        from ..features.rich_metrics import RichMetricsExtractor, RICH_METRIC_NAMES
+        blocks.append(RichMetricsExtractor().fit_transform(chunk_texts))
+        feature_names += list(RICH_METRIC_NAMES)
+
+    if include_perplexity:
+        from ..features.perplexity_features import (
+            PerplexityExtractor, PERPLEXITY_FEATURE_NAMES)
+        blocks.append(PerplexityExtractor().fit_transform(chunk_texts))
+        feature_names += list(PERPLEXITY_FEATURE_NAMES)
 
     matrix = blocks[0] if len(blocks) == 1 else np.hstack(blocks)
 
@@ -114,6 +127,8 @@ def build_profile(
         config={
             "use_stylometrix": use_stylometrix,
             "include_ngrams": include_ngrams,
+            "include_rich": include_rich,
+            "include_perplexity": include_perplexity,
             "chunk_sentences": chunk_sentences,
             "min_chunk_tokens": min_chunk_tokens,
         },
