@@ -25,10 +25,13 @@ This repo has **two subsystems** that share a single **Python 3.12** virtualenv 
 # Detect AI text
 .venv/bin/python -m run_ensemble --text-file t.txt --profile pl-technical-ood --json
 .venv/bin/python heuristic_detector.py --text "..." --json
+.venv/bin/python heuristic_detector.py --text-file t.txt --json --rich   # + rich metrics + AI-leaning overlay
 
 # Personal style similarity (build once, then score/rank/explain/edit)
+# Rich metrics are ON by default in the baseline (--no-rich to disable; --with-perplexity adds papuGaPT2).
 .venv/bin/python -m personal_style_pl.cli build-profile --samples-dir DIR --output artifacts/p.joblib
 .venv/bin/python -m personal_style_pl.cli score --profile artifacts/p.joblib --text-file d.txt --json --with-heuristics
+.venv/bin/python -m personal_style_pl.cli ai-markers --text-file d.txt --profile artifacts/p.joblib --json  # interpretable AI-leaning report (abstains on PL)
 .venv/bin/python -m personal_style_pl.cli rank|describe-profile|suggest-edits|edit|train-supervised --help
 ```
 
