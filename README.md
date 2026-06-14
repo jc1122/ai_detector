@@ -196,7 +196,16 @@ printf "Warto zauważyć, że w dzisiejszym świecie AI odgrywa kluczową rolę.
 
 # file input
 ai-detector-heuristic --text-file ./input.txt --json
+
+# optional: attach the interpretable rich-metric block + AI-leaning overlay
+# (lazy-imports personal_style_pl; the base path keeps zero extra dependencies)
+ai-detector-heuristic --text-file ./input.txt --json --rich
 ```
+
+With `--rich`, the payload gains `experts.heuristic.rich_metrics` (MATTR/MTLD,
+burstiness, length-normalized phrase densities) and `experts.heuristic.ai_leaning`
+(the AI-direction overlay; abstains on Polish). See §12 for the metrics and the
+interpretation/calibration. Without `--rich` the lean detector is unchanged.
 
 Heuristic JSON uses the same top-level operator sections:
 - `experts.heuristic.ai_probability`, `human_probability`, `site_metrics`, `categories`, `signals`, `metrics`
