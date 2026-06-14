@@ -847,7 +847,7 @@ def analyze_text(text: str) -> dict[str, object]:
     }
 
 
-def build_payload(text: str, *, threshold: float) -> dict[str, object]:
+def build_payload(text: str, *, threshold: float, rich: bool = False) -> dict[str, object]:
     result = analyze_text(text)
     ai_probability = float(result["ai_probability"])
     human_probability = 1.0 - ai_probability
@@ -866,6 +866,15 @@ def build_payload(text: str, *, threshold: float) -> dict[str, object]:
         "signals": result["signals"],
         "metrics": result["metrics"],
     }
+    if rich:
+        try:
+            from personal_style_pl.features.rich_metrics import rich_metrics_for_text
+            from personal_style_pl.ai_markers import ai_marker_report
+            expert_payload["rich_metrics"] = rich_metrics_for_text(text)
+            expert_payload["ai_leaning"] = ai_marker_report(text)
+        except Exception as exc:  # personal_style_pl deps not installed
+            expert_payload["rich_metrics"] = {"error": str(exc)}
+            expert_payload["ai_leaning"] = {"error": str(exc)}
     return {
         "text_preview": text[:250],
         "weights": {"heuristic": 1.0},
@@ -918,6 +927,8 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         help="Decision threshold on heuristic AI probability.",
     )
     parser.add_argument("--json", action="store_true", help="Print compact JSON output.")
+    parser.add_argument("--rich", action="store_true",
+                        help="Attach rich metrics + AI-leaning overlay (lazy-imports personal_style_pl).")
     return parser.parse_args(argv)
 
 
@@ -927,7 +938,7 @@ def main(argv: list[str] | None = None) -> None:
         text = _read_text(args)
         if not text:
             raise RuntimeError("No input text provided.")
-        payload = build_payload(text, threshold=args.threshold)
+        payload = build_payload(text, threshold=args.threshold, rich=args.rich)
     except (RuntimeError, ValueError) as exc:
         print(f"Error: {exc}", file=sys.stderr)
         raise SystemExit(1)
