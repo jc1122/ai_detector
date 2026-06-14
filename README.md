@@ -625,6 +625,46 @@ fed the score. (Caveat: calibrated on a small, single-author/single-AI-model cor
 treat as a domain heuristic, not a universal classifier; terse "humanized" AI without
 boilerplate/transitions can still evade the marker-based score.)
 
+### Judging AI-generated vs human text (recipe + honest limits)
+
+To use this repo to **discriminate AI-generated from human text** (rather than just style
+similarity), treat it as an **advisory triage**, not a verdict:
+
+```bash
+# 1. Build a KNOWN-HUMAN baseline from reference text you trust is human
+#    (e.g. the author's pre-LLM / pre-2020 writing). Rich metrics are on by default.
+python -m personal_style_pl.cli build-profile --samples-dir known_human_samples/ \
+  --output artifacts/human_baseline.joblib --no-stylometrix --with-perplexity
+
+# 2. Score the candidate text against that human baseline
+python -m personal_style_pl.cli ai-markers --text-file candidate.txt \
+  --profile artifacts/human_baseline.joblib --with-perplexity --json
+```
+
+**How to read the output:**
+- `ai_leaning_score` (0–100) = % of **counted** markers leaning AI vs the human baseline. Higher =
+  more AI-leaning. It is **relative to the baseline**, not an absolute probability.
+- Each marker row has `leaning` (`AI-leaning` / `matches` / `more-human-than-you` /
+  `advisory_only`) and `counted` (whether it fed the score). Trust the **counted** ones.
+- `perplexity_flag` (with `--with-perplexity`): `leans_AI_low_perplexity` vs
+  `within_or_above_human_range` — advisory, calibrated on Polish (threshold ≈47).
+- `ood_or_unreliable: true` + low `confidence` on Polish → **abstain**: report as advisory, never
+  as a definitive AI/human label.
+
+**What it can and cannot do (validated on Polish polymer-chemistry prose, v2.1):**
+- ✅ Reliably separates **naive AI** (formulaic phrasing, signposted transitions, uniform rhythm,
+  low perplexity) from human: in a held-out study the real human text scored 0 while AI averaged ~29.
+- ⚠️ **Misses terse "humanized" AI** that drops boilerplate/transitions — the marker score can read
+  0; only the (weak) perplexity signal hints. This is a hard limit of interpretable markers.
+- ⚠️ **Polish is out-of-distribution** — the overlay abstains and only some markers count (see the
+  v2.1 calibration note above). Do not emit confident AI/human verdicts for Polish.
+- ⚠️ Use clean prose: PDF/LaTeX-extraction noise inflates perplexity and repetition metrics.
+
+For a stronger, supervised approach when you have labelled examples, see
+`train-supervised --features rich` (a mine-vs-other / human-vs-AI classifier on surface+rich
+features). The discrimination methodology used to calibrate v2.1 (windowed human-vs-AI study) is
+summarised in the `ai_markers.py` module docstring.
+
 ### License note
 
 `stylo_metrix` and the `pl_nask` model are **GPL-3.0**. They are optional extras;

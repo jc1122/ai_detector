@@ -204,11 +204,29 @@ def build_parser() -> argparse.ArgumentParser:
     tsup.add_argument("--features", choices=["surface", "rich"], default="surface")
     tsup.set_defaults(func=_cmd_train_supervised)
 
-    am = sub.add_parser("ai-markers", help="Interpretable AI-leaning marker report.")
-    am.add_argument("--text-file", required=True)
-    am.add_argument("--profile")
-    am.add_argument("--with-perplexity", action="store_true")
-    am.add_argument("--json", action="store_true")
+    am = sub.add_parser(
+        "ai-markers",
+        help="Interpretable AI-leaning marker report (advisory; abstains on Polish).",
+        description=(
+            "Judge how AI-leaning a text is by reading interpretable, length-normalized markers "
+            "against a KNOWN-HUMAN baseline profile. Workflow: build a profile from known-human "
+            "reference samples (build-profile), then score a candidate here. Output: per-marker "
+            "leaning (AI-leaning / matches / more-human-than-you / advisory_only), an "
+            "`ai_leaning_score` (0-100 = share of COUNTED markers leaning AI), and (with "
+            "--with-perplexity) an advisory `perplexity_flag`."),
+        epilog=(
+            "IMPORTANT: marker-based heuristic, NOT proof of authorship. On Polish it ABSTAINS "
+            "(ood_or_unreliable=true, low confidence) and counts only markers that discriminate "
+            "on Polish (burstiness_coeff, sentence_len_cv, transition_per_1k, boilerplate_per_1k); "
+            "mattr/em_dash_per_1k/repeated_4gram_ratio are advisory_only there. Terse 'humanized' "
+            "AI can evade the score. See README section 12."))
+    am.add_argument("--text-file", required=True, help="Candidate text to judge.")
+    am.add_argument("--profile",
+                    help="Known-human baseline profile (.joblib from build-profile). Without it, "
+                         "only raw marker values are shown (no per-marker scoring).")
+    am.add_argument("--with-perplexity", action="store_true",
+                    help="Add the advisory papuGaPT2 perplexity_flag (needs the model).")
+    am.add_argument("--json", action="store_true", help="Emit the full report as JSON.")
     am.set_defaults(func=_cmd_ai_markers)
 
     return parser
